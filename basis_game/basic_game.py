@@ -30,10 +30,5 @@ print(a)
 a = np.zeros(4, dtype = bool)
 print(a)
 
-matrix = [[False for i in range(4)] for j in range(4)]
+matrix = [[0 for i in range(4)] for j in range(4)]
 print(matrix)
-
-def shw():
-    print("hello")
-    r = divide(2, 5) 
-    print(r) 
