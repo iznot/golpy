@@ -1,12 +1,12 @@
 from re import M
 import numpy as np
 
-#x = np.ndarray(shape = (6,6), dtype=bool)
 
 x = np.full((9,9), False)
 
 x[3,4] = True
 x[4,3] = True
+x[7,2] = True
 
 print(x)
 
@@ -41,11 +41,53 @@ def print_gameboard(gameboard : np.array):
     print(' ---' * n)
     
 
-#    m = gameboard.shape[0]
-#   first_line = '|   ' * (m + 1)
-#    for i in range(m):
-#        print(first_line)
-
 print_gameboard(x)
 
+
+#1. Funktion play(... definieren, in welche man ein gameboard als Attribut geben kann, und die das neue gameboard zurückgibt (NEW!)
+def play(gameboard: np.array) -> np.array:
+    """Macht einen Spielzug
+
+    Args:
+        gameboard (np.array): das gambeboard vor dem Spielzug
+
+    Returns:
+        np.array: das gameboard nach dem Spielzug
+    """
+
+    n = gameboard.shape[1]
+    m = gameboard.shape[0]
+
+    # 2. durch rows iterieren
+    for row in range(n):
+        # 3. durch cols (respektive cells) iterieren
+        for col in range(m):
+            # 4. Variable neighbour_count definieren (ein int) und auf 0 setzen
+            neighbour = [x[n-1, m], x[n+1, m] ,x[n, m-1], x[n, m+1], x[n-1,m-1], x[n+1, m+1], x[n-1, m+1], x[n+1, m-1]]
+            # 5. rund um die Zelle marschieren, und die Neighbours zählen
+            neighbour_count = neighbour.count(True)
+            # 6. if abfrage, um Business Logic zu implementieren (Status = True oder False) 
+            if neighbour_count == 3:
+                gameboard[row, col] = True
+
+            elif neighbour_count >= 4:
+                gameboard[row, col] = False
+            
+            elif neighbour_count <= 1:
+                gameboard[row, col] = False
     
+    return x
+
+
+
+
+x2 = play(x)
+
+print('x2:')
+print_gameboard(x2)
+
+x3 = play(x2)
+
+print('x3:')
+print_gameboard(x3)
+
