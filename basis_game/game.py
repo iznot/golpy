@@ -1,6 +1,9 @@
 from re import M
 import numpy as np
 
+import sys
+import os
+
 import basis_game.basic_game_functions as bgf
 
 # die erste Zahl gibt die Anzahl Zeilen (y-Achse, rows), die zweite Zahl die Anzahl Spalten (x-Achse, cols)
@@ -18,6 +21,3 @@ bgf.print_gameboard(x)
 x2 = bgf.play(x)
 print('x2:')
 bgf.print_gameboard(x2)
-
-
-

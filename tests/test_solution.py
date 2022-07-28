@@ -1,11 +1,13 @@
 import unittest
+import numpy as np
 import basis_game.basic_game_functions as gamefun
 
 class TestSolution(unittest.TestCase):
 
+#get_neighbour_indices
 
     def test_get_neighbour_indices(self):
-        res = gamefun.get_neighbour_indices(4, 5, 9, 9)
+        res = gamefun.get_neighbour_indices(row = 4, col = 5, rows = 9, cols = 9)
         assert len(res) == 4
         #toprow
         assert res[0] == 3
@@ -40,3 +42,22 @@ class TestSolution(unittest.TestCase):
         assert res[2] == 4
         #rightcol
         assert res[3] == 0
+
+
+#print_gameboard
+
+    def test_create_gameboard(self):
+        
+        gameboard = gamefun.create_gameboard(rows = 9, cols = 10)
+        
+        assert gameboard.size == 90
+        assert gameboard.shape == (9, 10)
+
+
+    def test_demo_gameboard(self):
+        gameboard = gamefun.create_gameboard(rows = 9, cols = 10)
+        gameboard[3,4] = True
+        gameboard[5,4] = True
+        gameboard[4,4] = True
+        
+        print(gameboard)

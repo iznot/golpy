@@ -1,7 +1,9 @@
-
-from re import X
 import numpy as np
 
+
+def create_gameboard(rows: int, cols: int) -> np.array:
+    gameboard = np.full((rows,cols), False)
+    return gameboard
 
 
 
@@ -43,7 +45,7 @@ def print_gameboard(gameboard : np.array):
         print(second_line)
     
     print(' ---' * cols)
-print_gameboard(X)
+
 
 def play(gameboard: np.array) -> np.array:
     """Macht einen Spielzug
