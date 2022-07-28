@@ -2,7 +2,8 @@
 "recommendations": [
     "ms-python.python",
     "njpwerner.autodocstring",
-    "ms-vscode.powershell"
+    "ms-vscode.powershell",
+    "Gruntfuggly.todo-tree"
 ]
 
 }

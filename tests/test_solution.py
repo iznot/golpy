@@ -54,10 +54,33 @@ class TestSolution(unittest.TestCase):
         assert gameboard.shape == (9, 10)
 
 
-    def test_demo_gameboard(self):
+    def test_demo_print_gameboard(self):
         gameboard = gamefun.create_gameboard(rows = 9, cols = 10)
         gameboard[3,4] = True
         gameboard[5,4] = True
         gameboard[4,4] = True
         
         print(gameboard)
+
+    
+    def test_demo_gameplay(self):
+        g0 = gamefun.create_gameboard(rows = 9, cols = 10)
+        g0[3,4] = True
+        g0[5,4] = True
+        g0[4,4] = True
+
+        assert g0.sum() == 3
+
+        g1 = gamefun.play(g0)
+
+        assert g1.sum() == 1
+        assert g1[5,4] == True
+
+        g2 = gamefun.play(g1)
+        
+        assert g2.sum() == 0
+    
+
+
+        
+
