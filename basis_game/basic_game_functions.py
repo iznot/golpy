@@ -76,7 +76,7 @@ def play(gameboard: np.array) -> np.array:
 
 
             ### iznot zeugs:
-            neighbour = [x[toprow-1, col], x[bottomrow+1, col], x[row, leftcol - 1], x[row, rightcol+1]]
+            neighbour = [gameboard[toprow-1, col], gameboard[toprow+1, col], gameboard[bottomrow-1, col], gameboard[bottomrow+1, col], gameboard[row, leftcol-1], gameboard[row, leftcol+1], gameboard[row, rightcol-1], gameboard[row, rightcol+1]]
             #neighbour = [x[leftrow, col], x[rightrow, col] ,x[row, col-1], x[row, col+1], x[row-1,col-1], x[row+1, col+1], x[row-1, col+1], x[row+1, col-1]]
             # 5. rund um die Zelle marschieren, und die Neighbours zählen
             neighbour_count = neighbour.count(True)
