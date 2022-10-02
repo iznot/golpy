@@ -1,3 +1,4 @@
+from turtle import Turtle
 import unittest
 import numpy as np
 import basis_game.basic_game_functions as gamefun
@@ -83,6 +84,51 @@ class TestSolution(unittest.TestCase):
         assert g2.sum() == 3
     
 
+    def test_why_space(self):
+        g0 = gamefun.create_gameboard(rows = 7, cols = 5)
+        g0[1,2] = True
+        g0[3,1] = True
 
+        assert g0.sum() == 2
+    # immer bei Hälfte(runtergerundet) einen Space
+
+    def test_gameplay_corner(self):
+        g0 = gamefun.create_gameboard(rows = 8, cols = 7)
+        g0[7,6] = True
+        g0[7,5] = True
+        g0[7,0] = True
+        g0[0,0] = True
+        g0[0,1] = True
+
+        assert g0.sum() == 5  
+
+        g1 = gamefun.play(g0)
+
+        assert g1.sum() == 6
+        assert g1[7,0] == True
+        assert g1[0,0] == True
+        assert g1[0,1] == True
+        assert g1[7,0] == True
+        assert g1[6,6] == True
+        assert g1[7,6] == True
+
+
+    def test_equal(self):
+        g0 = gamefun.create_gameboard(rows = 8, cols = 7)
+        g0[7,6] = True
+        g0[7,5] = True
+        g0[7,0] = True
+
+        is_equal = gamefun.gameboard_equal(g0, g0)
+        assert is_equal == True
+    
+    def test_not_equal(self):
+        g0 = gamefun.create_gameboard(rows = 8, cols = 7)
+        g0[7,6] = True
+        g0[7,5] = True
+        g0[7,0] = True
+
+        g1 = gamefun.play(g0)
         
-
+        is_equal = gamefun.gameboard_equal(g0, g1)
+        assert is_equal == False
