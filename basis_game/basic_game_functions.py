@@ -1,4 +1,5 @@
 import numpy as np
+import os
 
 
 def create_gameboard(rows: int, cols: int) -> np.array:
@@ -22,12 +23,28 @@ def print_gameboard(gameboard : np.array):
     Args:
         gameboard (np.array): Das Gameboard, also eine nxn Numpy Matrix mit bool
     """
+    txt = get_gameboard_text(gameboard)
+    print(txt)
+
+def get_gameboard_text(gameboard : np.array, horizontal_separator : bool = True) -> str:
+    """Generiert einen text string von einem Gameboard
+
+    Args:
+        gameboard (np.array): Das Gameboard, also eine nxn Numpy Matrix mit bool
+    """
     rows = gameboard.shape[0]
     cols = gameboard.shape[1]
-    first_line = ' ---' * cols
     
+    
+    sep_line = ' ---' * cols + ' '
+    
+    if horizontal_separator:
+        res = sep_line +  os.linesep
+    else:
+        res = ''
+
     for row in range(rows):
-        print(first_line)
+        
         second_line = '|'
         for col in range(cols):
             # Zelle:
@@ -42,9 +59,59 @@ def print_gameboard(gameboard : np.array):
             # 4. Zelle zu second_line hinzufügen
             second_line += cell_string
         # second_line ausgeben
-        print(second_line)
+        
+        res = res + second_line + os.linesep
+        if horizontal_separator:
+            res = res + sep_line + os.linesep
+
     
-    print(' ---' * cols)
+    res = res[:-1]
+    
+    return res
+
+def get_gameboard_text_compact(gameboard : np.array, horizontal_separator : bool = True) -> str:
+    """Generiert einen text string von einem Gameboard
+
+    Args:
+        gameboard (np.array): Das Gameboard, also eine nxn Numpy Matrix mit bool
+    """
+    rows = gameboard.shape[0]
+    cols = gameboard.shape[1]
+    
+    
+    sep_line = ' ---' * cols + ' '
+    
+    if horizontal_separator:
+        res = sep_line +  os.linesep
+    else:
+        res = ''
+
+    for row in range(rows):
+        
+        second_line = '|'
+        for col in range(cols):
+            # Zelle:
+            # 1. Zelle in gameboard abfragen
+            cell_value = gameboard[row, col]
+            # 2. wenn false, dann '|  '
+            if cell_value == False:
+                cell_string = '   |'
+            # 3. sonst: '| o '
+            else:
+                cell_string = ' o |'
+            # 4. Zelle zu second_line hinzufügen
+            second_line += cell_string
+        # second_line ausgeben
+        
+        res = res + second_line + os.linesep
+        if horizontal_separator:
+            res = res + sep_line + os.linesep
+
+    
+    res = res[:-1]
+    
+    return res
+
 
 
 def play(gameboard: np.array) -> np.array:
