@@ -40,8 +40,10 @@ class GolpyGui():
 
 
 def main():
-    gleiter = samples.get_gleiter(16)
-    GolpyGui(gleiter)
+    #gleiter = samples.get_gleiter(16)
+    #GolpyGui(gleiter)
+    erase = samples.get_erased()
+    GolpyGui(erase)
 
 if __name__ == "__main__":
     main()
