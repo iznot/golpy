@@ -69,8 +69,8 @@ def get_gameboard_text(gameboard : np.array, horizontal_separator : bool = True)
     
     return res
 
-def get_gameboard_text_compact(gameboard : np.array, horizontal_separator : bool = True) -> str:
-    """Generiert einen text string von einem Gameboard
+def get_gameboard_text_compact(gameboard : np.array) -> str:
+    """Generiert einen text string von einem Gameboard, z.B. zur Ansicht mit Webdings font
 
     Args:
         gameboard (np.array): Das Gameboard, also eine nxn Numpy Matrix mit bool
@@ -78,35 +78,25 @@ def get_gameboard_text_compact(gameboard : np.array, horizontal_separator : bool
     rows = gameboard.shape[0]
     cols = gameboard.shape[1]
     
-    
-    sep_line = ' ---' * cols + ' '
-    
-    if horizontal_separator:
-        res = sep_line +  os.linesep
-    else:
-        res = ''
+    res = ''
 
     for row in range(rows):
-        
-        second_line = '|'
+        second_line = ''
         for col in range(cols):
             # Zelle:
             # 1. Zelle in gameboard abfragen
             cell_value = gameboard[row, col]
             # 2. wenn false, dann '|  '
             if cell_value == False:
-                cell_string = '   |'
-            # 3. sonst: '| o '
+                cell_string = 'c'
+            
             else:
-                cell_string = ' o |'
+                cell_string = 'g'
             # 4. Zelle zu second_line hinzufügen
             second_line += cell_string
         # second_line ausgeben
         
-        res = res + second_line + os.linesep
-        if horizontal_separator:
-            res = res + sep_line + os.linesep
-
+        res = res + second_line + "\n"
     
     res = res[:-1]
     

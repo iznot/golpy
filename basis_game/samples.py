@@ -11,20 +11,22 @@ def get_gleiter(size = 8):
 
 def get_erased(size = 50):
     gameboard = gamefun.create_gameboard(rows = size, cols = size)
-    gameboard[1,2] = True
-    gameboard[1,3] = True
-    gameboard[1,4] = True
-    gameboard[2,2] = True
-    gameboard[2,4] = True
-    gameboard[3,2] = True
-    gameboard[3,4] = True
-    gameboard[5,2] = True
-    gameboard[5,4] = True
-    gameboard[6,2] = True
-    gameboard[6,4] = True
-    gameboard[7,2] = True
-    gameboard[7,3] = True
-    gameboard[7,4] = True
+    start_x = int(size / 2)
+    start_y = int(size / 2)
+    gameboard[start_x - 2,start_y-1] = True
+    gameboard[start_x - 2,start_y] = True
+    gameboard[start_x - 2,start_y+1] = True
+    gameboard[start_x - 1,start_y-1] = True
+    gameboard[start_x - 1,start_y+1] = True
+    gameboard[start_x,    start_y-1] = True
+    gameboard[start_x,    start_y+1] = True
+    gameboard[start_x + 2,start_y-1] = True
+    gameboard[start_x + 2,start_y+1] = True
+    gameboard[start_x + 3,start_y-1] = True
+    gameboard[start_x + 3,start_y+1] = True
+    gameboard[start_x + 4,start_y-1] = True
+    gameboard[start_x + 4,start_y] = True
+    gameboard[start_x + 4,start_y+1] = True
     return gameboard
 
 # TODO: viele weitere Beispiele einfügen!
