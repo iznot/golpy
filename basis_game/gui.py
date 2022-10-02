@@ -12,8 +12,9 @@ class GolpyGui():
 
         window = tk.Tk()
         self.gameboard = gameboard
-        self.gameboard_label = tk.Label(text = gamefun.get_gameboard_text(self.gameboard, horizontal_separator = False))
+        self.gameboard_label = tk.Label(text = gamefun.get_gameboard_text_compact(self.gameboard))
         self.gameboard_label.configure(font=("Webdings", 12))
+        
         self.gameboard_label.pack()
     
 
@@ -34,7 +35,7 @@ class GolpyGui():
     def nextCallBack(self):
         
         self.gameboard = gamefun.play(self.gameboard)
-        self.gameboard_label["text"] = gamefun.get_gameboard_text(self.gameboard, horizontal_separator=False)
+        self.gameboard_label["text"] = gamefun.get_gameboard_text_compact(self.gameboard)
         self.gameboard_label.pack()
         
 
