@@ -7,5 +7,54 @@
         "test_*.py"
     ],
     "python.testing.pytestEnabled": false,
-    "python.testing.unittestEnabled": true
+    "python.testing.unittestEnabled": true,
+    
+    "markdownConverter.Parser.Toc.ListType": "ol",
+    "markdownConverter.Parser.Toc.Levels": "1-3",
+    "markdownConverter.ConversionQuality": 80,
+    "markdownConverter.Document.Paper.PaperFormat": {
+        "Format": "A4",
+        "Orientation": "Portrait"
+    },
+    "markdownConverter.DefaultDateFormat": "yyyy-MM-dd",
+    "markdownConverter.Document.Paper.Margin": {
+        "Top": "3cm",
+        "Bottom": "1.5cm",
+        "Left": "1.5cm",
+        "Right": "2cm"
+    },
+    "markdownConverter.Assets.StyleSheets": {
+        "./css/styles.css": "Default"
+        
+    },
+    "todo-tree.general.tags": [
+        "NOTE",
+        "QUESTION",
+        "TODO",
+        "REPLACE",
+        "IDEA"
+        ],
+    "todo-tree.highlights.customHighlight": {
+        "NOTE": {
+            "foreground": "#171716",
+            "background": "#fcd703"
+        },
+        "QUESTION": {
+            "foreground": "#060a80",
+            "background": "#23db2c"
+        },
+        "IDEA": {
+            "foreground": "#cffd02",
+            "background": "#db23cc"
+        },
+        "TODO": {
+            "foreground": "#f2edee",
+            "background": "#ff3239"
+        },
+        "REPLACE": {
+            "foreground": "#f2edee",
+            "background": "#3258ff"
+        }
+        
+    }
 }

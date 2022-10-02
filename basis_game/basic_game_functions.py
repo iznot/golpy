@@ -60,13 +60,18 @@ def play(gameboard: np.array) -> np.array:
     rows = gameboard.shape[0]
     cols = gameboard.shape[1]
 
+    # 1. Resultat (shallow copy, wir wollen das Input-Object nicht verändern)
+    gameboard_new = gameboard.copy()
     
-    
+   
     # 2. durch rows iterieren
     for row in range(rows):
         # 3. durch cols (respektive cells) iterieren
         for col in range(cols):
-            # 4. Variable neighbour_count definieren (ein int) und auf 0 setzen
+            
+            alive = gameboard[row, col]
+            
+            # 4. Die Nachbarn zählen
             
             ni = get_neighbour_indices(row, col, rows, cols)
             toprow = ni[0]
@@ -75,20 +80,44 @@ def play(gameboard: np.array) -> np.array:
             rightcol = ni[3]
 
 
-            ### iznot zeugs:
-            neighbour = [gameboard[toprow-1, col], gameboard[toprow+1, col], gameboard[bottomrow-1, col], gameboard[bottomrow+1, col], gameboard[row, leftcol-1], gameboard[row, leftcol+1], gameboard[row, rightcol-1], gameboard[row, rightcol+1]]
-            #neighbour = [x[leftrow, col], x[rightrow, col] ,x[row, col-1], x[row, col+1], x[row-1,col-1], x[row+1, col+1], x[row-1, col+1], x[row+1, col-1]]
+            # wir brauche 8 neighbours. Bei N startend im Uhrzeigersinn:
+            neighbour = [
+                gameboard[toprow, col], # N
+                gameboard[toprow, rightcol], # N-E
+                gameboard[row, rightcol], # E
+                gameboard[bottomrow, rightcol], # S-E
+                gameboard[bottomrow, col], # S
+                gameboard[bottomrow, leftcol], # S-W
+                gameboard[row, leftcol], # W
+                gameboard[toprow, leftcol] # N-W
+            ]
+            
+            
             # 5. rund um die Zelle marschieren, und die Neighbours zählen
             neighbour_count = neighbour.count(True)
             # 6. if abfrage, um Business Logic zu implementieren (Status = True oder False) 
-            if neighbour_count == 3:
-                gameboard[row, col] = True
+            
+            if not alive:
+                if neighbour_count == 3:
+                    #Eine tote Zelle mit genau drei lebenden Nachbarn wird in der Folgegeneration „geboren“ (zum Leben erweckt).
+                    gameboard_new[row, col] = True 
+                else:
+                    gameboard_new[row, col] = False
 
-            elif neighbour_count >= 4:
-                gameboard[row, col] = False
+            else:
+                if neighbour_count < 2:
+                    #Eine lebende Zelle mit weniger als zwei lebenden Nachbarn stirbt in der Folgegeneration (an Einsamkeit).
+                    gameboard_new[row, col] = False
+
+                elif (neighbour_count == 2 or neighbour_count == 3):
+                    # Eine lebende Zelle mit zwei oder drei lebenden Nachbarn bleibt in der Folgegeneration am Leben. 
+                    gameboard_new[row, col] = True
             
-            elif neighbour_count <= 1:
-                gameboard[row, col] = False
+                elif neighbour_count > 3:
+                    # Eine lebende Zelle mit mehr als drei lebenden Nachbarn stirbt in der Folgegeneration (an Überbevölkerung). 
+                    gameboard_new[row, col] = False
             
-    return gameboard
+                
+
+    return gameboard_new
 
