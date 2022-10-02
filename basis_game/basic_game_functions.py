@@ -50,10 +50,10 @@ def get_gameboard_text(gameboard : np.array, horizontal_separator : bool = True)
             # Zelle:
             # 1. Zelle in gameboard abfragen
             cell_value = gameboard[row, col]
-            # 2. wenn false, dann '|  '
+            # 2. wenn false, dann '   |'
             if cell_value == False:
                 cell_string = '   |'
-            # 3. sonst: '| o '
+            # 3. sonst: ' o |'
             else:
                 cell_string = ' o |'
             # 4. Zelle zu second_line hinzufügen
@@ -178,3 +178,6 @@ def play(gameboard: np.array) -> np.array:
 
     return gameboard_new
 
+def gameboard_equal(gameboard_1: np.array, gameboard_2: np.array):
+    result = np.array_equal(gameboard_1, gameboard_2)
+    return result
