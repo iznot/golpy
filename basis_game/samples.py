@@ -1,5 +1,6 @@
 import basic_game_functions as gamefun
 
+
 def get_gleiter(size = 8):
     gameboard = gamefun.create_gameboard(rows = size, cols = size)
     gameboard[4,1] = True
@@ -30,3 +31,8 @@ def get_erased(size = 50):
     return gameboard
 
 # TODO: viele weitere Beispiele einfügen!
+
+
+sample_dict = {
+                'Gleiter' : get_gleiter(), 
+                'Erased' : get_erased()}
