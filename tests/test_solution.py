@@ -1,7 +1,7 @@
 from turtle import Turtle
 import unittest
 import numpy as np
-import basis_game.basic_game_functions as gamefun
+import basic_game_functions as gamefun
 
 class TestSolution(unittest.TestCase):
 

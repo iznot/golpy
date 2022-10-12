@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-import basis_game.basic_game_functions as gamefun
+import basic_game_functions as gamefun
 import tkinter as tk
 
 class TestGUI(unittest.TestCase):
