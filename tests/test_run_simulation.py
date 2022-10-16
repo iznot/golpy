@@ -11,3 +11,5 @@ class TestSimulation(unittest.TestCase):
         gameboards = [gleiter, gleiter]
         res = sim.check_exit_criteria(gameboards)
         assert res == 'stable'
+
+    
