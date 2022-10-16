@@ -31,8 +31,8 @@ class GolpyGui():
             text = "next",
             width=15,
             height = 3,
-            bg="blue",
-            fg = "yellow",
+            bg="#668B8B",
+            fg = "#F0F0F0",
             command = self.nextCallBack
         )
 
@@ -40,8 +40,8 @@ class GolpyGui():
             text = "run",
             width=15,
             height = 3,
-            bg="blue",
-            fg = "yellow",
+            bg="#BC8F8F",
+            fg = "#F0F0F0",
             command = self.runCallBack
         )
 
