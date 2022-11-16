@@ -3,11 +3,11 @@ import basic_game_functions as gamefun
 #Spaceship
 def get_gleiter(size = 30):
     gameboard = gamefun.create_gameboard(rows = size, cols = size)
-    gameboard[4,1] = True
-    gameboard[4,2] = True
-    gameboard[4,3] = True
-    gameboard[3,3] = True
+    gameboard[2,0] = True
+    gameboard[2,1] = True
     gameboard[2,2] = True
+    gameboard[1,2] = True
+    gameboard[0,1] = True
     return gameboard
 
 def get_segler(size = 30):

@@ -2,6 +2,8 @@ from turtle import Turtle
 import unittest
 import numpy as np
 import basic_game_functions as gamefun
+import samples as samp
+import relative_position as rp
 
 class TestSolution(unittest.TestCase):
 
@@ -132,3 +134,20 @@ class TestSolution(unittest.TestCase):
         
         is_equal = gamefun.gameboard_equal(g0, g1)
         assert is_equal == False
+
+    def test_relative_position(self):
+        g0 = gamefun.create_gameboard(rows = 5, cols = 5)
+        g0[1,1] = True
+        g0[1,3] = True
+        g0[3,3] = True
+        g0a = gamefun.create_gameboard(rows = 3, cols = 3)
+        g0a[0,0] = True
+        g0a[0,2] = True
+        g0a[2,2] = True
+        
+        g1 = rp.cut_both_axis(g0)
+
+        is_equal = gamefun.gameboard_equal(g0a, g1)
+        assert is_equal == True
+
+
