@@ -94,7 +94,7 @@ def get_pulsator(size = 40):
     gameboard[x + 7, y + 1] = True
     return gameboard
 
-def get_Tümmler(size = 40):
+def get_Tuemmler(size = 40):
     gameboard = gamefun.create_gameboard(rows = size, cols = size)
     x = int(size / 2)
     y = int(size / 2)
@@ -147,6 +147,19 @@ def get_Eater(size = 10):
 
     return gameboard
 
+#explodierend
+def get_f_Pentomino(size = 50):
+    gameboard = gamefun.create_gameboard(rows = size, cols = size)
+    x = int(size/2)
+    y = int(size/2) 
+    gameboard[x, y + 1] = True
+    gameboard[x, y] = True
+    gameboard[x - 1, y] = True
+    gameboard[x - 2, y] = True
+    gameboard[x - 1, y - 1] = True
+    
+    return gameboard
+
 # TODO: viele weitere Beispiele einfügen!
 
 
@@ -155,7 +168,8 @@ sample_dict = {
                 'Segler' : get_segler(),
                 'Erased' : get_erased(),
                 'Pulsator' : get_pulsator(),
-                'Tümmler' : get_Tümmler(),
+                'Tümmler' : get_Tuemmler(),
                 'Loaf' : get_Loaf(),
                 'Eater' : get_Eater(),
+                'f-Pentomino' : get_f_Pentomino(),
                 'Random' : get_random()}

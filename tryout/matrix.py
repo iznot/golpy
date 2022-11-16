@@ -1,7 +1,7 @@
 from re import M
 import numpy as np
 
-import basis_game.basic_game_functions as bgf
+import basic_game_functions as bgf
 
 # die erste Zahl gibt die Anzahl Zeilen (y-Achse, rows), die zweite Zahl die Anzahl Spalten (x-Achse, cols)
 

@@ -14,6 +14,7 @@ def check_exit_criteria(gameboards):
     length = len(gameboards)
     last_gameboard = gameboards[length-1]
     previous_gameboard = gameboards[length-2]
+    previous_gameboards = gameboards[1:(length-2)]
     
 
     # check if extinct
@@ -28,21 +29,25 @@ def check_exit_criteria(gameboards):
         return "stable"
     
     # check if oscillator
-    if all_gameboards() == True:
-        return "oscilator"
+    osc_check, periodicity = check_exists(last_gameboard, previous_gameboards)
+    if osc_check:
+        return "oscilator", periodicity
 
     # check if spaceship
-    if compare_neighbours() == True:
+    if compare_neighbours(gameboards) == True:
         return "spaceship"
 
     # else
     return 'survival'
 
-def all_gameboards(gameboards):
+def check_exists(gameboard_to_check, gameboards):
     length = len(gameboards)
-    last_gameboard = gameboards[length-1]
-    for i in reversed(gameboards):
-        gameboard_equal(last_gameboard, i)
+    
+    for i in range(length-1, 0, -1):
+        gameboard_to_compare = gameboards[i]
+        res = gameboard_equal(gameboard_to_check, gameboard_to_compare)
+        if res: return True, length - i + 1
+    return False, -1
 
 def compare_neighbours(gameboards):
     length = len(gameboards)
