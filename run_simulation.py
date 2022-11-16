@@ -2,6 +2,7 @@ import numpy as np
 from basic_game_functions import gameboard_equal, play
 from itertools import product
 from basic_game_functions import get_neighbour_indices
+from relative_position import relative_position
 
 def run_simulation(gameboard, max_runs):
     gameboards = [gameboard]
@@ -34,7 +35,10 @@ def check_exit_criteria(gameboards):
         return "oscilator", periodicity
 
     # check if spaceship
-    if compare_neighbours(gameboards) == True:
+    lg = relative_position(last_gameboard)
+    pg = relative_position(previous_gameboards)
+    spaceship_check, periodicity = check_exists(lg, pg)
+    if spaceship_check:
         return "spaceship"
 
     # else
@@ -49,13 +53,7 @@ def check_exists(gameboard_to_check, gameboards):
         if res: return True, length - i + 1
     return False, -1
 
-def compare_neighbours(gameboards):
-    length = len(gameboards)
-    last_gameboard = gameboards[length-1]
-    last_neighbours = get_neighbour_indices(last_gameboard)
-    for i in reversed(gameboards):
-        other_neighbours = get_neighbour_indices(i)
-        set(last_neighbours) == set(other_neighbours)
+
 
 
 

@@ -26,8 +26,6 @@ def get_segler(size = 30):
     return gameboard
 
 
-
-
 #random
 def get_random(size = 30):
     gameboard = gamefun.create_gameboard(rows = size, cols = size)

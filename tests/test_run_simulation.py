@@ -43,3 +43,16 @@ class TestSimulation(unittest.TestCase):
 
         assert exit_criteria == 'oscilator'
         assert periodicity == 15
+
+    def test_gleiter_spaceship(self):
+        gameboard = samp.get_gleiter()
+        gameboards = [gameboard]
+        for i in range (7):
+            gameboard_new = gm.play(gameboard)
+            list.append(gameboards, gameboard_new)
+            gameboard = gameboard_new
+        
+        exit_criteria, periodicity = sim.check_exit_criteria(gameboards)
+
+        assert exit_criteria == 'spaceship'
+        assert periodicity == 4
