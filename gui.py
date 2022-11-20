@@ -6,13 +6,10 @@ import samples
 import tkinter as tk 
 
 
+
 class GolpyGui():
 
     
-    def font_size_chooser(e):
-        gameboard.config(
-            size = font_size_gameboard.get(font_size_gameboard.curselection()))
-
     def __init__(self, sample_key):
 
         self.window = tk.Tk()
