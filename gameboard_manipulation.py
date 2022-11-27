@@ -35,4 +35,24 @@ def cut(gb, axis = 0):
     else:
         gb_cut = gb[sums == 1,:]
 
-    return(gb_cut)
+    return gb_cut
+
+
+def expand_gameboard(gb):
+    rows = gb.shape[0]
+    cols = gb.shape[1]
+    if sum(gb[:, 0]) > 0:
+        #add first colum
+        gb = np.insert(gb, 0, 0, axis = 1)
+    
+    if sum(gb[0, :]) > 0:
+        #add first row
+        gb = np.insert(gb, 0, 0, axis = 0)
+    
+    if sum(gb[:, cols]) > 0 :
+        gb = np.insert(gb, cols + 1, 0, axis = 1)
+    
+    if sum(gb[rows, :]) > 0 :
+        gb = np.insert(gb, rows + 1, 0, axis = 0)
+    #TODO: add other axis
+    return gb

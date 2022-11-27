@@ -2,7 +2,9 @@ import numpy as np
 from basic_game_functions import gameboard_equal, play
 from itertools import product
 from basic_game_functions import get_neighbour_indices
-from relative_position import relative_position
+import gameboard_manipulation as gam
+
+
 
 def run_simulation(gameboard, max_runs):
     gameboards = [gameboard]
@@ -18,16 +20,16 @@ def check_exit_criteria(gameboards):
     previous_gameboards = gameboards[1:(length-2)]
     
 
-    # check if extinct
+    # check if extinct (all empty)
 
     if np.sum(last_gameboard) == 0:
-        return "extinct"
+        return "extinct", -1
 
 
     # check if equals
 
     if gameboard_equal(last_gameboard, previous_gameboard):
-        return "stable"
+        return "stable", -1
     
     # check if oscillator
     osc_check, periodicity = check_exists(last_gameboard, previous_gameboards)
@@ -35,14 +37,14 @@ def check_exit_criteria(gameboards):
         return "oscilator", periodicity
 
     # check if spaceship
-    lg = relative_position(last_gameboard)
-    pg = relative_position(previous_gameboards)
-    spaceship_check, periodicity = check_exists(lg, pg)
+    lg_cut = gam.cut_both_axis(last_gameboard)
+    pg_cut = [gam.cut_both_axis(gb) for gb in previous_gameboards]
+    spaceship_check, periodicity = check_exists(lg_cut, pg_cut)
     if spaceship_check:
-        return "spaceship"
+        return "spaceship", periodicity
 
     # else
-    return 'survival'
+    return 'survival', -1
 
 def check_exists(gameboard_to_check, gameboards):
     length = len(gameboards)

@@ -3,7 +3,8 @@ import unittest
 import numpy as np
 import basic_game_functions as gamefun
 import samples as samp
-import relative_position as rp
+import gameboard_manipulation as gam
+
 
 class TestSolution(unittest.TestCase):
 
@@ -135,7 +136,7 @@ class TestSolution(unittest.TestCase):
         is_equal = gamefun.gameboard_equal(g0, g1)
         assert is_equal == False
 
-    def test_relative_position(self):
+    def test_cut(self):
         g0 = gamefun.create_gameboard(rows = 5, cols = 5)
         g0[1,1] = True
         g0[1,3] = True
@@ -145,9 +146,19 @@ class TestSolution(unittest.TestCase):
         g0a[0,2] = True
         g0a[2,2] = True
         
-        g1 = rp.cut_both_axis(g0)
+        g1 = gam.cut_both_axis(g0)
 
         is_equal = gamefun.gameboard_equal(g0a, g1)
         assert is_equal == True
 
+    def test_expand(self):
+        g0 = gamefun.create_gameboard(rows = 3, cols = 3)
+        g0[0,0] = True
+        g0[0,2] = True
+        g0[2,2] = True
+        gamefun.print_gameboard(g0)
+        gb = gam.expand_gameboard(g0)
 
+        gamefun.print_gameboard(gb)
+
+        assert gb.shape == (5, 5)

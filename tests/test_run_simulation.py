@@ -10,7 +10,7 @@ class TestSimulation(unittest.TestCase):
     def test_check_exit_criteria_stable(self):
         gleiter = samp.get_gleiter()
         gameboards = [gleiter, gleiter]
-        res = sim.check_exit_criteria(gameboards)
+        res, p = sim.check_exit_criteria(gameboards)
         assert res == 'stable'
 
     
