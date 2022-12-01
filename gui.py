@@ -1,6 +1,7 @@
 from time import sleep
 
 import basic_game_functions as gamefun
+import gameboard_manipulation as gam
 import samples
 
 import tkinter as tk 
@@ -67,8 +68,10 @@ class GolpyGui():
 
 
     def nextCallBack(self):
-        
+        #TODO: add option to expand
+        #self.gameboard = gam.expand_gameboard_if_necessary(self.gameboard)
         self.gameboard = gamefun.play(self.gameboard)
+        
         self.gameboard_label["text"] = gamefun.get_gameboard_text_compact(self.gameboard)
         self.gameboard_label.pack()
         

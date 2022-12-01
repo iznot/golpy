@@ -56,3 +56,10 @@ class TestSimulation(unittest.TestCase):
 
         assert exit_criteria == 'spaceship'
         assert periodicity == 4
+
+    def test_run_simulation(self):
+        gameboard = samp.get_gleiter()
+        gameboards, exit_criteria, periodicity = sim.run_simulation(gameboard, 10)
+        assert len(gameboards) == 4
+        assert exit_criteria == 'spaceship'
+        assert periodicity == 4

@@ -157,8 +157,10 @@ class TestSolution(unittest.TestCase):
         g0[0,2] = True
         g0[2,2] = True
         gamefun.print_gameboard(g0)
-        gb = gam.expand_gameboard(g0)
+        gb = gam.expand_gameboard_if_necessary(g0)
 
         gamefun.print_gameboard(gb)
 
         assert gb.shape == (5, 5)
+    
+    

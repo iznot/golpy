@@ -11,7 +11,9 @@ def run_simulation(gameboard, max_runs):
     for i in range(1, max_runs):
         gameboard = play(gameboard)
         gameboards = gameboards.append(gameboard)
-
+        exit_criteria, periodicity = check_exit_criteria(gameboards)
+        if exit_criteria != 'survival':
+            return gameboards, exit_criteria, periodicity
 
 def check_exit_criteria(gameboards):
     length = len(gameboards)
