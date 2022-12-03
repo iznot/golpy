@@ -79,3 +79,12 @@ class TestSimulation(unittest.TestCase):
         assert width == '3'
         assert leading_zeros == '0'
         assert gameboard_number == '321'
+
+    def test_convert_to_string_2(self):
+        g0 = gm.create_gameboard(rows = 5, cols = 5)
+        g0[1,1] = True
+        g0[1,3] = True
+        g0[3,3] = True
+        res = sim.convert_to_string(g0)
+        assert res == '5,6,327744'
+        
