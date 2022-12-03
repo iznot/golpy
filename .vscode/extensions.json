@@ -3,7 +3,8 @@
     "ms-python.python",
     "njpwerner.autodocstring",
     "ms-vscode.powershell",
-    "Gruntfuggly.todo-tree"
+    "Gruntfuggly.todo-tree",
+    "johnpapa.vscode-peacock"
 ]
 
 }
