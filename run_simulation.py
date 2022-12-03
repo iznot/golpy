@@ -65,4 +65,15 @@ def check_exists(gameboard_to_check, gameboards):
 
 
 def convert_to_string(gameboard):
-    pass
+    gb_list = gameboard.tolist()
+    gb_int = 0
+    for x in gameboard:
+        gb_int += x
+
+    width = str(len(gameboard[0]))
+    leading_zeros= str(gb_list.index(next(filter(lambda i: i != 0, gb_list))))
+    gameboard_number_int = int(gb_int, 2)
+    gameboard_number = str(gameboard_number_int)
+
+    res = width + ',' + leading_zeros + ',' + gameboard_number
+    return res

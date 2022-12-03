@@ -72,9 +72,9 @@ class TestSimulation(unittest.TestCase):
         res = sim.convert_to_string(g0)
         res_list = res.split(',')
         width = res_list[0]
-        first_zeros = res_list[1]
+        leading_zeros = res_list[1]
         gameboard_number = res_list[2]
         assert type(res) is str
         assert width == '3'
-        assert first_zeros == '0'
+        assert leading_zeros == '0'
         assert gameboard_number == '321'
