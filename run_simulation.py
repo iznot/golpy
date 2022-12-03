@@ -71,17 +71,18 @@ def convert_to_string(gameboard):
 
     gb_bits = gb_array.astype(int)
 
-    gb_int = bits_to_int(gb_bits)
+    # gb_int = bits_to_int(gb_bits)
+
+    gb_str = ''.join(map(str, gb_bits))
+    gb_int = int(gb_str, 2)
+    gb_hex = hex(gb_int)
 
     width = len(gameboard[0])
     leading_zeroes= get_leading_zeroes(gb_bits)
 
-    res = f'{width},{leading_zeroes},{gb_int}'
+    res = f'{width},{leading_zeroes},{gb_hex}'
     return res
 
-def bits_to_int(bits):
-    res = bits.dot(2**np.arange(bits.size)[::-1])
-    return res
 
 def get_leading_zeroes(bits):
     i = np.argmax(bits!=0)
