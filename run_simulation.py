@@ -88,3 +88,25 @@ def get_leading_zeroes(bits):
     i = np.argmax(bits!=0)
     if i==0 and np.all(bits==0): i=len(bits)
     return i
+
+def convert_to_gameboard(gameboard_str):
+    res_list = gameboard_str.split(',')
+    width = int(res_list[0])
+    leading_zeroes = int(res_list[1])
+    gb_hex = res_list[2]
+
+    gb_int = int(gb_hex, 16)
+    gb_bits_without_zeroes = list(map(int, str(gb_int)))
+    gb_bits = add_zeroes(gb_bits_without_zeroes, leading_zeroes)
+
+    gb_array = gb_bits.astype(bool)
+
+    gameboard = np.reshape(gb_array, (width)).T
+
+    return gameboard
+
+
+def add_zeroes(z_list,x):
+    for i in range(0,x):
+       res = z_list.insert(0, 0)
+    return res

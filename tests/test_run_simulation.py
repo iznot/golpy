@@ -70,7 +70,7 @@ class TestSimulation(unittest.TestCase):
         g0[0,2] = True
         g0[2,2] = True
         res = sim.convert_to_string(g0)
-        assert res == '3,0,321'
+        assert res == '3,0,0x141'
         res_list = res.split(',')
         width = res_list[0]
         leading_zeros = res_list[1]
@@ -78,7 +78,7 @@ class TestSimulation(unittest.TestCase):
         assert type(res) is str
         assert width == '3'
         assert leading_zeros == '0'
-        assert gameboard_number == '321'
+        assert gameboard_number == '0x141'
 
     def test_convert_to_string_2(self):
         g0 = gm.create_gameboard(rows = 12, cols = 12)
@@ -86,5 +86,11 @@ class TestSimulation(unittest.TestCase):
         g0[1,3] = True
         g0[3,3] = True
         res = sim.convert_to_string(g0)
-        assert res == '5,6,327744'
+        assert res == '12,13,0x500000100000000000000000000000000'
+    
+    def test_convert_to_gameboard(self):
+        res = sim.convert_to_gameboard('12,13,0x500000100000000000000000000000000')
+        columns = len(res)
+        assert columns == 12
+        
         
