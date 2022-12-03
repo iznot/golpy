@@ -1,7 +1,7 @@
 from turtle import Turtle
 import unittest
 import numpy as np
-import basic_game_functions as gamefun
+import basic_game_functions as gm
 import samples as samp
 import gameboard_manipulation as gam
 
@@ -11,7 +11,7 @@ class TestSolution(unittest.TestCase):
 #get_neighbour_indices
 
     def test_get_neighbour_indices(self):
-        res = gamefun.get_neighbour_indices(row = 4, col = 5, rows = 9, cols = 9)
+        res = gm.get_neighbour_indices(row = 4, col = 5, rows = 9, cols = 9)
         assert len(res) == 4
         #toprow
         assert res[0] == 3
@@ -24,7 +24,7 @@ class TestSolution(unittest.TestCase):
 
 
     def test_get_neighbour_indices_corner_cases_top_left(self):
-        res = gamefun.get_neighbour_indices(0, 0, 9, 6)
+        res = gm.get_neighbour_indices(0, 0, 9, 6)
         assert len(res) == 4
         #toprow
         assert res[0] == 8
@@ -36,7 +36,7 @@ class TestSolution(unittest.TestCase):
         assert res[3] == 1
 
     def test_get_neighbour_indices_corner_cases_bottom_right(self):
-        res = gamefun.get_neighbour_indices(8, 5, 9, 6)
+        res = gm.get_neighbour_indices(8, 5, 9, 6)
         assert len(res) == 4
         #toprow
         assert res[0] == 7
@@ -52,14 +52,14 @@ class TestSolution(unittest.TestCase):
 
     def test_create_gameboard(self):
         
-        gameboard = gamefun.create_gameboard(rows = 9, cols = 10)
+        gameboard = gm.create_gameboard(rows = 9, cols = 10)
         
         assert gameboard.size == 90
         assert gameboard.shape == (9, 10)
 
 
     def test_demo_print_gameboard(self):
-        gameboard = gamefun.create_gameboard(rows = 9, cols = 10)
+        gameboard = gm.create_gameboard(rows = 9, cols = 10)
         gameboard[3,4] = True
         gameboard[5,4] = True
         gameboard[4,4] = True
@@ -68,27 +68,27 @@ class TestSolution(unittest.TestCase):
 
     
     def test_demo_gameplay(self):
-        g0 = gamefun.create_gameboard(rows = 9, cols = 10)
+        g0 = gm.create_gameboard(rows = 9, cols = 10)
         g0[3,4] = True
         g0[4,4] = True
         g0[5,4] = True
 
         assert g0.sum() == 3
 
-        g1 = gamefun.play(g0)
+        g1 = gm.play(g0)
 
         assert g1.sum() == 3
         assert g1[4,3] == True
         assert g1[4,4] == True
         assert g1[4,5] == True
 
-        g2 = gamefun.play(g1)
+        g2 = gm.play(g1)
         
         assert g2.sum() == 3
     
 
     def test_why_space(self):
-        g0 = gamefun.create_gameboard(rows = 7, cols = 5)
+        g0 = gm.create_gameboard(rows = 7, cols = 5)
         g0[1,2] = True
         g0[3,1] = True
 
@@ -96,7 +96,7 @@ class TestSolution(unittest.TestCase):
     # immer bei Hälfte(runtergerundet) einen Space
 
     def test_gameplay_corner(self):
-        g0 = gamefun.create_gameboard(rows = 8, cols = 7)
+        g0 = gm.create_gameboard(rows = 8, cols = 7)
         g0[7,6] = True
         g0[7,5] = True
         g0[7,0] = True
@@ -105,7 +105,7 @@ class TestSolution(unittest.TestCase):
 
         assert g0.sum() == 5  
 
-        g1 = gamefun.play(g0)
+        g1 = gm.play(g0)
 
         assert g1.sum() == 6
         assert g1[7,0] == True
@@ -117,49 +117,49 @@ class TestSolution(unittest.TestCase):
 
 
     def test_equal(self):
-        g0 = gamefun.create_gameboard(rows = 8, cols = 7)
+        g0 = gm.create_gameboard(rows = 8, cols = 7)
         g0[7,6] = True
         g0[7,5] = True
         g0[7,0] = True
 
-        is_equal = gamefun.gameboard_equal(g0, g0)
+        is_equal = gm.gameboard_equal(g0, g0)
         assert is_equal == True
     
     def test_not_equal(self):
-        g0 = gamefun.create_gameboard(rows = 8, cols = 7)
+        g0 = gm.create_gameboard(rows = 8, cols = 7)
         g0[7,6] = True
         g0[7,5] = True
         g0[7,0] = True
 
-        g1 = gamefun.play(g0)
+        g1 = gm.play(g0)
         
-        is_equal = gamefun.gameboard_equal(g0, g1)
+        is_equal = gm.gameboard_equal(g0, g1)
         assert is_equal == False
 
     def test_cut(self):
-        g0 = gamefun.create_gameboard(rows = 5, cols = 5)
+        g0 = gm.create_gameboard(rows = 5, cols = 5)
         g0[1,1] = True
         g0[1,3] = True
         g0[3,3] = True
-        g0a = gamefun.create_gameboard(rows = 3, cols = 3)
+        g0a = gm.create_gameboard(rows = 3, cols = 3)
         g0a[0,0] = True
         g0a[0,2] = True
         g0a[2,2] = True
         
         g1 = gam.cut_both_axis(g0)
 
-        is_equal = gamefun.gameboard_equal(g0a, g1)
+        is_equal = gm.gameboard_equal(g0a, g1)
         assert is_equal == True
 
     def test_expand(self):
-        g0 = gamefun.create_gameboard(rows = 3, cols = 3)
+        g0 = gm.create_gameboard(rows = 3, cols = 3)
         g0[0,0] = True
         g0[0,2] = True
         g0[2,2] = True
-        gamefun.print_gameboard(g0)
+        gm.print_gameboard(g0)
         gb = gam.expand_gameboard_if_necessary(g0)
 
-        gamefun.print_gameboard(gb)
+        gm.print_gameboard(gb)
 
         assert gb.shape == (5, 5)
     

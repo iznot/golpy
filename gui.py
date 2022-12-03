@@ -1,6 +1,6 @@
 from time import sleep
 
-import basic_game_functions as gamefun
+import basic_game_functions as gm
 import gameboard_manipulation as gam
 import samples
 
@@ -61,7 +61,7 @@ class GolpyGui():
     def set_gameboard(self, sample_key):
         self.gameboard = samples.sample_dict[sample_key]
         self.gameboard_label.configure(
-                            text = gamefun.get_gameboard_text_compact(self.gameboard),
+                            text = gm.get_gameboard_text_compact(self.gameboard),
                             font=("Webdings", 12))
         
         self.gameboard_label.pack()
@@ -70,9 +70,9 @@ class GolpyGui():
     def nextCallBack(self):
         #TODO: add option to expand
         #self.gameboard = gam.expand_gameboard_if_necessary(self.gameboard)
-        self.gameboard = gamefun.play(self.gameboard)
+        self.gameboard = gm.play(self.gameboard)
         
-        self.gameboard_label["text"] = gamefun.get_gameboard_text_compact(self.gameboard)
+        self.gameboard_label["text"] = gm.get_gameboard_text_compact(self.gameboard)
         self.gameboard_label.pack()
         
     def runCallBack(self):

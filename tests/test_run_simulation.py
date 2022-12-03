@@ -63,3 +63,18 @@ class TestSimulation(unittest.TestCase):
         assert len(gameboards) >= periodicity
         assert exit_criteria == 'spaceship'
         assert periodicity == 4
+    
+    def test_convert_to_string(self):
+        g0 = gm.create_gameboard(rows = 3, cols = 3)
+        g0[0,0] = True
+        g0[0,2] = True
+        g0[2,2] = True
+        res = sim.convert_to_string(g0)
+        res_list = res.split(',')
+        width = res_list[0]
+        first_zeros = res_list[1]
+        gameboard_number = res_list[2]
+        assert type(res) is str
+        assert width == '3'
+        assert first_zeros == '0'
+        assert gameboard_number == '321'

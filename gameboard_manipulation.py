@@ -1,6 +1,6 @@
 
 import numpy as np
-import basic_game_functions as gamefun
+import basic_game_functions as gm
 
 
 
@@ -54,5 +54,4 @@ def expand_gameboard_if_necessary(gb):
     
     if sum(gb[gb.shape[0]-1, :]) > 0 :
         gb = np.insert(gb, gb.shape[0], 0, axis = 0)
-    #TODO: add other axis
     return gb

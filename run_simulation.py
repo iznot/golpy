@@ -64,3 +64,5 @@ def check_exists(gameboard_to_check, gameboards):
     #counter = sum(1 if x==y else -1 for x, y in product (last_gameboard, i))
 
 
+def convert_to_string(gameboard):
+    pass
