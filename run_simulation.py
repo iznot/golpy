@@ -4,7 +4,8 @@ from itertools import product
 from basic_game_functions import get_neighbour_indices
 import gameboard_manipulation as gam
 import basic_game_functions as gm
-
+import base64
+import struct
 
 
 def run_simulation(gameboard, max_runs):
@@ -76,6 +77,8 @@ def convert_to_string(gameboard):
     gb_str = ''.join(map(str, gb_bits))
     gb_int = int(gb_str, 2)
     gb_hex = hex(gb_int)
+    # IDEA: base64 would be even more efficient than hex.
+    # gb_64 = base64.b64encode(gb_bits)
 
     width = len(gameboard[0])
     leading_zeroes= get_leading_zeroes(gb_bits)
