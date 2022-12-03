@@ -70,6 +70,7 @@ class TestSimulation(unittest.TestCase):
         g0[0,2] = True
         g0[2,2] = True
         res = sim.convert_to_string(g0)
+        assert res == '3,0,321'
         res_list = res.split(',')
         width = res_list[0]
         leading_zeros = res_list[1]

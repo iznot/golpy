@@ -3,6 +3,7 @@ from basic_game_functions import gameboard_equal, play
 from itertools import product
 from basic_game_functions import get_neighbour_indices
 import gameboard_manipulation as gam
+import basic_game_functions as gm
 
 
 
@@ -65,15 +66,24 @@ def check_exists(gameboard_to_check, gameboards):
 
 
 def convert_to_string(gameboard):
-    gb_list = gameboard.tolist()
-    gb_int = 0
-    for x in gameboard:
-        gb_int += x
+    
+    gb_array = gameboard.ravel()
 
-    width = str(len(gameboard[0]))
-    leading_zeros= str(gb_list.index(next(filter(lambda i: i != 0, gb_list))))
-    gameboard_number_int = int(gb_int, 2)
-    gameboard_number = str(gameboard_number_int)
+    gb_bits = gb_array.astype(int)
 
-    res = width + ',' + leading_zeros + ',' + gameboard_number
+    gb_int = bits_to_int(gb_bits)
+
+    width = len(gameboard[0])
+    leading_zeroes= get_leading_zeroes(gb_bits)
+
+    res = f'{width},{leading_zeroes},{gb_int}'
     return res
+
+def bits_to_int(bits):
+    res = bits.dot(2**np.arange(bits.size)[::-1])
+    return res
+
+def get_leading_zeroes(bits):
+    i = np.argmax(bits!=0)
+    if i==0 and np.all(bits==0): i=len(bits)
+    return i

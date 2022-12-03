@@ -3,7 +3,7 @@ import os
 
 
 def create_gameboard(rows: int, cols: int) -> np.array:
-    gameboard = np.full((rows,cols), False)
+    gameboard = np.full((rows,cols), False)    
     return gameboard
 
 
