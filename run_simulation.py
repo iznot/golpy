@@ -93,15 +93,14 @@ def convert_to_gameboard(gameboard_str):
     res_list = gameboard_str.split(',')
     width = int(res_list[0])
     leading_zeroes = int(res_list[1])
-    gb_hex = res_list[2]
+    gb_hex_str = res_list[2]
 
-    gb_int = int(gb_hex, 16)
-    gb_bits_without_zeroes = list(map(int, str(gb_int)))
-    gb_bits = add_zeroes(gb_bits_without_zeroes, leading_zeroes)
-
-    gb_array = gb_bits.astype(bool)
-
-    gameboard = np.reshape(gb_array, (width)).T
+    gb_int = int(gb_hex_str, 16)
+    gb_bin = bin(gb_int)[2:]
+    gb_bin = gb_bin.zfill(len(gb_bin) + leading_zeroes)
+    gb_array = np.fromstring(gb_bin,'u1') - ord('0')
+    gb_array = np.reshape(gb_array, (-1, width))
+    gameboard = gb_array.astype(bool)
 
     return gameboard
 

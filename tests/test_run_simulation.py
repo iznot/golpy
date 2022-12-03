@@ -89,8 +89,11 @@ class TestSimulation(unittest.TestCase):
         assert res == '12,13,0x500000100000000000000000000000000'
     
     def test_convert_to_gameboard(self):
-        res = sim.convert_to_gameboard('12,13,0x500000100000000000000000000000000')
-        columns = len(res)
+        gb_str = '12,13,0x530ebd1009000a0000000000000000000'
+        gb = sim.convert_to_gameboard(gb_str)
+        columns = len(gb)
         assert columns == 12
-        
+        assert gb.sum() == 18
+        gb_str_2 = sim.convert_to_string(gb)
+        assert gb_str_2 == gb_str
         
