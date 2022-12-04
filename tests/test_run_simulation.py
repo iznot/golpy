@@ -106,3 +106,6 @@ class TestSimulation(unittest.TestCase):
         gb = sim.convert_to_gameboard(res)
         assert gm.gameboard_equal(gb, g0)
     
+    def test_generate_simulation(self):
+        res = sim.generate_simulation(2,2,30)
+     

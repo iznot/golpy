@@ -1,0 +1,16 @@
+start_gameboard,end_gameboard,exit_criteria,periodicity,rows,cols,max_height,max_width
+"2,4,0x0","2,4,0x0",extinct,0,2,2,2,2
+"2,3,0x1","3,9,0x0",extinct,0,2,2,3,3
+"2,2,0x2","3,9,0x0",extinct,0,2,2,3,3
+"2,2,0x3","4,12,0x0",extinct,0,2,2,3,4
+"2,1,0x4","3,9,0x0",extinct,0,2,2,3,3
+"2,1,0x5","3,12,0x0",extinct,0,2,2,4,3
+"2,1,0x6","4,16,0x0",extinct,0,2,2,4,4
+"2,1,0x7","4,5,0x660",stable,0,2,2,4,4
+"2,0,0x8","3,9,0x0",extinct,0,2,2,3,3
+"2,0,0x9","4,16,0x0",extinct,0,2,2,4,4
+"2,0,0xa","3,12,0x0",extinct,0,2,2,4,3
+"2,0,0xb","4,5,0x660",stable,0,2,2,4,4
+"2,0,0xc","4,12,0x0",extinct,0,2,2,3,4
+"2,0,0xd","4,5,0x660",stable,0,2,2,4,4
+"2,0,0xe","4,5,0x660",stable,0,2,2,4,4

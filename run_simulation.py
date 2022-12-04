@@ -4,13 +4,14 @@ from itertools import product
 from basic_game_functions import get_neighbour_indices
 import gameboard_manipulation as gam
 import basic_game_functions as gm
-import base64
-import struct
+import csv
+
 
 
 def run_simulation(gameboard, max_runs):
     gameboards = [gameboard]
     for i in range(1, max_runs):
+        gameboard = gam.expand_gameboard_if_necessary(gameboard)
         gameboard = play(gameboard)
         gameboards.append(gameboard)
         exit_criteria, periodicity = check_exit_criteria(gameboards)
@@ -27,13 +28,13 @@ def check_exit_criteria(gameboards):
     # check if extinct (all empty)
 
     if np.sum(last_gameboard) == 0:
-        return "extinct", -1
+        return "extinct", 0
 
 
     # check if equals
 
     if gameboard_equal(last_gameboard, previous_gameboard):
-        return "stable", -1
+        return "stable", 0
     
     # check if oscillator
     osc_check, periodicity = check_exists(last_gameboard, previous_gameboards)
@@ -48,7 +49,7 @@ def check_exit_criteria(gameboards):
         return "spaceship", periodicity
 
     # else
-    return 'survival', -1
+    return 'survival', 0
 
 def check_exists(gameboard_to_check, gameboards):
     length = len(gameboards)
@@ -101,14 +102,45 @@ def convert_to_gameboard(gameboard_str):
     gb_int = int(gb_hex_str, 16)
     gb_bin = bin(gb_int)[2:]
     gb_bin = gb_bin.zfill(len(gb_bin) + leading_zeroes)
-    gb_array = np.fromstring(gb_bin,'u1') - ord('0')
-    gb_array = np.reshape(gb_array, (-1, width))
-    gameboard = gb_array.astype(bool)
+    gb_array_1D = np.fromstring(gb_bin,'u1') - ord('0')
+    gb_array_2D = np.reshape(gb_array_1D, (-1, width))
+    gameboard = gb_array_2D.astype(bool)
 
     return gameboard
 
 
-def add_zeroes(z_list,x):
-    for i in range(0,x):
-       res = z_list.insert(0, 0)
-    return res
+#generate csv file
+
+
+def generate_simulation(rows,cols,max_runs):
+    cells = rows * cols
+    max_value = (2**cells)-1
+
+    results_header = ['start_gameboard', 'end_gameboard', 'exit_criteria', 'periodicity', 'rows', 'cols', 'max_height', 'max_width']
+
+    with open('simulation_results.csv', 'w',  newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(results_header)
+
+        for gameboard_int in range(max_value):
+
+            gb_bin = bin(gameboard_int)[2:]
+            gb_bin = gb_bin.zfill(cells)
+            gb_array_1D = np.fromstring(gb_bin,'u1') - ord('0')
+            gb_array_2D = np.reshape(gb_array_1D, (rows, cols))
+            gameboard = gb_array_2D.astype(bool)
+
+            gameboards, exit_criteria, periodicity = run_simulation(gameboard, max_runs)
+
+            start_gameboard = convert_to_string(gameboard)
+            end_gameboard = convert_to_string(gameboards[len(gameboards)-1])
+
+            max_height= np.shape(gameboards[len(gameboards)-1])[0]
+            max_width = np.shape(gameboards[len(gameboards)-1])[1]
+    
+            new_row = [start_gameboard, end_gameboard, exit_criteria, periodicity, rows, cols, max_height, max_width]
+
+            writer.writerow(new_row)
+        
+
+
