@@ -14,20 +14,33 @@ class GolpyGui():
     def __init__(self, sample_key):
 
         self.window = tk.Tk()
+        
         self.gameboard_label = tk.Label(text = '')
 
         self.set_gameboard(sample_key)    
+
+        # Text Frame
+        self.text_frame = tk.Frame(self.window)
+
+        # Text field to paste
+        self.text_field = tk.Text(self.text_frame, height = 4, width = 50)
+        
 
         # Dropdown
         options = list(samples.sample_dict.keys())
         sample = tk.StringVar(self.window)
         sample.set(sample_key)
-        self.sample_selector = tk.OptionMenu(self.window, sample, command = self.selectSample, *options)
-        
+        self.sample_selector = tk.OptionMenu(self.text_frame, sample, command = self.selectSample, *options)
 
-        self.sample_selector.pack()
+        self.text_field.grid(columnspan=3, row = 0, column = 1, padx='5', pady='5')
+        self.sample_selector.grid(row = 0, column = 4, padx='5', pady='5')
+        self.text_frame.pack()
+
+        # Button Frame
+        self.button_frame = tk.Frame(self.window)
 
         nxt_button = tk.Button(
+            self.button_frame,
             text = "next",
             width=15,
             height = 3,
@@ -37,6 +50,7 @@ class GolpyGui():
         )
 
         self.run_button = tk.Button(
+            self.button_frame,
             text = "run",
             width=15,
             height = 3,
@@ -47,12 +61,12 @@ class GolpyGui():
 
         self.running = False
     
-        self.speed = tk.Scale(from_= 1, to = 10, orient = tk.HORIZONTAL)
+        self.speed = tk.Scale(self.button_frame, from_= 1, to = 10, orient = tk.HORIZONTAL)
 
-        nxt_button.pack()
-        self.run_button.pack()
-        self.speed.pack()
-    
+        nxt_button.grid(row=0, column = 0, padx='5', pady='5')
+        self.run_button.grid(row = 0, column = 1, padx='5', pady='5')
+        self.speed.grid(row = 0, column =2, padx='5', pady='5')
+        self.button_frame.pack()
 
 
         tk.mainloop()
