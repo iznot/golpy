@@ -108,12 +108,16 @@ class GolpyGui():
         max_dim = max(gameboard.shape)
         if max_dim < 50:
             return 12
-        font_size = 14 - max_dim // 20
+        font_size = 14 - max_dim // 15
         return font_size
 
     def nextCallBack(self):
         
-        self.gameboard = gm.play(self.gameboard)
+        gb = gm.play(self.gameboard)
+        if gm.gameboard_equal(gb, self.gameboard):
+            self.running = False
+        
+        self.gameboard = gb
         if self.expand.get() == 1:
             self.gameboard = gam.expand_gameboard_if_necessary(self.gameboard)
         gb_str = sim.convert_to_string(self.gameboard)        

@@ -5,7 +5,7 @@ from basic_game_functions import get_neighbour_indices
 import gameboard_manipulation as gam
 import basic_game_functions as gm
 import csv
-import logging
+import datetime as dt
 
 
 
@@ -17,7 +17,8 @@ def run_simulation(gameboard, max_runs):
         gameboards.append(gameboard)
         exit_criteria, periodicity = check_exit_criteria(gameboards)
         if exit_criteria != 'survival':
-            return gameboards, exit_criteria, periodicity
+            return gameboards, exit_criteria, periodicity, i
+    return gameboards, 'survival', 0, i
 
 def check_exit_criteria(gameboards):
     length = len(gameboards)
@@ -117,13 +118,20 @@ def generate_simulation(rows,cols,max_runs):
     cells = rows * cols
     max_value = (2**cells)-1
 
-    results_header = ['start_gameboard', 'end_gameboard', 'exit_criteria', 'periodicity', 'rows', 'cols', 'max_height', 'max_width']
+    results_header = ['start_gameboard', 'end_gameboard', 'exit_criteria', 'periodicity', 'rows', 'cols', 'max_height', 'max_width', 'runs']
 
-    with open('simulation_results.csv', 'w',  newline='') as file:
+    with open(f'simulation_results_{rows}_{cols}.csv', 'w',  newline='') as file:
         writer = csv.writer(file)
         writer.writerow(results_header)
 
         gameboard_sim_start_history = []
+
+        simulation_count = 0
+
+
+        max_max_runs = max_p = max_max_height = max_max_width = 0
+
+        start = dt.datetime.now()
 
         for gameboard_int in range(max_value):
 
@@ -133,41 +141,51 @@ def generate_simulation(rows,cols,max_runs):
             gb_array_2D = np.reshape(gb_array_1D, (rows, cols))
             gameboard = gb_array_2D.astype(bool)
             
-                    
+            if gameboard_int > 0 and  gameboard_int % 1000 == 0:
+                dt_diff = dt.datetime.now() - start
+                prog = gameboard_int/max_value
+                expected_end = dt.datetime.now() + dt_diff * (1.0 - prog) / prog
+                print(f'{simulation_count} simulations for {gameboard_int}/{max_value} gameboards. Max p/h/w/r: {max_p}/{max_max_width}/{max_max_height}/{max_max_runs} Progress: {int(100*prog)}%. Expected end: {expected_end}')
 
             # check if current gb is in history
-                # NOTE: debug only
-           # already_simulated = check_similar_exists(gameboard_sim_start_history, gameboard)
+            # NOTE: debug only
+            already_simulated = check_similar_exists(gameboard_sim_start_history, gameboard)
 
-            #if already_simulated:
-             #  continue              
+            if already_simulated:
+              continue              
 
-
-            gameboards, exit_criteria, periodicity = run_simulation(gameboard, max_runs)
+            gameboards, exit_criteria, periodicity, runs = run_simulation(gameboard, max_runs)
+           
 
             start_gameboard = convert_to_string(gameboard)
             end_gameboard = convert_to_string(gameboards[len(gameboards)-1])
 
             max_height= np.shape(gameboards[len(gameboards)-1])[0]
             max_width = np.shape(gameboards[len(gameboards)-1])[1]
-    
-            new_row = [start_gameboard, end_gameboard, exit_criteria, periodicity, rows, cols, max_height, max_width]
+
+            max_max_runs = max(max_max_runs, runs)
+            max_p = max(max_p, periodicity)
+            max_max_height = max(max_max_height, max_height)
+            max_max_width = max(max_max_width, max_width)
+
+            new_row = [start_gameboard, end_gameboard, exit_criteria, periodicity, rows, cols, max_height, max_width, runs]
 
             writer.writerow(new_row)
 
-            if gameboard_int % 100 == 0:
-                print(f'{gameboard_int}/{max_value} {100*gameboard_int//max_value}%')
+            simulation_count += 1
 
 def check_similar_exists(gameboard_sim_start_history, gameboard):
-    existence = False
+    exists = False
     cut_gb = gam.cut_both_axis(gameboard)
     for past_gameboard in gameboard_sim_start_history:
-        existence = gameboard_equal(cut_gb,past_gameboard)
-        if existence:
+        exists = gameboard_equal(cut_gb,past_gameboard)
+        if exists:
             break
     
-    gameboard_sim_start_history.append(cut_gb)
-    return existence
+    if not exists:
+        gameboard_sim_start_history.append(cut_gb)
+    
+    return exists
 
         
     
