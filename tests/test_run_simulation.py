@@ -107,5 +107,5 @@ class TestSimulation(unittest.TestCase):
         assert gm.gameboard_equal(gb, g0)
     
     def test_generate_simulation(self):
-        res = sim.generate_simulation(2,2,30)
+        res = sim.generate_simulation(4,4,100)
      

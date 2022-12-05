@@ -5,6 +5,7 @@ from basic_game_functions import get_neighbour_indices
 import gameboard_manipulation as gam
 import basic_game_functions as gm
 import csv
+import logging
 
 
 
@@ -122,6 +123,8 @@ def generate_simulation(rows,cols,max_runs):
         writer = csv.writer(file)
         writer.writerow(results_header)
 
+        gameboard_sim_start_history = []
+
         for gameboard_int in range(max_value):
 
             gb_bin = bin(gameboard_int)[2:]
@@ -129,6 +132,16 @@ def generate_simulation(rows,cols,max_runs):
             gb_array_1D = np.fromstring(gb_bin,'u1') - ord('0')
             gb_array_2D = np.reshape(gb_array_1D, (rows, cols))
             gameboard = gb_array_2D.astype(bool)
+            
+                    
+
+            # check if current gb is in history
+                # NOTE: debug only
+           # already_simulated = check_similar_exists(gameboard_sim_start_history, gameboard)
+
+            #if already_simulated:
+             #  continue              
+
 
             gameboards, exit_criteria, periodicity = run_simulation(gameboard, max_runs)
 
@@ -141,6 +154,20 @@ def generate_simulation(rows,cols,max_runs):
             new_row = [start_gameboard, end_gameboard, exit_criteria, periodicity, rows, cols, max_height, max_width]
 
             writer.writerow(new_row)
+
+            if gameboard_int % 100 == 0:
+                print(f'{gameboard_int}/{max_value} {100*gameboard_int//max_value}%')
+
+def check_similar_exists(gameboard_sim_start_history, gameboard):
+    existence = False
+    cut_gb = gam.cut_both_axis(gameboard)
+    for past_gameboard in gameboard_sim_start_history:
+        existence = gameboard_equal(cut_gb,past_gameboard)
+        if existence:
+            break
+    
+    gameboard_sim_start_history.append(cut_gb)
+    return existence
+
         
-
-
+    
