@@ -17,7 +17,7 @@ class GolpyGui():
         self.window = tk.Tk()
         self.window.title("golpy - Game of Life Python - Anaïs Glur")
         
-        self.gameboard_label = tk.Label(text = '')
+        
 
         #self.set_gameboard(sample_key)    
 
@@ -89,22 +89,39 @@ class GolpyGui():
         self.expand_checkbox.grid(row = 0, column = 3, padx='5', pady='5')
         self.button_frame.pack()
 
+        self.gameboard_label = tk.Text(self.window, height = 4, width = 50, font="Webdings" )
 
         tk.mainloop()
     
     
     def set_gameboard(self):
         gb_txt = self.text_field.get(1.0, tk.END)
+        
+        self.gameboard_label.pack_forget()
+
         self.gameboard = sim.convert_to_gameboard(gb_txt)
-        
         font_size = self.get_font_size(self.gameboard)
-        self.gameboard_label.configure(
-                            text = gm.get_gameboard_text_compact(self.gameboard),
-                            font=("Webdings", font_size))
+        self.gameboard_label = tk.Text(self.window, height = self.gameboard.shape[0], width = self.gameboard.shape[1], font = ("Webdings", self.get_font_size(self.gameboard)) )
         
+        #self.gameboard_label.configure(
+        #                    text = gm.get_gameboard_text_compact(self.gameboard),
+        #                    font=("Webdings", font_size))
+        
+        self.gameboard_label.delete(1.0, tk.END)
+        self.gameboard_label.insert(tk.END, gm.get_gameboard_text_compact(self.gameboard))
+
+
+        self.gameboard_label.config(spacing1=-1)    # Spacing above the first line in a block of text
+        self.gameboard_label.config(spacing2=-1)    # Spacing between the lines in a block of text
+        self.gameboard_label.config(spacing3=-1)    # Spacing after the lines of text
+
+
+
+        self.gameboard_label.pack_propagate(0)
         self.gameboard_label.pack()
 
     def get_font_size(self, gameboard):
+        return 8
         max_dim = max(gameboard.shape)
         if max_dim < 50:
             return 12
@@ -116,6 +133,7 @@ class GolpyGui():
         gb = gm.play(self.gameboard)
         if gm.gameboard_equal(gb, self.gameboard):
             self.running = False
+            self.run_button["text"] = "run"
         
         self.gameboard = gb
         if self.expand.get() == 1:
@@ -124,9 +142,14 @@ class GolpyGui():
         self.text_field.delete(1.0, tk.END)
         self.text_field.insert(tk.END, gb_str)
 
-        self.gameboard_label["font"] = ("Webdings", self.get_font_size(self.gameboard))
-        self.gameboard_label["text"] = gm.get_gameboard_text_compact(self.gameboard)
         
+        self.gameboard_label.delete(1.0, tk.END)
+        self.gameboard_label.configure(font = ("Webdings", self.get_font_size(self.gameboard)))
+        self.gameboard_label.configure(height = self.gameboard.shape[0])
+        self.gameboard_label.configure(width = self.gameboard.shape[1])
+        self.gameboard_label.insert(tk.END, gm.get_gameboard_text_compact(self.gameboard))
+        
+
         self.gameboard_label.pack()
         
     def runCallBack(self):
