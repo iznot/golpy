@@ -12,6 +12,7 @@ class DrawableGrid(tk.Frame):
     def __init__(self, parent, golpy, gameboard, size=5):
         super().__init__(parent, bd=1, relief="sunken")
         self.golpy = golpy
+        self.gameboard = gameboard
         self.height = gameboard.shape[0]
         self.width = gameboard.shape[1]
         self.size = size
@@ -48,14 +49,19 @@ class DrawableGrid(tk.Frame):
         return output
     
     def set_gameboard(self, gameboard):
-        for row in range(self.height):
-            for column in range(self.width):
-                x0, y0 = (column * self.size), (row*self.size)
-                #x1, y1 = (x0 + self.size), (y0 + self.size)
-                color = "black" if gameboard[row, column] == True else "white"
-                cell = self.canvas.find_closest(x0, y0)
-                self.canvas.itemconfigure(cell, fill = color)
+        
+        idx = np.where(self.gameboard != gameboard)
 
+        for i in range(0, len(idx[0])):
+            row = idx[0][i]
+            column = idx[1][i]
+            x0, y0 = (column * self.size), (row*self.size)
+            #x1, y1 = (x0 + self.size), (y0 + self.size)
+            color = "black" if gameboard[row, column] == True else "white"
+            cell = self.canvas.find_closest(x0, y0)
+            self.canvas.itemconfigure(cell, fill = color)
+
+        self.gameboard = gameboard
 
 
     def get_gameboard(self):
@@ -74,7 +80,8 @@ class DrawableGrid(tk.Frame):
         color = "black" if color == "white" else "white"
         self.canvas.itemconfigure(cell, fill=color)
         self.golpy.set_text_to_value("")
-        self.golpy.gameboard = self.get_gameboard()
+        self.gameboard = self.golpy.gameboard = self.get_gameboard()
+        
         
 
 class GolpyGui():
