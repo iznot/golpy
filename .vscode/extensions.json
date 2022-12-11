@@ -4,7 +4,15 @@
     "njpwerner.autodocstring",
     "ms-vscode.powershell",
     "Gruntfuggly.todo-tree",
-    "johnpapa.vscode-peacock"
+    "johnpapa.vscode-peacock",
+
+    "TakumiI.markdowntable",
+    "yzhang.markdown-all-in-one",
+    "manuth.markdown-converter",
+    "bierner.markdown-mermaid",
+    "mathematic.vscode-pdf",
+    "telesoho.vscode-markdown-paste-image"
+        
 ]
 
 }
