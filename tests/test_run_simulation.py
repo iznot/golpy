@@ -57,6 +57,33 @@ class TestSimulation(unittest.TestCase):
         assert exit_criteria == 'spaceship'
         assert periodicity == 4
 
+    def test_oscillator(self):
+        gb_str =  5,19,0x2f 
+        gameboard = samp.get_gleiter()
+        gameboards = [gameboard]
+        for i in range (7):
+            gameboard_new = gm.play(gameboard)
+            list.append(gameboards, gameboard_new)
+            gameboard = gameboard_new
+        
+        exit_criteria, periodicity = sim.check_exit_criteria(gameboards)
+
+        assert exit_criteria == 'spaceship'
+        assert periodicity == 4
+
+        gameboard = samp.get_gleiter()
+        gameboards = [gameboard]
+        for i in range (7):
+            gameboard_new = gm.play(gameboard)
+            list.append(gameboards, gameboard_new)
+            gameboard = gameboard_new
+        
+        exit_criteria, periodicity = sim.check_exit_criteria(gameboards)
+
+        assert exit_criteria == 'spaceship'
+        assert periodicity == 4
+
+
     def test_run_simulation(self):
         gameboard = samp.get_gleiter()
         gameboards, exit_criteria, periodicity = sim.run_simulation(gameboard, 10)
@@ -107,5 +134,7 @@ class TestSimulation(unittest.TestCase):
         assert gm.gameboard_equal(gb, g0)
     
     def test_generate_simulation(self):
-        res = sim.generate_simulation(4,4,100)
+        res = sim.generate_simulation(5,5,100)
+
+
      
