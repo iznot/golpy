@@ -57,8 +57,7 @@ class TestSimulation(unittest.TestCase):
         assert exit_criteria == 'spaceship'
         assert periodicity == 4
 
-    def test_oscillator(self):
-        gb_str =  5,19,0x2f 
+
         gameboard = samp.get_gleiter()
         gameboards = [gameboard]
         for i in range (7):
@@ -133,8 +132,4 @@ class TestSimulation(unittest.TestCase):
         gb = sim.convert_to_gameboard(res)
         assert gm.gameboard_equal(gb, g0)
     
-    def test_generate_simulation(self):
-        res = sim.generate_simulation(5,5,100)
-
-
      
