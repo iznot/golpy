@@ -4,6 +4,7 @@ import run_simulation as sim
 import samples as samp
 import unittest
 import basic_game_functions as gm
+import gameboard_manipulation as gam
 
 class TestSimulation(unittest.TestCase):
 
@@ -70,22 +71,16 @@ class TestSimulation(unittest.TestCase):
         assert exit_criteria == 'spaceship'
         assert periodicity == 4
 
-        gameboard = samp.get_gleiter()
-        gameboards = [gameboard]
-        for i in range (7):
-            gameboard_new = gm.play(gameboard)
-            list.append(gameboards, gameboard_new)
-            gameboard = gameboard_new
-        
-        exit_criteria, periodicity = sim.check_exit_criteria(gameboards)
-
-        assert exit_criteria == 'spaceship'
-        assert periodicity == 4
-
+    def test_oscillator(self):
+        gameboard = sim.convert_to_gameboard('5,19,0x2f')
+        gameboards, exit_criteria, periodicity, i = sim.run_simulation(gameboard,100)
+        assert exit_criteria == 'oscilator'
+        assert periodicity == 2
+        assert i == len(gameboards)
 
     def test_run_simulation(self):
         gameboard = samp.get_gleiter()
-        gameboards, exit_criteria, periodicity = sim.run_simulation(gameboard, 10)
+        gameboards, exit_criteria, periodicity = sim.run_simulation(gameboard, 30)
         assert len(gameboards) >= periodicity
         assert exit_criteria == 'spaceship'
         assert periodicity == 4
@@ -132,4 +127,6 @@ class TestSimulation(unittest.TestCase):
         gb = sim.convert_to_gameboard(res)
         assert gm.gameboard_equal(gb, g0)
     
-     
+    def test_new_cut(self):
+        gb = sim.convert_to_gameboard('5,19,0x2f')
+        gb = gam.cut_both_axis(gb)
