@@ -198,23 +198,24 @@ class GolpyGui():
    
     def nextCallBack(self):
         self.set_text_to_value("")
+        gb_orig = self.gameboard
+        if self.expand.get() == 1:
+            self.gameboard = gam.expand_gameboard_if_necessary(self.gameboard)
         gb = gm.play(self.gameboard)
         if gm.gameboard_equal(gb, self.gameboard):
             self.running = False
             self.run_button["text"] = "run"
         
         self.gameboard = gb
-        if self.expand.get() == 1:
-            self.gameboard = gam.expand_gameboard_if_necessary(self.gameboard)
         
-        if self.gameboard.shape != gb.shape:
+        if self.gameboard.shape != gb_orig:
             
             self.canvas.pack_forget()
             self.canvas = DrawableGrid(self.window, self, self.gameboard, size = 20)
             self.canvas.pack(fill="both", expand=True)
 
         else:
-            self.canvas.set_gameboard(gb)
+            self.canvas.set_gameboard(self.gameboard)
 
         
         

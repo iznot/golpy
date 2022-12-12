@@ -24,7 +24,7 @@ def check_exit_criteria(gameboards):
     length = len(gameboards)
     last_gameboard = gameboards[length-1]
     previous_gameboard = gameboards[length-2]
-    previous_gameboards = gameboards[1:(length-2)]
+    previous_gameboards = gameboards[0:(length-1)]
     
 
     # check if extinct (all empty)
