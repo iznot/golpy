@@ -41,7 +41,7 @@ def check_exit_criteria(gameboards):
     # check if oscillator
     osc_check, periodicity = check_exists(last_gameboard, previous_gameboards)
     if osc_check:
-        return "oscilator", periodicity
+        return "oscillator", periodicity
 
     # check if spaceship
     lg_cut = gam.cut_both_axis(last_gameboard)
@@ -58,6 +58,7 @@ def check_exists(gameboard_to_check, gameboards):
     
     for i in range(length-1, 0, -1):
         gameboard_to_compare = gameboards[i]
+#TODO hier kommt Fehler, ndarrays haben verschiedene shapes
         res = gameboard_equal(gameboard_to_check, gameboard_to_compare)
         if res: return True, length - i + 1
     return False, -1
