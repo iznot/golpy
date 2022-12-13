@@ -81,7 +81,7 @@ def try_cut_new(gb, axis = 0):
             break
     
     cut_until = np.count_nonzero(sums == -1)
-    gb_cut1 = np.delete(gb, np.s_[:cut_until], other)
+    gb_cut = np.delete(gb, np.s_[:cut_until], other)
 
     for i in range(len(sums)-1, 0, -1):
         if sums[i] == 0:
@@ -90,9 +90,10 @@ def try_cut_new(gb, axis = 0):
             sums[i] 
             break
     
-    two = np.count_nonzero(-2) -1
+    
+    two = np.count_nonzero(sums ==-2) + 1
     length_sums = len(sums) 
     cut_from =length_sums - two
-    gb_cut1 = np.delete(gb_cut1, np.s_[cut_from:length_sums], other)
-    return gb_cut1
+    gb_cut = np.delete(gb_cut, np.s_[cut_from:length_sums], other)
+    return gb_cut
 

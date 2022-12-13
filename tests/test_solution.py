@@ -136,20 +136,7 @@ class TestSolution(unittest.TestCase):
         is_equal = gm.gameboard_equal(g0, g1)
         assert is_equal == False
 
-    def test_cut(self):
-        g0 = gm.create_gameboard(rows = 5, cols = 5)
-        g0[1,1] = True
-        g0[1,3] = True
-        g0[3,3] = True
-        g0a = gm.create_gameboard(rows = 3, cols = 3)
-        g0a[0,0] = True
-        g0a[0,2] = True
-        g0a[2,2] = True
-        
-        g1 = gam.cut_both_axis(g0)
 
-        is_equal = gm.gameboard_equal(g0a, g1)
-        assert is_equal == True
 
     def test_expand(self):
         g0 = gm.create_gameboard(rows = 3, cols = 3)
