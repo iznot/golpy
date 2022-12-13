@@ -1,3 +1,9 @@
-000_Help.md
-01_teil1.md
-02_teil2.md
+01_Titelblatt.md
+03_Vorwort.md
+04_Zusammenfassung.md
+05_Einleitung.md
+06_Material&Methode.md
+07_Resultate.md
+08_Diskussion.md 
+09_Quellenverzeichnis.md
+10_Anhang.md
