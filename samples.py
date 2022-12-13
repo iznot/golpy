@@ -158,8 +158,6 @@ def get_f_Pentomino(size = 50):
     
     return gameboard
 
-# TODO: viele weitere Beispiele einfügen!
-
 
 sample_dict = {
                 'Gleiter' : get_gleiter(),

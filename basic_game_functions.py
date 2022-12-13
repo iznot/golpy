@@ -69,13 +69,16 @@ def get_gameboard_text(gameboard : np.array, horizontal_separator : bool = True)
     
     return res
 
-#TODO verstehe ich nicht, noch erklären papi bitee
+
 def get_gameboard_text_compact(gameboard : np.array) -> str:
     """Generiert einen text string von einem Gameboard, z.B. zur Ansicht mit Webdings font
 
     Args:
         gameboard (np.array): Das Gameboard, also eine nxn Numpy Matrix mit bool
     """
+
+    # NOTE: das funktioniert, weil der Webdings font Symbole anstatt normale Buchstaben anzeigt.
+
     rows = gameboard.shape[0]
     cols = gameboard.shape[1]
     
