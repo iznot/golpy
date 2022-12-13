@@ -82,7 +82,9 @@ class DrawableGrid(tk.Frame):
         self.golpy.set_text_to_value("")
         self.gameboard = self.golpy.gameboard = self.get_gameboard()
         
-        
+
+
+
 
 class GolpyGui():
 
@@ -131,11 +133,22 @@ class GolpyGui():
             command = self.set_text
         )
 
+        self.get_print_button = tk.Button(
+            self.text_frame,
+            text = "get print",
+            width=15,
+            height = 3,
+            bg="#668B8B",
+            fg = "#F0F0F0",
+            command = self.set_print
+        )
+
         self.text_field.grid(columnspan=3, row = 0, column = 0, padx='5', pady='5')
         self.scroll_bar.grid(row = 0, column = 3, rowspan = 2, sticky = tk.N + tk.S+tk.W)
         self.paint_button.grid(row = 0, column = 4, rowspan = 1)
         self.get_text_button.grid(row = 0, column = 5, rowspan = 1)
-        self.sample_selector.grid(row = 0, column = 6 , padx='5', pady='5')
+        self.get_print_button.grid(row = 0, column = 6, rowspan = 1)
+        self.sample_selector.grid(row = 0, column = 7 , padx='5', pady='5')
         
         self.text_frame.pack()
 
@@ -203,6 +216,11 @@ class GolpyGui():
         gb_str = sim.convert_to_string(self.gameboard)
         self.set_text_to_value(gb_str)
    
+    def set_print(self):
+        self.gameboard = self.canvas.get_gameboard()
+        gb_str = gm.get_gameboard_text(self.gameboard)
+        self.set_text_to_value(gb_str)
+
     def nextCallBack(self):
         self.set_text_to_value("")
         gb_orig = self.gameboard
@@ -215,7 +233,7 @@ class GolpyGui():
         
         self.gameboard = gb
         
-        if self.gameboard.shape != gb_orig:
+        if self.gameboard.shape != gb_orig.shape:
             
             self.canvas.pack_forget()
             self.canvas = DrawableGrid(self.window, self, self.gameboard, size = 20)

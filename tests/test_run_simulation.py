@@ -19,7 +19,7 @@ class TestSimulation(unittest.TestCase):
     def test_check_exists(self):
         gameboards = [samp.get_Eater(), samp.get_erased(), samp.get_gleiter()]
         gameboard_to_check = samp.get_Tuemmler()
-        res1, i = sim.check_exists(gameboard_to_check, gameboards)
+        res1, i = sim.check_exists(gameboard_to_check, gameboards, True)
         assert res1 == False
         assert i == -1
 
@@ -27,9 +27,9 @@ class TestSimulation(unittest.TestCase):
     def test_check_not_exists(self):
         gameboards = [samp.get_Eater(), samp.get_Tuemmler(), samp.get_erased(), samp.get_gleiter()]
         gameboard_to_check = samp.get_Tuemmler()
-        res1, i = sim.check_exists(gameboard_to_check, gameboards)
+        res1, periodicity = sim.check_exists(gameboard_to_check, gameboards, True)
         assert res1 == True
-        assert i == 4
+        assert periodicity == 3
 
 
     def test_pulsator_oscilator(self):
@@ -43,14 +43,15 @@ class TestSimulation(unittest.TestCase):
         exit_criteria, periodicity = sim.check_exit_criteria(gameboards)
 
         assert exit_criteria == 'oscillator'
-        assert periodicity == 16
+        assert periodicity == 15
 
-    #TODO geht auch nicht, schreibe in Funktion wo
     def test_gleiter_spaceship(self):
         gameboard = samp.get_gleiter()
         gameboards = [gameboard]
         for i in range (7):
-            gameboard_new = gm.play(gameboard)
+            gameboard_new = gam.expand_gameboard_if_necessary(gameboard)
+            gameboard_new = gm.play(gameboard_new)
+            gameboard_new = gam.cut_both_axis( gameboard_new )
             list.append(gameboards, gameboard_new)
             gameboard = gameboard_new
         
@@ -59,30 +60,18 @@ class TestSimulation(unittest.TestCase):
         assert exit_criteria == 'spaceship'
         assert periodicity == 4
 
-
-        gameboard = samp.get_gleiter()
-        gameboards = [gameboard]
-        for i in range (7):
-            gameboard_new = gm.play(gameboard)
-            list.append(gameboards, gameboard_new)
-            gameboard = gameboard_new
-        
-        exit_criteria, periodicity = sim.check_exit_criteria(gameboards)
-
-        assert exit_criteria == 'spaceship'
-        assert periodicity == 4
 
     def test_oscillator(self):
         gameboard = sim.convert_to_gameboard('5,19,0x2f')
         gameboards, exit_criteria, periodicity, i = sim.run_simulation(gameboard,100)
         assert exit_criteria == 'oscillator'
-        assert periodicity == 3
+        assert periodicity == 2
         assert i == len(gameboards)-1
 
-TODO unverstädnlich wieso falsch
+
     def test_run_simulation(self):
         gameboard = samp.get_gleiter()
-        gameboards, exit_criteria, periodicity = sim.run_simulation(gameboard, 30)
+        gameboards, exit_criteria, periodicity, i = sim.run_simulation(gameboard, 30)
         assert len(gameboards) >= periodicity
         assert exit_criteria == 'spaceship'
         assert periodicity == 4
