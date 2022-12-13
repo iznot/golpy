@@ -16,11 +16,8 @@ John Horton Conway ist wohl einer der bedeutsamsten Mathematiker aus dem letzten
 
 Ihm war es wichtig, die Mathematik den Leuten näherzubringen. Dadurch unterrichtete er nicht nur Hochbegabte an Universitäten, sondern auch jüngere und normal-talentierte Kinder. Er gab viele Vorträge, bei denen er entweder gänzlich vom Thema abkam, oder gar nicht erst erschien, bezeichnete sich selbst als faul und ging stets barfuss oder in Sandalen. Er widerspiegelte wohl genau das Bild, was die Allgemeinheit von einem zerstreuten Professor hat.
 
-TODO Bild
 {width: "30%"}
-![Abb. 1: John Horton Conway]()
-
-Schon als Kind hatte er eine Faszination für Spiele, welche ihn später in die Unterhaltungsmathematik führte. Er war eine der ersten Personen, die eine Theorie zur Lösung des Rubic Scubes veröffentlichte, konnte dank einer selbstentwickelten Methode innerhalb von Sekunden den Wochentag beliebiger Daten ausrechnen und wurde von seinen Kollegen «Mathemagier» genannt. 
+![Abb. 1: John Horton Conway](conway.png) Schon als Kind hatte er eine Faszination für Spiele, welche ihn später in die Unterhaltungsmathematik führte. Er war eine der ersten Personen, die eine Theorie zur Lösung des Rubic Scubes veröffentlichte, konnte dank einer selbstentwickelten Methode innerhalb von Sekunden den Wochentag beliebiger Daten ausrechnen und wurde von seinen Kollegen «Mathemagier» genannt. 
 
 Der Öffentlichkeit wurde er durch die Entwicklung des «Game of Life» bekannt. Dieses «no-player, never ending game», wie er es auch nannte, entwickelte er in den 70er Jahren. Dieses Spiel war der Startschuss für Simulationen auf dem Gebiet der Komplexitätswissenschaft und viele liessen sich dafür begeistern. Unzählige versuchten das «Leben» zu hacken, in dem sie neue Lebensformen entdecken. Die ansteigende Popularität seiner Entwicklung gefiel Conway gar nicht, weshalb er Fragen über seine Kreation mit dem Satz «I hate life» auswich. Gegen das Ende seines realen Lebens konnte er sich jedoch wieder damit anfreunden: «Ich gab irgendwo einen Vortrag und wurde als ‘John Conway, Schöpfer des Lebens’ vorgestellt. Und ich dachte ‘Oh das ist eine nette Art bekannt zu sein’.». 
 
@@ -69,6 +66,79 @@ Der Anwendungsbereich des «Game of Life» greift viele Themenbereiche auf und l
 
 # Material und Methode
 Um mich diesen grossen Fragen des «Game of Life» stellen zu können, programmierte ich als erstes das einfache Grundkonzept des Spieles. Danach widmete ich mich der Programmierung einer Simulation, die für mich schlussendlich auf einem beliebig grossen Spielfeld alle möglichen Konfiguration durchspielen sollte. 
+
+## Game of Life
+Während der Programmierung des Grundkonzeptes filterten sich mehrere Probleme heraus. Als Programmieranfängerin war das ganze natürlich noch schwieriger. Zuerst machte ich mich an das Gameboard.
+
+### Das Gameboard
+Das Gameboard ist ein numpy Array bestehend aus Booleans. Die Reihen sind auf der Achse mit dem Index 0 und die Kollonen auf der mit dem Index 1. Die Kollonen werden durch Bindestriche ('---') und die Reihen durch Trennstriche ('|') dargestellt. Zusammen bilden sie nun eine Zelle. Somit sieht ein Gameboard mit der Grösse 5x5 wie folgt aus:
+
+TODO wieso '-1?'
+{title: "Leeres Gameboard", id: gb-leer}
+
+```text
+ --- --- --- --- --- 
+|   |   |   |   |   |
+ --- --- --- --- ---
+|   |   |   |   |   |
+ --- --- --- --- ---
+|   |   |   |   |   |
+ --- --- --- --- ---
+|   |   |   |   |   |
+ --- --- --- --- ---
+|   |   |   |   |   |
+ --- --- --- --- ---
+ ```
+
+### Play
+Als nächstes machte ich mich an die Spielfunktion. Jede Zelle hat einen Index[Reihe, Kollone], ähnlich wie in einem Koordinatensystem. Wenn dieser mit 'True' gleichgesetzt wird, ist die Zelle am leben:
+
+1. Zelle[2,1] = True
+1. Zelle[3,2] = True
+1. Zelle[4,0] = True
+{title: "Beispiel lebendige Zellen", id: gb-1}
+```text
+ --- --- --- --- --- 
+|   |   |   |   |   |
+ --- --- --- --- ---
+|   |   |   |   |   |
+ --- --- --- --- ---
+|   | o |   |   |   |
+ --- --- --- --- ---
+|   |   | o |   |   |
+ --- --- --- --- ---
+| o |   |   |   |   |
+ --- --- --- --- ---
+ ```
+
+Um eine Konfiguration durchzuspielen, muss der Status der Nachbarszellen bekannt sein. Zuerst iteriere ich also durch das Spielfeld, um alle lebendigen Zellen herauszufinden. Als nächstes marschiere ich um jede lebendige Zelle herum und zähle, wie viele der Nachbarszellen lebendig sind. Nun muss nur noch den bereits bekannten Regeln gefolgt werden und ein neues Gameboard ausgedruckt werden. 
+
+TODO gespieltes Gameboard 
+
+### Grenzfälle
+
+Ein Problem stellten die Grenzfälle dar. Eine Zelle am Rand hat nur fünf existente Nachbarn und eine in einem Ecken sogar nur drei. Zuerst löste ich das Problem damit, dass die oberste linkste Zelle die oberste rechteste Zelle als direkten linken Nachbarn hat und umgekehrt. Als direkten oberen Nachbarn hat sie die unterste linkste Zelle und als schräg-oberen, rechten Nachbarn din rechts untersten. Eine Zelle am linken Rand hat die Zelle am rechten Rand in der gleichen Reihe als direkten Nachbarn, eine Zelle am oberem Rand hat eine Zelle in der selben Kollone als Nachbar und so weiter. Die folgenden Zellen sind also Nachbarn:
+
+{title: "Grenzfälle Nachbarn", id: gb-1}
+```text
+Generation 0:           Gen 1:
+ --- --- --- --- ---     --- --- --- --- ---
+| o |   |   |   | o |   | o |   |   |   | o |
+ --- --- --- --- ---     --- --- --- --- ---
+|   |   |   |   |   |   |   |   |   |   |   |
+ --- --- --- --- ---     --- --- --- --- ---
+|   |   |   |   |   |   |   |   |   |   |   |
+ --- --- --- --- ---     --- --- --- --- ---
+|   |   |   |   |   |   |   |   |   |   |   |
+ --- --- --- --- ---     --- --- --- --- ---
+| o |   |   |   | o |   | o |   |   |   | o |
+ --- --- --- --- ---     --- --- --- --- ---
+ ```
+
+Mit dem Hinblick auf die Simulation die ich später erstellen würde, war diese Lösung nicht die beste. Für diese ist es nämlich wichtig, dass das Gameboard unendlich gross ist, da sonst die folgende Generation verfälscht werden könnte. Also schrieb ich eine Funktion, die jedesmal wenn eine Zelle an den Rand des Gameboardes kommt, dieses um eine Reihe oder Kollone, je nach Fall, vergrösserte. Somit ist sichergestellt, dass jede Zelle immer acht Nachbarn hat.
+Das vorherige Gameboard würde dann also, trotz einer vorgegebenen Grösse von 5x5 wie folgt aussehen:
+
+
 
 
 
