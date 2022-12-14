@@ -65,13 +65,13 @@ class DrawableGrid(tk.Frame):
 
 
     def get_gameboard(self):
-        gb = np.full((self.height, self.width), False)
+        gb_a = np.full((self.height, self.width), False)
         for row in range(self.height):
             for column in range(self.width):
                 color = self.canvas.itemcget(self._tag(row, column), "fill")
                 if color == "black":
-                    gb[row, column] = True
-        gameboard = gm.create_gameboard(gb[0])
+                    gb_a[row, column] = True
+        gameboard = gm.create_gameboard(gb_a)
         return gameboard
         
 

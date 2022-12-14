@@ -62,7 +62,7 @@ class TestSimulation(unittest.TestCase):
 
 
     def test_oscillator(self):
-        gameboard = sim.convert_to_gameboard('5,19,0x2f')
+        gameboard = sim.convert_to_gameboard('(20, 20):(9, 8)|(2, 4):0:0x8f')
         gameboards, exit_criteria, periodicity, i = sim.run_simulation(gameboard,100)
         assert exit_criteria == 'oscillator'
         assert periodicity == 2
@@ -77,20 +77,17 @@ class TestSimulation(unittest.TestCase):
         assert periodicity == 4
     
     def test_convert_to_string(self):
-        g0 = gm.create_gameboard(rows = 3, cols = 3)
-        g0[0][0,0] = True
-        g0[0][0,2] = True
-        g0[0][2,2] = True
+        g0 = gm.create_gameboard(rows = 5, cols = 4, origin=(-12, -15))
+        g0[0][1,0] = True
+        g0[0][1,2] = True
+        g0[0][2,1] = True
         res = sim.convert_to_string(g0)
-        assert res == '3,0,0x141'
-        res_list = res.split(',')
-        width = res_list[0]
-        leading_zeros = res_list[1]
-        gameboard_number = res_list[2]
-        assert type(res) is str
-        assert width == '3'
-        assert leading_zeros == '0'
-        assert gameboard_number == '0x141'
+        assert res == '(5, 4):(1, 0)|(2, 3):0:0x2a'
+        g1 = sim.convert_to_gameboard(res)
+        assert gm.gameboard_equal(g0, g1, check_origin=False)
+
+    
+
 
     def test_convert_to_string_2(self):
         g0 = gm.create_gameboard(rows = 12, cols = 12)
@@ -98,14 +95,13 @@ class TestSimulation(unittest.TestCase):
         g0[0][1,3] = True
         g0[0][3,3] = True
         res = sim.convert_to_string(g0)
-        assert res == '12,13,0x500000100000000000000000000000000'
+        assert res == '(12, 12):(1, 1)|(3, 3):0:0x141'
     
     def test_convert_to_gameboard(self):
-        gb_str = '6,13,0x530ebd1009000a0000000000000000000'
+        gb_str = '(12, 12):(2, 3)|(7, 8):4:0x8a8002810a825'
         gb = sim.convert_to_gameboard(gb_str)
         columns = gb[0].shape[1]
-        assert columns == 6
-        assert gb[0].sum() == 18
+        assert columns == 12
         gb_str_2 = sim.convert_to_string(gb)
         assert gb_str_2 == gb_str
         
@@ -119,5 +115,8 @@ class TestSimulation(unittest.TestCase):
         assert gm.gameboard_equal(gb, g0)
     
     def test_new_cut(self):
-        gb = sim.convert_to_gameboard('5,19,0x2f')
+        gb = sim.convert_to_gameboard('(12, 12):(2, 3)|(10, 8):4:0x8a8002810a825202020')
         gb = gam.cut_both_axis(gb)
+        gb_str = sim.convert_to_string(gb)
+        print(gb_str)
+        assert gb_str == "(10, 8):(0, 0)|(10, 8):4:0x8a8002810a825202020"
