@@ -71,7 +71,8 @@ class DrawableGrid(tk.Frame):
                 color = self.canvas.itemcget(self._tag(row, column), "fill")
                 if color == "black":
                     gb[row, column] = True
-        return gb
+        gameboard = gm.Gameboard(gb)
+        return gameboard
         
 
     def paint(self, event):
