@@ -13,8 +13,8 @@ class DrawableGrid(tk.Frame):
         super().__init__(parent, bd=1, relief="sunken")
         self.golpy = golpy
         self.gameboard = gameboard
-        self.height = gameboard.shape[0]
-        self.width = gameboard.shape[1]
+        self.height = gameboard[0].shape[0]
+        self.width = gameboard[0].shape[1]
         self.size = size
         canvas_width = self.width*size
         canvas_height = self.height*size
@@ -25,7 +25,7 @@ class DrawableGrid(tk.Frame):
             for column in range(self.width):
                 x0, y0 = (column * self.size), (row*self.size)
                 x1, y1 = (x0 + self.size), (y0 + self.size)
-                color = "black" if gameboard[row, column] == True else "white"
+                color = "black" if gameboard[0][row, column] == True else "white"
                 self.canvas.create_rectangle(x0, y0, x1, y1,
                                              fill=color, outline="gray",
                                              tags=(self._tag(row, column),"cell" ))
@@ -50,14 +50,14 @@ class DrawableGrid(tk.Frame):
     
     def set_gameboard(self, gameboard):
         
-        idx = np.where(self.gameboard != gameboard)
+        idx = np.where(self.gameboard[0] != gameboard[0])
 
         for i in range(0, len(idx[0])):
             row = idx[0][i]
             column = idx[1][i]
             x0, y0 = (column * self.size), (row*self.size)
             #x1, y1 = (x0 + self.size), (y0 + self.size)
-            color = "black" if gameboard[row, column] == True else "white"
+            color = "black" if gameboard[0][row, column] == True else "white"
             cell = self.canvas.find_closest(x0, y0)
             self.canvas.itemconfigure(cell, fill = color)
 
@@ -71,7 +71,7 @@ class DrawableGrid(tk.Frame):
                 color = self.canvas.itemcget(self._tag(row, column), "fill")
                 if color == "black":
                     gb[row, column] = True
-        gameboard = gm.Gameboard(gb)
+        gameboard = gm.create_gameboard(gb[0])
         return gameboard
         
 
@@ -190,7 +190,7 @@ class GolpyGui():
         self.button_frame.pack()
      
 
-        self.gameboard = gm.create_gameboard(20, 20)
+        self.gameboard = gm.create_gameboard(rows= 20, cols = 20)
         self.canvas = DrawableGrid(self.window, self, self.gameboard, size=20)
         self.canvas.pack(fill="both", expand=True)
 
@@ -234,7 +234,7 @@ class GolpyGui():
         
         self.gameboard = gb
         
-        if self.gameboard.shape != gb_orig.shape:
+        if self.gameboard[0].shape != gb_orig[0].shape:
             
             self.canvas.pack_forget()
             self.canvas = DrawableGrid(self.window, self, self.gameboard, size = 20)
