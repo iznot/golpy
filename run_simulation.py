@@ -143,7 +143,7 @@ def generate_simulation(rows,cols,max_runs):
             gb_bin = gb_bin.zfill(cells)
             gb_array_1D = np.fromstring(gb_bin,'u1') - ord('0')
             gb_array_2D = np.reshape(gb_array_1D, (rows, cols))
-            gameboard = gm.Gameboard(gb_array_2D.astype(bool))
+            gameboard = gm.create_gameboard(gb_array_2D.astype(bool))
 
             gameboard = gam.cut_both_axis(gameboard)
             
@@ -153,7 +153,7 @@ def generate_simulation(rows,cols,max_runs):
                 expected_end = dt.datetime.now() + dt_diff * (1.0 - prog) / prog
                 print(f'{simulation_count} simulations for {gameboard_int}/{max_value} gameboards. Max p/h/w/r: {max_p}/{max_max_width}/{max_max_height}/{max_max_runs} Progress: {int(100*prog)}%. Expected end: {expected_end}')
 
-            if gameboard.shape != (rows, cols):
+            if gameboard[0].shape != (rows, cols):
                 #skipping non-full 
                 continue
             
@@ -171,8 +171,8 @@ def generate_simulation(rows,cols,max_runs):
             start_gameboard = convert_to_string(gameboard)
             end_gameboard = convert_to_string(gameboards[len(gameboards)-1])
 
-            max_height= np.shape(gameboards[len(gameboards)-1])[0]
-            max_width = np.shape(gameboards[len(gameboards)-1])[1]
+            max_height= np.shape(gameboards[len(gameboards)-1][0])[0]
+            max_width = np.shape(gameboards[len(gameboards)-1][0])[1]
 
             max_max_runs = max(max_max_runs, runs)
             max_p = max(max_p, periodicity)
@@ -201,7 +201,7 @@ def check_similar_exists(gameboard_sim_start_history, gameboard):
         
     
 def main():
-    generate_simulation(3,3,100)
+    generate_simulation(4,4,100)
 
 if __name__ == "__main__":
     main()
