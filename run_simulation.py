@@ -33,7 +33,7 @@ def check_exit_criteria(gameboards):
 
     # check if extinct (all empty)
 
-    if np.sum(last_gameboard) == 0:
+    if np.sum(last_gameboard[0]) == 0:
         return "extinct", 0
 
 
@@ -73,7 +73,7 @@ def check_exists(gameboard_to_check, gameboards, check_origin):
 
 def convert_to_string(gameboard):
     
-    gb_array = gameboard.ravel()
+    gb_array = gameboard[0].ravel()
 
     gb_bits = gb_array.astype(int)
 
@@ -85,7 +85,7 @@ def convert_to_string(gameboard):
     # IDEA: base64 would be even more efficient than hex.
     # gb_64 = base64.b64encode(gb_bits)
 
-    width = len(gameboard[0])
+    width = len(gameboard[0][0])
     leading_zeroes= get_leading_zeroes(gb_bits)
 
     res = f'{width},{leading_zeroes},{gb_hex}'
@@ -110,7 +110,7 @@ def convert_to_gameboard(gameboard_str):
     gb_array_2D = np.reshape(gb_array_1D, (-1, width))
     input_array = gb_array_2D.astype(bool)
 
-    gameboard = gm.Gameboard(input_array)
+    gameboard = gm.create_gameboard(input_array)
 
     return gameboard
 

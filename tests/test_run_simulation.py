@@ -78,9 +78,9 @@ class TestSimulation(unittest.TestCase):
     
     def test_convert_to_string(self):
         g0 = gm.create_gameboard(rows = 3, cols = 3)
-        g0[0,0] = True
-        g0[0,2] = True
-        g0[2,2] = True
+        g0[0][0,0] = True
+        g0[0][0,2] = True
+        g0[0][2,2] = True
         res = sim.convert_to_string(g0)
         assert res == '3,0,0x141'
         res_list = res.split(',')
@@ -94,26 +94,26 @@ class TestSimulation(unittest.TestCase):
 
     def test_convert_to_string_2(self):
         g0 = gm.create_gameboard(rows = 12, cols = 12)
-        g0[1,1] = True
-        g0[1,3] = True
-        g0[3,3] = True
+        g0[0][1,1] = True
+        g0[0][1,3] = True
+        g0[0][3,3] = True
         res = sim.convert_to_string(g0)
         assert res == '12,13,0x500000100000000000000000000000000'
     
     def test_convert_to_gameboard(self):
         gb_str = '6,13,0x530ebd1009000a0000000000000000000'
         gb = sim.convert_to_gameboard(gb_str)
-        columns = gb.shape[1]
+        columns = gb[0].shape[1]
         assert columns == 6
-        assert gb.sum() == 18
+        assert gb[0].sum() == 18
         gb_str_2 = sim.convert_to_string(gb)
         assert gb_str_2 == gb_str
         
     def test_convert_huge_gameboard(self):
         g0 = gm.create_gameboard(rows = 1000, cols = 900)
-        g0[1,1] = True
-        g0[1,3] = True
-        g0[3,3] = True
+        g0[0][1,1] = True
+        g0[0][1,3] = True
+        g0[0][3,3] = True
         res = sim.convert_to_string(g0)
         gb = sim.convert_to_gameboard(res)
         assert gm.gameboard_equal(gb, g0)

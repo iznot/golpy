@@ -9,9 +9,9 @@ class TestGUI(unittest.TestCase):
 
     def test_gameboard(self):
         g0 = gm.create_gameboard(rows = 6, cols = 6)
-        g0[3,4] = True
-        g0[4,4] = True
-        g0[5,4] = True
+        g0[0][3,4] = True
+        g0[0][4,4] = True
+        g0[0][5,4] = True
         window = tk.Tk()
         gameboard = tk.Label(text = gm.get_gameboard_text(g0))
         gameboard.pack()
