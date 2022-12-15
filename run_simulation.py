@@ -1,7 +1,5 @@
 import numpy as np
-from basic_game_functions import gameboard_equal, play
 from itertools import product
-from basic_game_functions import get_neighbour_indices
 import gameboard_manipulation as gam
 import basic_game_functions as gm
 
@@ -17,7 +15,7 @@ def run_simulation(gameboard, max_runs):
     for i in range(1, max_runs):
         #NOTE: notwendig vorher, falls Anfangsposition am Rand
         gameboard = gam.expand_gameboard_if_necessary(gameboard)
-        gameboard = play(gameboard)
+        gameboard = gm.play(gameboard)
         gameboard = gam.cut_both_axis(gameboard)
         gameboards.append(gameboard)
         exit_criteria, periodicity = check_exit_criteria(gameboards)
@@ -40,7 +38,7 @@ def check_exit_criteria(gameboards):
 
     # check if equals
 
-    if gameboard_equal(last_gameboard, previous_gameboard, True):
+    if gm.gameboard_equal(last_gameboard, previous_gameboard, True):
         return "stable", 0
     
     # check if oscillator
@@ -61,7 +59,7 @@ def check_exists(gameboard_to_check, gameboards, check_origin):
     
     for i in range(length-1, 0, -1):
         gameboard_to_compare = gameboards[i]
-        res = gameboard_equal(gameboard_to_check, gameboard_to_compare, check_origin)
+        res = gm.gameboard_equal(gameboard_to_check, gameboard_to_compare, check_origin)
         if res: return True, length - i
     return False, -1
 
@@ -129,7 +127,7 @@ def convert_to_gameboard(gameboard_str):
     full_gameboard_a = np.full(full_shape, False)
 
     full_gameboard_a[ origin[0]:(origin[0]+shape[0])  , origin[1]:(origin[1]+shape[1])   ] = gameboard[0]
-
+#TODO wieso brauchts diese komische Form und 'full_gameboard_a' reicht nicht aus?
     gameboard = gm.create_gameboard(full_gameboard_a)
 
 
@@ -181,7 +179,7 @@ def generate_simulation(rows,cols,max_runs):
 
             # check if current gb is in history
             # NOTE: debug only
-            already_simulated = check_similar_exists(gameboard_sim_start_history, gameboard)
+            already_simulated = compare_rotated(gameboard_sim_start_history, gameboard)
 
             if already_simulated:
               continue              
@@ -206,16 +204,27 @@ def generate_simulation(rows,cols,max_runs):
 
             simulation_count += 1
 
-def check_similar_exists(gameboard_sim_start_history, gameboard):
+def check_similar_exists(gameboard_sim_start_history, gb, gb1, gb2, gb3):
     exists = False
-    cut_gb = gam.cut_both_axis(gameboard)
     for past_gameboard in gameboard_sim_start_history:
-        exists = gameboard_equal(cut_gb,past_gameboard)
+        exists = gm.gameboard_equal(gb,past_gameboard)
+        if exists:
+            break
+    for past_gameboard in gameboard_sim_start_history:
+        exists = gm.gameboard_equal(gb1,past_gameboard)
+        if exists:
+            break
+    for past_gameboard in gameboard_sim_start_history:
+        exists = gm.gameboard_equal(gb2,past_gameboard)
+        if exists:
+            break
+    for past_gameboard in gameboard_sim_start_history:
+        exists = gm.gameboard_equal(gb3,past_gameboard)
         if exists:
             break
     
     if not exists:
-        gameboard_sim_start_history.append(cut_gb)
+        gameboard_sim_start_history.append(gb)
     
     return exists
 
@@ -226,3 +235,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+def compare_rotated(gameboard_sim_start_history, gb):
+    cut_gb = gam.cut_both_axis(gb)
+    cut_1, cut_2, cut_3 = gam.turn_gb(gb)
+    exists = check_similar_exists(gameboard_sim_start_history, cut_gb, cut_1, cut_2, cut_3)
+    return exists
+
