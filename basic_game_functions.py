@@ -2,27 +2,10 @@ import numpy as np
 import os
 
 
-
-class Gameboard(np.ndarray):
-
-    def __new__(cls, input_array = None, rows = None, cols = None, origin=(0,0)):        
-        if input_array is None:
-            input_array = np.full((rows,cols), False)
-        obj = np.asarray(input_array).view(cls)
-        obj.origin = origin
-        return obj
-
-
-
-    def __array_finalize__(self, obj):
-        if obj is None: return
-        self.origin = getattr(obj, 'origin', None)
-
-
-def create_gameboard(rows: int, cols: int) -> np.array:
-    gameboard = Gameboard(rows = rows, cols = cols)
-    return gameboard
-
+def create_gameboard(input_array = None, rows = None, cols = None, origin=(0,0)):
+    if input_array is None:
+        input_array = np.full((rows,cols), False)
+    return (input_array, origin)
 
 
 def get_neighbour_indices(row: int, col: int, rows: int, cols: int) -> list[int]:
@@ -43,14 +26,14 @@ def print_gameboard(gameboard : np.array):
     txt = get_gameboard_text(gameboard)
     print(txt)
 
-def get_gameboard_text(gameboard : np.array, horizontal_separator : bool = True) -> str:
+def get_gameboard_text(gameboard, horizontal_separator : bool = True) -> str:
     """Generiert einen text string von einem Gameboard
 
     Args:
-        gameboard (np.array): Das Gameboard, also eine nxn Numpy Matrix mit bool
+        gameboard: Das Gameboard, also eine nxn Numpy Matrix mit bool
     """
-    rows = gameboard.shape[0]
-    cols = gameboard.shape[1]
+    rows = gameboard[0].shape[0]
+    cols = gameboard[0].shape[1]
     
     
     sep_line = ' ---' * cols + ' '
@@ -66,7 +49,7 @@ def get_gameboard_text(gameboard : np.array, horizontal_separator : bool = True)
         for col in range(cols):
             # Zelle:
             # 1. Zelle in gameboard abfragen
-            cell_value = gameboard[row, col]
+            cell_value = gameboard[0][row, col]
             # 2. wenn false, dann '   |'
             if cell_value == False:
                 cell_string = '   |'
@@ -96,8 +79,8 @@ def get_gameboard_text_compact(gameboard : np.array) -> str:
 
     # NOTE: das funktioniert, weil der Webdings font Symbole anstatt normale Buchstaben anzeigt.
 
-    rows = gameboard.shape[0]
-    cols = gameboard.shape[1]
+    rows = gameboard[0].shape[0]
+    cols = gameboard[0].shape[1]
     
     res = ''
 
@@ -106,7 +89,7 @@ def get_gameboard_text_compact(gameboard : np.array) -> str:
         for col in range(cols):
             # Zelle:
             # 1. Zelle in gameboard abfragen
-            cell_value = gameboard[row, col]
+            cell_value = gameboard[0][row, col]
             # 2. wenn false, dann '|  '
             if cell_value == False:
                 cell_string = 'c'
@@ -125,7 +108,7 @@ def get_gameboard_text_compact(gameboard : np.array) -> str:
 
 
 
-def play(gameboard: np.array) -> np.array:
+def play(gameboard) -> np.array:
     """Macht einen Spielzug
 
     Args:
@@ -135,11 +118,11 @@ def play(gameboard: np.array) -> np.array:
         np.array: das gameboard nach dem Spielzug
     """
 
-    rows = gameboard.shape[0]
-    cols = gameboard.shape[1]
+    rows = gameboard[0].shape[0]
+    cols = gameboard[0].shape[1]
 
     # 1. Resultat (shallow copy, wir wollen das Input-Object nicht verändern)
-    gameboard_new = gameboard.copy()
+    gameboard_new = (np.copy(gameboard[0]), gameboard[1])
     
    
     # 2. durch rows iterieren
@@ -147,7 +130,7 @@ def play(gameboard: np.array) -> np.array:
         # 3. durch cols (respektive cells) iterieren
         for col in range(cols):
             
-            alive = gameboard[row, col]
+            alive = gameboard[0][row, col]
             
             # 4. Die Nachbarn zählen
             
@@ -160,14 +143,14 @@ def play(gameboard: np.array) -> np.array:
 
             # wir brauche 8 neighbours. Bei N startend im Uhrzeigersinn:
             neighbour = [
-                gameboard[toprow, col], # N
-                gameboard[toprow, rightcol], # N-E
-                gameboard[row, rightcol], # E
-                gameboard[bottomrow, rightcol], # S-E
-                gameboard[bottomrow, col], # S
-                gameboard[bottomrow, leftcol], # S-W
-                gameboard[row, leftcol], # W
-                gameboard[toprow, leftcol] # N-W
+                gameboard[0][toprow, col], # N
+                gameboard[0][toprow, rightcol], # N-E
+                gameboard[0][row, rightcol], # E
+                gameboard[0][bottomrow, rightcol], # S-E
+                gameboard[0][bottomrow, col], # S
+                gameboard[0][bottomrow, leftcol], # S-W
+                gameboard[0][row, leftcol], # W
+                gameboard[0][toprow, leftcol] # N-W
             ]
             
             
@@ -178,31 +161,31 @@ def play(gameboard: np.array) -> np.array:
             if not alive:
                 if neighbour_count == 3:
                     #Eine tote Zelle mit genau drei lebenden Nachbarn wird in der Folgegeneration „geboren“ (zum Leben erweckt).
-                    gameboard_new[row, col] = True 
+                    gameboard_new[0][row, col] = True 
                 else:
-                    gameboard_new[row, col] = False
+                    gameboard_new[0][row, col] = False
 
             else:
                 if neighbour_count < 2:
                     #Eine lebende Zelle mit weniger als zwei lebenden Nachbarn stirbt in der Folgegeneration (an Einsamkeit).
-                    gameboard_new[row, col] = False
+                    gameboard_new[0][row, col] = False
 
                 elif (neighbour_count == 2 or neighbour_count == 3):
                     # Eine lebende Zelle mit zwei oder drei lebenden Nachbarn bleibt in der Folgegeneration am Leben. 
-                    gameboard_new[row, col] = True
+                    gameboard_new[0][row, col] = True
             
                 elif neighbour_count > 3:
                     # Eine lebende Zelle mit mehr als drei lebenden Nachbarn stirbt in der Folgegeneration (an Überbevölkerung). 
-                    gameboard_new[row, col] = False
+                    gameboard_new[0][row, col] = False
             
                 
 
     return gameboard_new
 
-def gameboard_equal(gameboard_1: Gameboard, gameboard_2: Gameboard, check_origin: bool = True):
-    if gameboard_1.shape != gameboard_2.shape:
+def gameboard_equal(gameboard_1, gameboard_2, check_origin: bool = True):
+    if gameboard_1[0].shape != gameboard_2[0].shape:
         return False
-    if check_origin and gameboard_1.origin != gameboard_2.origin:
+    if check_origin and gameboard_1[1] != gameboard_2[1]:
         return False
-    result = np.array_equal(gameboard_1, gameboard_2)
+    result = np.array_equal(gameboard_1[0], gameboard_2[0])
     return result

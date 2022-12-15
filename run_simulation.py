@@ -7,7 +7,8 @@ import basic_game_functions as gm
 
 import csv
 import datetime as dt
-
+import operator
+from ast import literal_eval
 
 
 def run_simulation(gameboard, max_runs):
@@ -33,7 +34,7 @@ def check_exit_criteria(gameboards):
 
     # check if extinct (all empty)
 
-    if np.sum(last_gameboard) == 0:
+    if np.sum(last_gameboard[0]) == 0:
         return "extinct", 0
 
 
@@ -73,7 +74,9 @@ def check_exists(gameboard_to_check, gameboards, check_origin):
 
 def convert_to_string(gameboard):
     
-    gb_array = gameboard.ravel()
+    gameboard_cut = gam.cut_both_axis(gameboard)
+
+    gb_array = gameboard_cut[0].ravel()
 
     gb_bits = gb_array.astype(int)
 
@@ -85,10 +88,11 @@ def convert_to_string(gameboard):
     # IDEA: base64 would be even more efficient than hex.
     # gb_64 = base64.b64encode(gb_bits)
 
-    width = len(gameboard[0])
+    shape = gameboard[0].shape
+    shape_cut = gameboard_cut[0].shape
     leading_zeroes= get_leading_zeroes(gb_bits)
-
-    res = f'{width},{leading_zeroes},{gb_hex}'
+    origin = tuple(map(lambda x, y: -(x - y), gameboard_cut[1], gameboard[1]))
+    res = f'{shape}:{origin}|{shape_cut}:{leading_zeroes}:{gb_hex}'
     return res
 
 
@@ -98,19 +102,36 @@ def get_leading_zeroes(bits):
     return i
 
 def convert_to_gameboard(gameboard_str):
-    res_list = gameboard_str.split(',')
-    width = int(res_list[0])
-    leading_zeroes = int(res_list[1])
-    gb_hex_str = res_list[2]
+    res_list = gameboard_str.split('|')
+    gb_specs = res_list[0].split(':')
+    set_specs = res_list[1].split(':')
+
+    
+    
+    shape = literal_eval(set_specs[0])
+    leading_zeroes = int(set_specs[1])
+    gb_hex_str = set_specs[2]
 
     gb_int = int(gb_hex_str, 16)
     gb_bin = bin(gb_int)[2:]
     gb_bin = gb_bin.zfill(len(gb_bin) + leading_zeroes)
     gb_array_1D = np.fromstring(gb_bin,'u1') - ord('0')
-    gb_array_2D = np.reshape(gb_array_1D, (-1, width))
+    gb_array_2D = np.reshape(gb_array_1D, shape)
     input_array = gb_array_2D.astype(bool)
 
-    gameboard = gm.Gameboard(input_array)
+    gameboard = gm.create_gameboard(input_array)
+
+
+    # fit into large
+    full_shape = literal_eval(gb_specs[0])
+    origin = literal_eval(gb_specs[1])
+
+    full_gameboard_a = np.full(full_shape, False)
+
+    full_gameboard_a[ origin[0]:(origin[0]+shape[0])  , origin[1]:(origin[1]+shape[1])   ] = gameboard[0]
+
+    gameboard = gm.create_gameboard(full_gameboard_a)
+
 
     return gameboard
 
@@ -143,7 +164,7 @@ def generate_simulation(rows,cols,max_runs):
             gb_bin = gb_bin.zfill(cells)
             gb_array_1D = np.fromstring(gb_bin,'u1') - ord('0')
             gb_array_2D = np.reshape(gb_array_1D, (rows, cols))
-            gameboard = gm.Gameboard(gb_array_2D.astype(bool))
+            gameboard = gm.create_gameboard(gb_array_2D.astype(bool))
 
             gameboard = gam.cut_both_axis(gameboard)
             
@@ -153,7 +174,7 @@ def generate_simulation(rows,cols,max_runs):
                 expected_end = dt.datetime.now() + dt_diff * (1.0 - prog) / prog
                 print(f'{simulation_count} simulations for {gameboard_int}/{max_value} gameboards. Max p/h/w/r: {max_p}/{max_max_width}/{max_max_height}/{max_max_runs} Progress: {int(100*prog)}%. Expected end: {expected_end}')
 
-            if gameboard.shape != (rows, cols):
+            if gameboard[0].shape != (rows, cols):
                 #skipping non-full 
                 continue
             
@@ -171,8 +192,8 @@ def generate_simulation(rows,cols,max_runs):
             start_gameboard = convert_to_string(gameboard)
             end_gameboard = convert_to_string(gameboards[len(gameboards)-1])
 
-            max_height= np.shape(gameboards[len(gameboards)-1])[0]
-            max_width = np.shape(gameboards[len(gameboards)-1])[1]
+            max_height= np.shape(gameboards[len(gameboards)-1][0])[0]
+            max_width = np.shape(gameboards[len(gameboards)-1][0])[1]
 
             max_max_runs = max(max_max_runs, runs)
             max_p = max(max_p, periodicity)
@@ -201,7 +222,7 @@ def check_similar_exists(gameboard_sim_start_history, gameboard):
         
     
 def main():
-    generate_simulation(3,3,100)
+    generate_simulation(4,4,100)
 
 if __name__ == "__main__":
     main()

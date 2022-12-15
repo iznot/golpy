@@ -10,9 +10,9 @@ def cut_both_axis(gb):
     return gb2
 
 def cut(gb, axis = 0):
-    gb = gb.copy()
+    
     #überflüssige cols herausfinden
-    sums = np.sum(gb, axis = axis)
+    sums = np.sum(gb[0], axis = axis)
 
     idx = np.where(sums != 0)[0]
 
@@ -24,34 +24,27 @@ def cut(gb, axis = 0):
     sums[min:max+1] = 1
     
     if axis == 0:
-        gb = gb[:,sums == 1]
-        gb.origin = (gb.origin[0], gb.origin[1] - min)
+        gb = (gb[0][:,sums == 1], (gb[1][0], gb[1][1] - min))
     else:
-        gb = gb[sums == 1,]
-        gb.origin = (gb.origin[0] - min, gb.origin[1])
+        gb = (gb[0][sums == 1,], (gb[1][0] - min, gb[1][1]))
 
     return gb
 
 
 
 def expand_gameboard_if_necessary(gb):
-    gb = gb.copy()
-    gb = gm.Gameboard(gb, origin = gb.origin)
-    if sum(gb[0, :]) > 0:
+    if sum(gb[0][0, :]) > 0:
         #add first row
-        gb = np.insert(gb, 0, 0, axis = 0)
-        gb.origin = (gb.origin[0]+1, gb.origin[1])
+        gb = (np.insert(gb[0], 0, 0, axis = 0), (gb[1][0]+1, gb[1][1]))
 
 
-    if sum(gb[:, 0]) > 0:
+    if sum(gb[0][:, 0]) > 0:
         #add first column
-        gb = np.insert(gb, 0, 0, axis = 1)
-        gb.origin = (gb.origin[0], gb.origin[1]+1)
+        gb = (np.insert(gb[0], 0, 0, axis = 1), (gb[1][0], gb[1][1]+1))
     
+    if sum(gb[0][:, gb[0].shape[1]-1]) > 0 :
+        gb = (np.insert(gb[0], gb[0].shape[1], 0, axis = 1), gb[1])
     
-    if sum(gb[:, gb.shape[1]-1]) > 0 :
-        gb = np.insert(gb, gb.shape[1], 0, axis = 1)
-    
-    if sum(gb[gb.shape[0]-1, :]) > 0 :
-        gb = np.insert(gb, gb.shape[0], 0, axis = 0)
+    if sum(gb[0][gb[0].shape[0]-1, :]) > 0 :
+        gb = (np.insert(gb[0], gb[0].shape[0], 0, axis = 0), gb[1])
     return gb
