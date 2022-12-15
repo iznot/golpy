@@ -4,16 +4,20 @@ from itertools import product
 from basic_game_functions import get_neighbour_indices
 import gameboard_manipulation as gam
 import basic_game_functions as gm
+
 import csv
 import datetime as dt
 
 
 
 def run_simulation(gameboard, max_runs):
+    
     gameboards = [gameboard]
     for i in range(1, max_runs):
+        #NOTE: notwendig vorher, falls Anfangsposition am Rand
         gameboard = gam.expand_gameboard_if_necessary(gameboard)
         gameboard = play(gameboard)
+        gameboard = gam.cut_both_axis(gameboard)
         gameboards.append(gameboard)
         exit_criteria, periodicity = check_exit_criteria(gameboards)
         if exit_criteria != 'survival':
@@ -35,32 +39,29 @@ def check_exit_criteria(gameboards):
 
     # check if equals
 
-    if gameboard_equal(last_gameboard, previous_gameboard):
+    if gameboard_equal(last_gameboard, previous_gameboard, True):
         return "stable", 0
     
     # check if oscillator
-    osc_check, periodicity = check_exists(last_gameboard, previous_gameboards)
+    osc_check, periodicity = check_exists(last_gameboard, previous_gameboards, True)
     if osc_check:
         return "oscillator", periodicity
 
     # check if spaceship
-    lg_cut = gam.cut_both_axis(last_gameboard)
-    pg_cut = [gam.cut_both_axis(gb) for gb in previous_gameboards]
-    spaceship_check, periodicity = check_exists(lg_cut, pg_cut)
+    spaceship_check, periodicity = check_exists(last_gameboard, previous_gameboards, False)
     if spaceship_check:
         return "spaceship", periodicity
 
     # else
     return 'survival', 0
 
-def check_exists(gameboard_to_check, gameboards):
+def check_exists(gameboard_to_check, gameboards, check_origin):
     length = len(gameboards)
     
     for i in range(length-1, 0, -1):
         gameboard_to_compare = gameboards[i]
-#TODO hier kommt Fehler, ndarrays haben verschiedene shapes
-        res = gameboard_equal(gameboard_to_check, gameboard_to_compare)
-        if res: return True, length - i + 1
+        res = gameboard_equal(gameboard_to_check, gameboard_to_compare, check_origin)
+        if res: return True, length - i
     return False, -1
 
 
@@ -107,7 +108,9 @@ def convert_to_gameboard(gameboard_str):
     gb_bin = gb_bin.zfill(len(gb_bin) + leading_zeroes)
     gb_array_1D = np.fromstring(gb_bin,'u1') - ord('0')
     gb_array_2D = np.reshape(gb_array_1D, (-1, width))
-    gameboard = gb_array_2D.astype(bool)
+    input_array = gb_array_2D.astype(bool)
+
+    gameboard = gm.Gameboard(input_array)
 
     return gameboard
 
@@ -140,13 +143,20 @@ def generate_simulation(rows,cols,max_runs):
             gb_bin = gb_bin.zfill(cells)
             gb_array_1D = np.fromstring(gb_bin,'u1') - ord('0')
             gb_array_2D = np.reshape(gb_array_1D, (rows, cols))
-            gameboard = gb_array_2D.astype(bool)
+            gameboard = gm.Gameboard(gb_array_2D.astype(bool))
+
+            gameboard = gam.cut_both_axis(gameboard)
             
             if gameboard_int > 0 and  gameboard_int % 1000 == 0:
                 dt_diff = dt.datetime.now() - start
                 prog = gameboard_int/max_value
                 expected_end = dt.datetime.now() + dt_diff * (1.0 - prog) / prog
                 print(f'{simulation_count} simulations for {gameboard_int}/{max_value} gameboards. Max p/h/w/r: {max_p}/{max_max_width}/{max_max_height}/{max_max_runs} Progress: {int(100*prog)}%. Expected end: {expected_end}')
+
+            if gameboard.shape != (rows, cols):
+                #skipping non-full 
+                continue
+            
 
             # check if current gb is in history
             # NOTE: debug only
@@ -190,3 +200,8 @@ def check_similar_exists(gameboard_sim_start_history, gameboard):
 
         
     
+def main():
+    generate_simulation(3,3,100)
+
+if __name__ == "__main__":
+    main()

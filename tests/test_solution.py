@@ -122,9 +122,13 @@ class TestSolution(unittest.TestCase):
         g0[7,5] = True
         g0[7,0] = True
 
-        is_equal = gm.gameboard_equal(g0, g0)
+        is_equal = gm.gameboard_equal(g0, g0, True)
         assert is_equal == True
-    
+
+        is_equal = gm.gameboard_equal(g0, g0, False)
+        assert is_equal == True
+
+
     def test_not_equal(self):
         g0 = gm.create_gameboard(rows = 8, cols = 7)
         g0[7,6] = True
@@ -133,7 +137,7 @@ class TestSolution(unittest.TestCase):
 
         g1 = gm.play(g0)
         
-        is_equal = gm.gameboard_equal(g0, g1)
+        is_equal = gm.gameboard_equal(g0, g1, True)
         assert is_equal == False
 
 
@@ -149,5 +153,45 @@ class TestSolution(unittest.TestCase):
         gm.print_gameboard(gb)
 
         assert gb.shape == (5, 5)
+        assert gb.origin == (1, 1)
     
-    
+
+    def test_expand_north(self):
+        g0 = gm.create_gameboard(rows = 3, cols = 3)
+        g0[0,1] = True
+        gm.print_gameboard(g0)
+        gb = gam.expand_gameboard_if_necessary(g0)
+
+        gm.print_gameboard(gb)
+
+        assert gb.shape == (4, 3)
+        assert gb.origin == (1, 0)
+
+    def test_cutoff(self):
+        g0 = gm.create_gameboard(rows = 3, cols = 3)
+        g0[0,1] = True
+        g0[1,1] = True
+        g0[1,2] = True
+        
+        gm.print_gameboard(g0)
+        gb = gam.cut_both_axis(g0)
+
+        gm.print_gameboard(gb)
+
+        assert gb.shape == (2, 2)
+        assert gb.origin == (0, -1)
+
+    def test_origin(self):
+        g0 = gm.create_gameboard(rows = 3, cols = 4)
+        assert g0.origin == (0, 0)
+
+        g1 = gm.create_gameboard(rows = 3, cols = 4)
+        g1.origin = (1, 2)
+        assert g0.origin == (0, 0)
+        assert g1.origin == (1, 2)
+
+        g1[1, 1] = 1
+
+        g1 = gam.cut_both_axis(g1)
+        assert g1.origin == (0, 1)
+

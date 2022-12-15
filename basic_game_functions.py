@@ -2,8 +2,25 @@ import numpy as np
 import os
 
 
+
+class Gameboard(np.ndarray):
+
+    def __new__(cls, input_array = None, rows = None, cols = None, origin=(0,0)):        
+        if input_array is None:
+            input_array = np.full((rows,cols), False)
+        obj = np.asarray(input_array).view(cls)
+        obj.origin = origin
+        return obj
+
+
+
+    def __array_finalize__(self, obj):
+        if obj is None: return
+        self.origin = getattr(obj, 'origin', None)
+
+
 def create_gameboard(rows: int, cols: int) -> np.array:
-    gameboard = np.full((rows,cols), False)    
+    gameboard = Gameboard(rows = rows, cols = cols)
     return gameboard
 
 
@@ -182,6 +199,10 @@ def play(gameboard: np.array) -> np.array:
 
     return gameboard_new
 
-def gameboard_equal(gameboard_1: np.array, gameboard_2: np.array):
+def gameboard_equal(gameboard_1: Gameboard, gameboard_2: Gameboard, check_origin: bool = True):
+    if gameboard_1.shape != gameboard_2.shape:
+        return False
+    if check_origin and gameboard_1.origin != gameboard_2.origin:
+        return False
     result = np.array_equal(gameboard_1, gameboard_2)
     return result
