@@ -120,6 +120,21 @@ Konfiguration:         1. Generation:         2.Generation:           3.Generati
 Diese Objekte enden nach beliebeg vielen Generationen in einem leeren Spielfeld
 TODO Beispiel erased
 
+{text:"Selbstauslöschendes Objekt", id:erased_gb}
+```text
+Konfiguration:                1.Generation                  2. Generation:
+ --- --- --- --- ---           --- --- --- --- ---           --- --- --- --- ---   
+|   |   |   |   |   |         |   |   |   |   |   |         |   |   |   |   |   |
+ --- --- --- --- ---           --- --- --- --- ---           --- --- --- --- ---   
+|   | o |   |   |   |         |   |   |   |   |   |         |   |   |   |   |   |
+ --- --- --- --- ---           --- --- --- --- ---           --- --- --- --- ---   
+|   |   |   | o |   |         |   |   | o |   |   |         |   |   |   |   |   |
+ --- --- --- --- ---           --- --- --- --- ---           --- --- --- --- ---   
+|   | o |   |   |   |         |   |   |   |   |   |         |   |   |   |   |   |
+ --- --- --- --- ---           --- --- --- --- ---           --- --- --- --- ---   
+|   |   |   |   |   |         |   |   |   |   |   |         |   |   |   |   |   |
+ --- --- --- --- ---           --- --- --- --- ---           --- --- --- --- ---   
+
 
 
 Es gibt noch weitere Objekte wie Gleiterkanonen, die in einem periodischem Zeitabstand immer wieder Gleiter erzeugen, Puffer, die eine Art Gleiter mit Überbleibsel darstellen oder völlig chaotische Objekte. Diese weiteren Objekte sind für diese Arbeit jedoch nicht relevant.

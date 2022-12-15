@@ -146,7 +146,7 @@ Diese relativen Spielfelder werden nun nach dem Schema der Oszillatoren abgeglic
 Falls die Konfiguration keiner der oben genannten Objekten entspricht, ist es laut meiner Definition ein überlebendes Objekt. Damit diese nun nicht endlos weiterlaufen, beziehungsweise die Simulation nicht zu lange dauert, baue ich einen Grenzwert ein. Wenn nach dem Erreichen dieses Wertes die Konfiguration immer noch keinem Objekt entspricht, bricht die Simulation ab und die Konfiguration gilt als überlebend. 
 
 ### Speicherform des Spielbrettes 
-Um diese simulierten Konfigurationen und deren Endzustände abzuspeichern, müssen die Spielbretter in eine andere Form gebracht werden. Wenn sie bei einem herkömlichen Spielfeld belassen werden würden, würde viel zu viel Speicherplatz benötigt werden. Also will ich das Spielbrett in eine Zahl verwandeln. Zuerst kommt die Anzahl an Kollonen, dann die Anzahl an toten Zellen bis zur ersten lebendigen und schlussendlich noch die Zahl des Spielbrettes. 
+Um diese simulierten Konfigurationen und deren Endzustände abzuspeichern, müssen die Spielbretter in eine andere Form gebracht werden. Wenn sie bei einem herkömlichen Spielfeld belassen werden würden, würde viel zu viel Speicherplatz benötigt werden. Also will ich das Spielbrett in eine Zahl verwandeln. Zuerst kommt die grösse des Spielfelds, dann die Postition der Konfiguration auf dem Spielfeld, darauf folgt die eigentliche grösse der Konfiguration, die Anzahl an toten Zellen bis zur ersten lebendigen Zelle und schlussendlich noch die Zahl des Spielbrettes. 
 Die Zahl des Spielbrettes ergibt sich aus dem Spielfeld als binäre Zahl, die Nullen stellen die toten Zellen und die Einsen die lebendigen dar. Diese Zahl wird in eine hexadimensionale Zahl umgewandelt um weiteren Speicherplatz zu sparen. Das folgende Spielbrett sieht dann also wie folgt aus:
 
 
@@ -158,7 +158,7 @@ Spielbrett:                     Zahl:
  --- --- --- --- ---  
 |   |   |   |   | o | 
  --- --- --- --- ---  
-|   |   |   |   | o |           5,9,0x84c0
+|   |   |   |   | o |        (5, 5):(1, 2)|(3, 3):2:0x4e
  --- --- --- --- --- 
 |   |   | o | o |   |
  --- --- --- --- --- 
@@ -174,7 +174,7 @@ Diese soeben erklärte Methode verwende ich ähnlich um die einzelnen zu simulie
 Zahl:     Binäre Zahl:    Zellen:        Aufgefüllte Zahl:              Gameboard:
                                                                         [False False False False False]
                                                                         [False False False False False]
- 1              1        5*5 = 25      0000000000000000000000001        [False False False False False]
+ 1             1         5*5 = 25      0000000000000000000000001        [False False False False False]
                                                                         [False False False False False]
                                                                         [False False False False  True]
           

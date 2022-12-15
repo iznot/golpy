@@ -48,3 +48,10 @@ def expand_gameboard_if_necessary(gb):
     if sum(gb[0][gb[0].shape[0]-1, :]) > 0 :
         gb = (np.insert(gb[0], gb[0].shape[0], 0, axis = 0), gb[1])
     return gb
+
+
+def turn_gb(gb):
+    gb1 = np.rot90(gb)
+    gb2 = np.rot90(gb1)
+    gb3 = np.rot90(gb2)
+    return gb1, gb2, gb3
