@@ -145,3 +145,48 @@ Diese relativen Spielfelder werden nun nach dem Schema der Oszillatoren abgeglic
 #### Überlebende Objekte (Survival)
 Falls die Konfiguration keiner der oben genannten Objekten entspricht, ist es laut meiner Definition ein überlebendes Objekt. Damit diese nun nicht endlos weiterlaufen, beziehungsweise die Simulation nicht zu lange dauert, baue ich einen Grenzwert ein. Wenn nach dem Erreichen dieses Wertes die Konfiguration immer noch keinem Objekt entspricht, bricht die Simulation ab und die Konfiguration gilt als überlebend. 
 
+### Speicherform des Spielbrettes 
+Um diese simulierten Konfigurationen und deren Endzustände abzuspeichern, müssen die Spielbretter in eine andere Form gebracht werden. Wenn sie bei einem herkömlichen Spielfeld belassen werden würden, würde viel zu viel Speicherplatz benötigt werden. Also will ich das Spielbrett in eine Zahl verwandeln. Zuerst kommt die Anzahl an Kollonen, dann die Anzahl an toten Zellen bis zur ersten lebendigen und schlussendlich noch die Zahl des Spielbrettes. 
+Die Zahl des Spielbrettes ergibt sich aus dem Spielfeld als binäre Zahl, die Nullen stellen die toten Zellen und die Einsen die lebendigen dar. Diese Zahl wird in eine hexadimensionale Zahl umgewandelt um weiteren Speicherplatz zu sparen. Das folgende Spielbrett sieht dann also wie folgt aus:
+
+
+{title: "Gameboard als Zahl", id:numbre_gb}
+```text
+Spielbrett:                     Zahl:
+ --- --- --- --- ---  
+|   |   |   |   |   | 
+ --- --- --- --- ---  
+|   |   |   |   | o | 
+ --- --- --- --- ---  
+|   |   |   |   | o |           5,9,0x84c0
+ --- --- --- --- --- 
+|   |   | o | o |   |
+ --- --- --- --- --- 
+|   |   |   |   |   |
+ --- --- --- --- --- 
+```
+
+### Zähler
+Diese soeben erklärte Methode verwende ich ähnlich um die einzelnen zu simulierenden Konfigurationen zu generieren. Ein Zähler zählt jedes mal, wenn eine neue Anfangskonfiguration in die Simulation gegeben wird, herauf. Einzig die höchste Zahl muss bekannt sein, also wie viele verschiedene Konfigurationen auf diesem Spielfeld generiert werden können. Da hier eine Wahrscheinlichkeit mit zwei möglichen Ausgängen besteht, muss jeweil 2^(Anazahl Zellen) gerechnet werden. Bei einem 5x5 Spielfeld würden alle Möglichkeiten zusammen also 2^(5*5)=33'554'432 ergeben. Nun zählt der Zähler bis zum erreichen dieser Zahl hoch. Jede Zahl wird nun zuerst in eine binäre Zahl umgewandelt. Diese wird nun mit der Anzahl an Zellen verglichen, bis sie auf die gleiche Länge kommen. Da die Länge und Breite des Spielbrettes bekannt sind, kann nun aus dieser binären Zahl einfach ein Spielbrett mit der gewünschten Konfiguration erstellt werden. 
+
+{title: "Dezimalzahl als Spielbrett", id: decimale_gb}
+```text
+Zahl:     Binäre Zahl:    Zellen:        Aufgefüllte Zahl:              Gameboard:
+                                                                        [False False False False False]
+                                                                        [False False False False False]
+ 1              1        5*5 = 25      0000000000000000000000001        [False False False False False]
+                                                                        [False False False False False]
+                                                                        [False False False False  True]
+          
+```
+
+### Abspeichern
+NOTE alle gameboards abspeichern? für problemlösung
+Alles was ich schpeichern will, speichere ich in ein CSV-File. Dieses Format eignet sich besonders gut, da es einfach in eine Exceltabelle transformiert werden kann. Jede einzelne Generation einer Konfiguration abzuspeichern würde zu viel Speicherplatz brauchen. Deshalb werden diese auf die Anzahl an Generationen beschränkt. Die Anfangs- und Endslänge beziehnugsweise Breite, die Anfangs und Endkonfiguration und die Definition des Objektes werden auch abgespeichert. Zudem noch die Periodizität, falls es sich um ein oszillierendes oder gleitendes Objekt handelt. 
+TODO Bild von CSV- File
+
+
+                                                                                      
+                                                                                      
+                                                                               
+                                                                                                                                                                
