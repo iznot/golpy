@@ -124,10 +124,12 @@ def convert_to_gameboard(gameboard_str):
     full_shape = literal_eval(gb_specs[0])
     origin = literal_eval(gb_specs[1])
 
+    #NOTE: wir erstellen ein Gameboard mit der gewünschten Form (aber alles leer)
     full_gameboard_a = np.full(full_shape, False)
 
+    #NOTE: jetzt platzieren wir die Figur an die richtige Stelle, relativ zum Ursprung
     full_gameboard_a[ origin[0]:(origin[0]+shape[0])  , origin[1]:(origin[1]+shape[1])   ] = gameboard[0]
-#TODO wieso brauchts diese komische Form und 'full_gameboard_a' reicht nicht aus?
+
     gameboard = gm.create_gameboard(full_gameboard_a)
 
 
@@ -172,17 +174,18 @@ def generate_simulation(rows,cols,max_runs):
                 expected_end = dt.datetime.now() + dt_diff * (1.0 - prog) / prog
                 print(f'{simulation_count} simulations for {gameboard_int}/{max_value} gameboards. Max p/h/w/r: {max_p}/{max_max_width}/{max_max_height}/{max_max_runs} Progress: {int(100*prog)}%. Expected end: {expected_end}')
 
-            if gameboard[0].shape != (rows, cols):
-                #skipping non-full 
+            if gameboard[0].shape[0] < rows and gameboard[0].shape[1] < cols:
+                #skipping non-full
                 continue
             
 
             # check if current gb is in history
-            # NOTE: debug only
-            already_simulated = compare_rotated(gameboard_sim_start_history, gameboard)
+            already_simulated = check_similar_exists(gameboard, gameboard_sim_start_history)
 
             if already_simulated:
               continue              
+            else:
+                gameboard_sim_start_history.append(gameboard)
 
             gameboards, exit_criteria, periodicity, runs = run_simulation(gameboard, max_runs)
            
@@ -204,41 +207,29 @@ def generate_simulation(rows,cols,max_runs):
 
             simulation_count += 1
 
-def check_similar_exists(gameboard_sim_start_history, gb, gb1, gb2, gb3):
-    exists = False
-    for past_gameboard in gameboard_sim_start_history:
-        exists = gm.gameboard_equal(gb,past_gameboard)
-        if exists:
-            break
-    for past_gameboard in gameboard_sim_start_history:
-        exists = gm.gameboard_equal(gb1,past_gameboard)
-        if exists:
-            break
-    for past_gameboard in gameboard_sim_start_history:
-        exists = gm.gameboard_equal(gb2,past_gameboard)
-        if exists:
-            break
-    for past_gameboard in gameboard_sim_start_history:
-        exists = gm.gameboard_equal(gb3,past_gameboard)
-        if exists:
-            break
+def check_similar_exists(gb, gameboard_sim_start_history):
+
+    gb_rotations = gam.turn_gb(gb)
+
+    for gb_rot in gb_rotations:
+        for past_gameboard in gameboard_sim_start_history:
+            exists = gm.gameboard_equal(gb_rot,past_gameboard, check_origin=False)
+            if exists:
+                return True
     
-    if not exists:
-        gameboard_sim_start_history.append(gb)
+    return False    
     
-    return exists
+    
 
         
     
 def main():
+    generate_simulation(2,2,100)
+    generate_simulation(3,3,100)
     generate_simulation(4,4,100)
 
 if __name__ == "__main__":
     main()
 
-def compare_rotated(gameboard_sim_start_history, gb):
-    cut_gb = gam.cut_both_axis(gb)
-    cut_1, cut_2, cut_3 = gam.turn_gb(gb)
-    exists = check_similar_exists(gameboard_sim_start_history, cut_gb, cut_1, cut_2, cut_3)
-    return exists
+    
 

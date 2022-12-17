@@ -51,7 +51,7 @@ def expand_gameboard_if_necessary(gb):
 
 
 def turn_gb(gb):
-    gb1 = np.rot90(gb)
-    gb2 = np.rot90(gb1)
-    gb3 = np.rot90(gb2)
-    return gb1, gb2, gb3
+    gb1 = gm.create_gameboard(np.rot90(gb[0]))
+    gb2 = gm.create_gameboard(np.rot90(gb1[0]))
+    gb3 = gm.create_gameboard(np.rot90(gb2[0]))
+    return gb, gb1, gb2, gb3
