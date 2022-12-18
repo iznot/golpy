@@ -1,16 +1,9 @@
-
-
-TODO: Seitenumbruch?
-
-
-
 # Einleitung #
-<!-- das ist ein Teil-->
 
 ## John Conway
-John Horton Conway ist wohl einer der bedeutsamsten Mathematiker aus dem letzten Jahrhundert. Er wurde 1937 in Liverpool geboren und verstarb vor zwei Jahren im Alter von 82 Jahren an Covid19. Er studierte Mathematik an der Universität Cambridge, wo er später mathematische Logik unterrichtete. Während dieser Zeit machte er sich einen Namen in dem Gebiet der Gruppentheorie. Er entdeckte eine endliche Gruppe mit über 8 Trillionen Elementen in einem 24-dimensionalem Raum, die nach ihm benannt wurde.
+John Horton Conway ist einer der bedeutsamsten Mathematiker aus dem letzten Jahrhundert. Er ist 1937 in Liverpool geboren worden und verstarb vor zwei Jahren im Alter von 82 Jahren an Covid19. Er studierte Mathematik an der Universität Cambridge, wo er später mathematische Logik unterrichtete. Während dieser Zeit machte er sich einen Namen in dem Gebiet der Gruppentheorie. Er entdeckte eine endliche Gruppe mit über 8 Trillionen Elementen in einem 24-dimensionalem Raum, die nach ihm benannt wurde.
 
-Ihm war es wichtig, die Mathematik den Leuten näherzubringen. Dadurch unterrichtete er nicht nur Hochbegabte an Universitäten, sondern auch jüngere und normal-talentierte Kinder. Er gab viele Vorträge, bei denen er entweder gänzlich vom Thema abkam, oder gar nicht erst erschien, bezeichnete sich selbst als faul und ging stets barfuss oder in Sandalen. Er widerspiegelte wohl genau das Bild, was die Allgemeinheit von einem zerstreuten Professor hat.
+Ihm war es wichtig, die Mathematik den Leuten näherzubringen. Dadurch unterrichtete er nicht nur Hochbegabte an Universitäten, sondern auch jüngere und normal-talentierte Kinder. Er gab viele Vorträge, bei denen er entweder gänzlich vom Thema abkam, oder gar nicht erst erschien, bezeichnete sich selbst als faul und ging stets barfuss oder in Sandalen. Er widerspiegelte genau das Bild, was die Allgemeinheit von einem zerstreuten Professor hat.
 
 {width: "30%"}
 ![Abb. 1: John Horton Conway](conway.png) 
@@ -23,11 +16,11 @@ Die Faszination des Spieles liegt darin, dass ein einfaches Konzept mit vier sim
 
 ## Regel
 
-Ein faszinierendes Spiel, welches auf drei einfachen Regeln basiert. Man stelle sich ein Schachbrett vor, welches über eine beliebig grosse Anzahl an Feldern verfügt. Jedes Feld, oder besser, jede Zelle kann entweder lebendig oder tot sein. Durch die Abhängigkeit von ihren Nachbarn kann sich der Status der Zelle von Generation zu Generation verändern. Jede Zelle hat acht Nachbarn, drei oben, drei unten und noch je einen auf jeder Seite. Zu Beginn kann der Zustand jeder Zelle festgelegt werden. Nun gelten folgende Regeln:
+Ein faszinierendes Spiel, welches auf vier einfachen Regeln basiert. Man stelle sich ein Schachbrett vor, welches über eine beliebig grosse Anzahl an Feldern verfügt. Jedes Feld, oder besser, jede Zelle kann entweder lebendig oder tot sein. Durch die Abhängigkeit von ihren Nachbarn kann sich der Status der Zelle von Generation zu Generation verändern. Jede Zelle hat acht Nachbarn, drei oben, drei unten und noch je einen auf jeder Seite. Zu Beginn kann der Zustand jeder Zelle festgelegt werden. Nun gelten folgende Regeln:
 1.	Der Status einer Zelle bleibt unverändert, wenn diese zwei Nachbarn hat.
 2.	Hat die Zelle drei Nachbarn, ist diese zwingend am Leben.
 3.	Wenn weniger als zwei Nachbarn leben, stirbt die Zelle an Einsamkeit.
-4.	Hat sie mehr als drei Nachbarn stirbt sie an Überbevölkerung.
+4.	Hat sie mehr als drei Nachbarn, stirbt sie an Überbevölkerung.
 
 {title: "Lebensentwicklung", id:life_gb}
 ```text
@@ -43,7 +36,8 @@ Konfiguration:            1. Generation:           2. Generation:
  --- --- --- --- ---      --- --- --- --- ---      --- --- --- --- ---             
 |   |   |   |   |   |    |   |   |   |   |   |    |   |   |   |   |   |              
  --- --- --- --- ---      --- --- --- --- ---      --- --- --- --- ---             
-        
+```
+
 ## Objekte    
 
 Über die Jahre sind viele unterschiedliche Objekte entdeckt worden. Diese können in verschiedene Kategorien eingeteilt werden:
@@ -51,7 +45,7 @@ Konfiguration:            1. Generation:           2. Generation:
 ### Statische Objekte
 
 Statische Objekte, oft auch «Stillleben» genannt, definieren sich dadurch, dass sie ohne äussere Einflüsse stillstehen. Dies ist möglich, wenn jede lebende Zelle zwei oder drei Nachbarn hat, aber keine der tote genau drei.
-Die 2. Generation von eben ist ein Beispiel für ein staatisches Projekt:
+Die 2. Generation von eben ist ein Beispiel für ein staatisches Objekt:
 
 {title: "Statisches Objekt", id:stable_gb}
 ```text
@@ -74,51 +68,108 @@ Oszillatoren ändern sich einem bestimmten Schema folgend in periodischen Zeitab
 {title: "Oszillierende Objekte", id:oscillator}
 
 ```text
-Konfiguration:                              1. Generation                              2.Generation
- --- --- --- --- --- --- --- --- ---         --- --- --- --- --- --- --- --- ---       --- --- --- --- --- --- --- --- ---                                   
-|   |   |   |   |   |   |   |   |   |       |   |   |   |   | o |   |   |   |   |     |   |   |   |   |   |   |   |   |   |                                  
- --- --- --- --- --- --- --- --- ---         --- --- --- --- --- --- --- --- ---       --- --- --- --- --- --- --- --- ---                                    
-|   |   |   | o | o | o |   |   |   |       |   |   |   |   | o |   |   |   |   |     |   |   |   | o | o | o |   |   |   |                                  
- --- --- --- --- --- --- --- --- ---         --- --- --- --- --- --- --- --- ---       --- --- --- --- --- --- --- --- ---                                     
-|   |   |   |   |   |   |   |   |   |       |   |   |   |   | o |   |   |   |   |     |   |   |   |   |   |   |   |   |   |                                   
- --- --- --- --- --- --- --- --- ---         --- --- --- --- --- --- --- --- ---       --- --- --- --- --- --- --- --- ---                                     
-|   | o |   |   |   |   |   | o |   |       |   |   |   |   |   |   |   |   |   |     |   | o |   |   |   |   |   | o |   |                                   
- --- --- --- --- --- --- --- --- ---         --- --- --- --- --- --- --- --- ---       --- --- --- --- --- --- --- --- ---                                     
-|   | o |   |   |   |   |   | o |   |       | o | o | o |   |   |   | o | o | o |     |   | o |   |   |   |   |   | o |   |                                   
- --- --- --- --- --- --- --- --- ---         --- --- --- --- --- --- --- --- ---       --- --- --- --- --- --- --- --- ---                                     
-|   | o |   |   |   |   |   | o |   |       |   |   |   |   |   |   |   |   |   |     |   | o |   |   |   |   |   | o |   |                                   
- --- --- --- --- --- --- --- --- ---         --- --- --- --- --- --- --- --- ---       --- --- --- --- --- --- --- --- ---                                     
-|   |   |   |   |   |   |   |   |   |       |   |   |   |   | o |   |   |   |   |     |   |   |   |   |   |   |   |   |   |                                   
- --- --- --- --- --- --- --- --- ---         --- --- --- --- --- --- --- --- ---       --- --- --- --- --- --- --- --- ---                                     
-|   |   |   | o | o | o |   |   |   |       |   |   |   |   | o |   |   |   |   |     |   |   |   | o | o | o |   |   |   |                                   
- --- --- --- --- --- --- --- --- ---         --- --- --- --- --- --- --- --- ---       --- --- --- --- --- --- --- --- ---                                     
-|   |   |   |   |   |   |   |   |   |       |   |   |   |   | o |   |   |   |   |     |   |   |   |   |   |   |   |   |   |                                   
- --- --- --- --- --- --- --- --- ---         --- --- --- --- --- --- --- --- ---       --- --- --- --- --- --- --- --- ---                                      
+Konfiguration:                           
+ --- --- --- --- --- --- --- --- ---                                      
+|   |   |   |   |   |   |   |   |   |                                     
+ --- --- --- --- --- --- --- --- ---                                       
+|   |   |   | o | o | o |   |   |   |                                     
+ --- --- --- --- --- --- --- --- ---                                        
+|   |   |   |   |   |   |   |   |   |                                      
+ --- --- --- --- --- --- --- --- ---                                        
+|   | o |   |   |   |   |   | o |   |                                      
+ --- --- --- --- --- --- --- --- ---                                        
+|   | o |   |   |   |   |   | o |   |                                      
+ --- --- --- --- --- --- --- --- ---                                        
+|   | o |   |   |   |   |   | o |   |                                      
+ --- --- --- --- --- --- --- --- ---                                        
+|   |   |   |   |   |   |   |   |   |                                      
+ --- --- --- --- --- --- --- --- ---                                        
+|   |   |   | o | o | o |   |   |   |                                      
+ --- --- --- --- --- --- --- --- ---                                        
+|   |   |   |   |   |   |   |   |   |                                      
+ --- --- --- --- --- --- --- --- ---     
+
+
+1. Generation                         
+ --- --- --- --- --- --- --- --- ---  
+|   |   |   |   | o |   |   |   |   | 
+ --- --- --- --- --- --- --- --- ---  
+|   |   |   |   | o |   |   |   |   | 
+ --- --- --- --- --- --- --- --- ---  
+|   |   |   |   | o |   |   |   |   | 
+ --- --- --- --- --- --- --- --- ---  
+|   |   |   |   |   |   |   |   |   | 
+ --- --- --- --- --- --- --- --- ---  
+| o | o | o |   |   |   | o | o | o | 
+ --- --- --- --- --- --- --- --- ---  
+|   |   |   |   |   |   |   |   |   | 
+ --- --- --- --- --- --- --- --- ---  
+|   |   |   |   | o |   |   |   |   | 
+ --- --- --- --- --- --- --- --- ---  
+|   |   |   |   | o |   |   |   |   | 
+ --- --- --- --- --- --- --- --- ---  
+|   |   |   |   | o |   |   |   |   | 
+ --- --- --- --- --- --- --- --- --- 
+
+
+2.Generation
+ --- --- --- --- --- --- --- --- ---  
+|   |   |   |   |   |   |   |   |   | 
+ --- --- --- --- --- --- --- --- ---  
+|   |   |   | o | o | o |   |   |   | 
+ --- --- --- --- --- --- --- --- ---  
+|   |   |   |   |   |   |   |   |   | 
+ --- --- --- --- --- --- --- --- ---  
+|   | o |   |   |   |   |   | o |   | 
+ --- --- --- --- --- --- --- --- ---  
+|   | o |   |   |   |   |   | o |   | 
+ --- --- --- --- --- --- --- --- ---  
+|   | o |   |   |   |   |   | o |   | 
+ --- --- --- --- --- --- --- --- ---  
+|   |   |   |   |   |   |   |   |   | 
+ --- --- --- --- --- --- --- --- ---  
+|   |   |   | o | o | o |   |   |   | 
+ --- --- --- --- --- --- --- --- ---  
+|   |   |   |   |   |   |   |   |   | 
+ --- --- --- --- --- --- --- --- ---  
+
 ```
 
 ### Gleitende Objekte
 Wie auch die Oszillatoren verändern sich diese Objekte periodisch nach einem bestimmten Schema. Der Unterschied liegt aber darin, dass sie ihre Position ändern. Auf einem endlosen Spielfeld hören sie also, ohne äusseren Einfluss, nie auf, sich fortzubewegen.
 {title: "Gleitende Objekte", id:spaceship_gb}
 ```text
-Konfiguration:         1. Generation:         2.Generation:           3.Generation:            4.Generation              
- --- --- --- --- ---    --- --- --- --- ---    --- --- --- --- ---     --- --- --- --- ---     --- --- --- --- ---         
-|   |   |   |   |   |  |   |   |   |   |   |  |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |    
- --- --- --- --- ---    --- --- --- --- ---    --- --- --- --- ---     --- --- --- --- ---     --- --- --- --- ---         
-|   |   | o |   |   |  |   | o |   | o |   |  |   |   |   | o |   |   |   | o |   |   |   |   |   |   | o |   |   |    
- --- --- --- --- ---    --- --- --- --- ---    --- --- --- --- ---     --- --- --- --- ---     --- --- --- --- ---         
-|   |   |   | o |   |  |   |   | o | o |   |  |   | o |   | o |   |   |   |   | o | o |   |   |   |   |   | o |   |    
- --- --- --- --- ---    --- --- --- --- ---    --- --- --- --- ---     --- --- --- --- ---     --- --- --- --- ---         
-|   | o | o | o |   |  |   |   | o |   |   |  |   |   | o | o |   |   |   | o | o |   |   |   |   | o | o | o |   |    
- --- --- --- --- ---    --- --- --- --- ---    --- --- --- --- ---     --- --- --- --- ---     --- --- --- --- ---         
-|   |   |   |   |   |  |   |   |   |   |   |  |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |    
- --- --- --- --- ---    --- --- --- --- ---    --- --- --- --- ---     --- --- --- --- ---     --- --- --- --- ---        
-
+Konfiguration:         1. Generation:         2.Generation:               
+ --- --- --- --- ---    --- --- --- --- ---    --- --- --- --- ---          
+|   |   |   |   |   |  |   |   |   |   |   |  |   |   |   |   |   |     
+ --- --- --- --- ---    --- --- --- --- ---    --- --- --- --- ---          
+|   |   | o |   |   |  |   | o |   | o |   |  |   |   |   | o |   |     
+ --- --- --- --- ---    --- --- --- --- ---    --- --- --- --- ---          
+|   |   |   | o |   |  |   |   | o | o |   |  |   | o |   | o |   |     
+ --- --- --- --- ---    --- --- --- --- ---    --- --- --- --- ---          
+|   | o | o | o |   |  |   |   | o |   |   |  |   |   | o | o |   |     
+ --- --- --- --- ---    --- --- --- --- ---    --- --- --- --- ---          
+|   |   |   |   |   |  |   |   |   |   |   |  |   |   |   |   |   |     
+ --- --- --- --- ---    --- --- --- --- ---    --- --- --- --- ---         
+ 3.Generation:            4.Generation         
+  --- --- --- --- ---     --- --- --- --- ---  
+ |   |   |   |   |   |   |   |   |   |   |   | 
+  --- --- --- --- ---     --- --- --- --- ---  
+ |   | o |   |   |   |   |   |   | o |   |   | 
+  --- --- --- --- ---     --- --- --- --- ---  
+ |   |   | o | o |   |   |   |   |   | o |   | 
+  --- --- --- --- ---     --- --- --- --- ---  
+ |   | o | o |   |   |   |   | o | o | o |   | 
+  --- --- --- --- ---     --- --- --- --- ---  
+ |   |   |   |   |   |   |   |   |   |   |   | 
+  --- --- --- --- ---     --- --- --- --- ---  
+```
 
 
 ### Selbstauslöschende Objekte
 
 Diese Objekte enden nach beliebeg vielen Generationen in einem leeren Spielfeld
-TODO Beispiel erased
+
 
 {text:"Selbstauslöschendes Objekt", id:erased_gb}
 ```text
@@ -134,12 +185,12 @@ Konfiguration:                1.Generation                  2. Generation:
  --- --- --- --- ---           --- --- --- --- ---           --- --- --- --- ---   
 |   |   |   |   |   |         |   |   |   |   |   |         |   |   |   |   |   |
  --- --- --- --- ---           --- --- --- --- ---           --- --- --- --- ---   
+```
 
 
-
-Es gibt noch weitere Objekte wie Gleiterkanonen, die in einem periodischem Zeitabstand immer wieder Gleiter erzeugen, Puffer, die eine Art Gleiter mit Überbleibsel darstellen oder völlig chaotische Objekte. Diese weiteren Objekte sind für diese Arbeit jedoch nicht relevant.
+Es gibt noch weitere Objekte wie Gleiterkanonen, die in einem periodischem Zeitabstand immer wieder Gleiter erzeugen, Puffer, die eine Art Gleiter mit Überbleibsel darstellen oder völlig chaotische Objekte. Diese Objekte werden in dieser Arbeit jedoch nicht konkret berücksichtigt.
 
 ## Probleme
-Der Anwendungsbereich des «Game of Life» greift viele Themenbereiche auf und löst somit auch bei vielen Menschen eine Faszination aus. Aufgrund dessen beschäftigen sich Mathematiker, Informatiker, Physiker und viele mehr mit den ungelösten Problemen, die das Spiel mit sich bringt. Einige der Probleme sind mit der Zeit bereits gelöst worden, andere noch nicht. In der Theoretischen Informatik ist das Spiel besonders als Entscheidungsproblem interessant. Es existiert keinen Algorithmus, der mit dem Input zweier Konfiguration entscheiden kann, ob die eine aus der anderen entstehen kann. Zudem ist auch kein Algorithmus bekannt, der bestimmen kann, was der Endzustand einer gegebenen Konfiguration ist. In dieser Arbeit versuche ich mich diesen beiden Problemen zu widmen.
+Der Anwendungsbereich des «Game of Life» greift viele Themenbereiche auf und löst somit auch bei vielen Menschen eine Faszination aus. Aufgrund dessen beschäftigen sich Mathematiker, Informatiker, Physiker und viele mehr mit den ungelösten Problemen, die das Spiel mit sich bringt. Einige der Probleme sind mit der Zeit bereits gelöst worden, andere noch nicht. In der Theoretischen Informatik ist das Spiel besonders als Entscheidungsproblem interessant. Es existiert keinen Algorithmus, der mit dem Input zweier Konfiguration entscheiden kann, ob die eine aus der anderen entstehen kann. Zudem ist auch kein Algorithmus bekannt, der bestimmen kann, was der Endzustand einer gegebenen Konfiguration ist. In dieser Arbeit versuche ich, mich diesen beiden Problemen zu widmen.
 
 

@@ -2,7 +2,7 @@
 03_Vorwort.md
 04_Zusammenfassung.md
 05_Einleitung.md
-06_Material&Methode.md
+06_Material_und_Methode.md
 07_Resultate.md
 08_Diskussion.md 
 09_Quellenverzeichnis.md
