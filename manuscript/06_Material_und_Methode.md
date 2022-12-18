@@ -172,12 +172,12 @@ Diese soeben erklärte Methode verwende ich ähnlich um die einzelnen zu simulie
 
 {title: "Dezimalzahl als Spielbrett", id: decimale_gb}
 ```text
-Zahl:  Binäre Zahl:  Zellen:        Aufgefüllte Zahl:              Gameboard:
-                                                                 [False False False False False]
-                                                                 [False False False False False]
- 1         1         5*5 = 25      0000000000000000000000001     [False False False False False]
-                                                                 [False False False False False]
-                                                                 [False False False False  True]
+Zahl:  Binärzahl:  Zellen:    Aufgefüllte Zahl:    Gameboard:
+                                                   [False False False False False]
+                                0000000000000      [False False False False False]
+ 1         1       5*5 = 25     000000000001       [False False False False False]
+                                                   [False False False False False]
+                                                   [False False False False  True]
           
 ```
 
