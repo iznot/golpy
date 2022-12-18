@@ -179,6 +179,14 @@ def generate_simulation(rows,cols,max_runs):
                 continue
             
 
+            
+            
+            # filter "boring" cases (to improve performance)
+            gameboards, exit_criteria, periodicity, runs = run_simulation(gameboard, 2)
+
+            if exit_criteria == 'extinct' or exit_criteria == 'stable':
+                continue
+
             # check if current gb is in history
             already_simulated = check_similar_exists(gameboard, gameboard_sim_start_history)
 
@@ -224,9 +232,9 @@ def check_similar_exists(gb, gameboard_sim_start_history):
         
     
 def main():
-    generate_simulation(2,2,100)
+    #generate_simulation(2,2,100)
     generate_simulation(3,3,100)
-    generate_simulation(4,4,100)
+    #generate_simulation(4,4,100)
 
 if __name__ == "__main__":
     main()
