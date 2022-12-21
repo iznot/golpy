@@ -76,5 +76,6 @@
         "titleBar.inactiveBackground": "#e3738399",
         "titleBar.inactiveForeground": "#15202b99"
     },
-    "peacock.color": "#E37383"
+    "peacock.color": "#E37383",
+    "ltex.language": "de-CH"
 }

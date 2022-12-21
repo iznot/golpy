@@ -3,16 +3,15 @@
     "ms-python.python",
     "njpwerner.autodocstring",
     "ms-vscode.powershell",
-    "Gruntfuggly.todo-tree",
+    "gruntfuggly.todo-tree",
     "johnpapa.vscode-peacock",
-
-    "TakumiI.markdowntable",
+    "takumii.markdowntable",
     "yzhang.markdown-all-in-one",
     "manuth.markdown-converter",
     "bierner.markdown-mermaid",
     "mathematic.vscode-pdf",
-    "telesoho.vscode-markdown-paste-image"
-        
+    "telesoho.vscode-markdown-paste-image",
+    "valentjn.vscode-ltex"
 ]
 
 }
