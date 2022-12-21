@@ -139,6 +139,7 @@ def convert_to_gameboard(gameboard_str):
 
 #generate csv file
 
+# TODO: repl. sum_filter mit shape
 
 def generate_simulation(rows,cols,max_runs, sum_filter = None, filter_die_fasts = False, debug = False):
     cells = rows * cols
@@ -146,6 +147,7 @@ def generate_simulation(rows,cols,max_runs, sum_filter = None, filter_die_fasts 
 
     results_header = ['start_gameboard', 'end_gameboard', 'exit_criteria', 'periodicity', 'rows', 'cols', 'max_height', 'max_width', 'runs']
 
+    # TODO: if und sum_filter nicht mehr notwendig im Filenamen
     file_name = f'simulation_results_{rows}_{cols}.csv' if sum_filter is None else f'simulation_results_{rows}_{cols}_{sum_filter}.csv'
 
     with open(file_name, 'w',  newline='') as file:
@@ -186,11 +188,13 @@ def generate_simulation(rows,cols,max_runs, sum_filter = None, filter_die_fasts 
             
             
 
+            # TODO: teste ob input shape
             if gameboard[0].shape[0] < rows and gameboard[0].shape[1] < cols:
                 #skipping non-full
                 continue
             
 
+            # TODO: teste ob quadratisch oder flach -> sonst continue
             
             
             # filter "boring" cases (to improve performance)
@@ -213,6 +217,7 @@ def generate_simulation(rows,cols,max_runs, sum_filter = None, filter_die_fasts 
             start_gameboard = convert_to_string(gameboard)
             end_gameboard = convert_to_string(gameboards[len(gameboards)-1])
 
+            # TODO: überprüfen, sieht komisch aus
             max_height= np.shape(gameboards[len(gameboards)-1][0])[0]
             max_width = np.shape(gameboards[len(gameboards)-1][0])[1]
 
@@ -221,7 +226,7 @@ def generate_simulation(rows,cols,max_runs, sum_filter = None, filter_die_fasts 
             max_max_height = max(max_max_height, max_height)
             max_max_width = max(max_max_width, max_width)
 
-            new_row = [start_gameboard, end_gameboard, exit_criteria, periodicity, rows, cols, max_height, max_width, runs]
+            new_row = [start_gameboard, end_gameboard, exit_criteria, periodicity, rows, cols, max_max_height, max_max_width, runs]
 
             writer.writerow(new_row)
 
@@ -229,9 +234,19 @@ def generate_simulation(rows,cols,max_runs, sum_filter = None, filter_die_fasts 
 
 def check_similar_exists(gb, gameboard_sim_start_history):
 
-    gb_rotations = gam.turn_gb(gb)
 
-    for gb_variation in gb_rotations:
+
+    gb_variations = gam.turn_gb(gb)
+
+    #TODO: um Performance zu verbessern, machen wir einen dict of dict
+    # L1: 
+    #   key = Anzahl lebende
+    #   value = dict L2
+    # L2:
+    #   key = Anzahl lebende im onion ring (egal falls Ecken doppelt)
+    #   value = Liste mit gbs
+
+    for gb_variation in gb_variations:
         shape = gb[0].shape
         key = 10*shape[0]+shape[1]
         if key not in gameboard_sim_start_history:
@@ -243,34 +258,6 @@ def check_similar_exists(gb, gameboard_sim_start_history):
         gameboard_sim_start_history[key].append(gb_variation)
     return False
     
-    
-    
-
-        
-    
-def main():
-    #generate_simulation(2,2,100)
-    #generate_simulation(3,3,100)
-    #generate_simulation(4,4,100)
-
-
-    
-    def process(i):
-        generate_simulation(5,5,100, i, debug=False)
-    
-    r1 = range(15,9, -1)
-    r2 = range(16,26)
-    r3 = range(9, 3, -1)
-    rng = list(r1) + list(r2) + list(r3)
-
-    Parallel(n_jobs=18)(delayed(process)(i) for i in rng)
-    
-
-    
-
-if __name__ == "__main__":
-    main()
-
     
 def simulation_for_generations(rows, cols, max_runs):
     cells = rows*cols
@@ -304,3 +291,39 @@ def simulation_for_generations(rows, cols, max_runs):
 
         new_row = cut_gameboards
         writer.writerow(new_row)
+
+        
+    
+def main():
+    #generate_simulation(2,2,100)
+    #generate_simulation(3,3,100)
+    #generate_simulation(4,4,100)
+
+
+    
+    def process(i):
+        # TODO: anstatt i (Anzahl True) soll hier die Shape mitgegeben werden
+        generate_simulation(5,5,100, i, debug=False)
+    
+    r1 = range(15,9, -1)
+    r2 = range(16,26)
+    r3 = range(9, 3, -1)
+    rng = list(r1) + list(r2) + list(r3)
+
+    # TODO: anstatt eine List von Summen (True) soll hier eine Liste von Shapes erstellt werden
+    # z.b. für (5, 5) haben wir:
+    # - (1, 1)
+    # - (1, 2)
+    # - ...
+    # - (2, 1) -> nein! weil wir haben ja schon (1, 2) und mit Drehen und Spiegelung gibt es dasselbe
+    # ...
+    # - (5, 5)
+    Parallel(n_jobs=18)(delayed(process)(i) for i in rng)
+    
+
+    
+
+if __name__ == "__main__":
+    main()
+
+    

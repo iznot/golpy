@@ -51,10 +51,16 @@ def expand_gameboard_if_necessary(gb):
 
 
 def turn_gb(gb):
+
+    #TODO: wir wollen hier MINIMALE Anzahl von Varianten, d.h
+    # - wenn quadratisch: gb + rota1 + rota2 + rota3, gb horifilp + rota1 + rota2 + rota3
+    # - wenn flach: gb + rota2, gb horiflip + rota 2
     gb1 = gm.create_gameboard(np.rot90(gb[0]))
     gb2 = gm.create_gameboard(np.rot90(gb1[0]))
     gb3 = gm.create_gameboard(np.rot90(gb2[0]))
     gb4 = gm.create_gameboard(np.flip(gb[0], axis = 0))
     gb5 = gm.create_gameboard(np.flip(gb[0], axis = 1))
+
+    #TODO: doppelte entfernen
 
     return gb, gb1, gb2, gb3, gb4, gb5
