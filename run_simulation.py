@@ -240,4 +240,35 @@ if __name__ == "__main__":
     main()
 
     
+def simulation_for_generations(rows, cols, max_runs):
+    cells = rows*cols
+    max_value = 2^(cells)
+    cut_gameboards = []
+    generations_header = ['Startkonfiguration']
 
+    for i in max_runs[2:]:
+        i = 'Generation' + i
+        generations_header.append(i)
+        
+
+    with open(f'generations_of_gameboards', 'w',  newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(generations_header)
+
+
+    for gameboard_int in range(max_value):
+        gb_bin = bin(gameboard_int)[2:]
+        gb_bin = gb_bin.zfill(cells)
+        gb_array_1D = np.fromstring(gb_bin,'u1') - ord('0')
+        gb_array_2D = np.reshape(gb_array_1D, (rows, cols))
+        gameboard = gm.create_gameboard(gb_array_2D.astype(bool))
+        gameboard = gam.cut_both_axis(gameboard)
+
+        gameboards, exit_criteria, periodicity, runs = run_simulation(gameboard, 2)
+
+        for gb in gameboards:
+            gameboard = gam.cut_both_axis(gb)
+            cut_gameboards.append(gameboard)
+
+        new_row = cut_gameboards
+        writer.writerow(new_row)

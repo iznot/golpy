@@ -55,3 +55,23 @@ def turn_gb(gb):
     gb2 = gm.create_gameboard(np.rot90(gb1[0]))
     gb3 = gm.create_gameboard(np.rot90(gb2[0]))
     return gb, gb1, gb2, gb3
+
+def reflect_gameboard(gb):
+    gb = gb[0]
+    other = gb[1]
+
+    reversed_cols = [np.fliplr(gb)]
+    reversed_rows = [np.flipud(gb)]
+
+    reversed_cols.append(other)
+    reversed_rows.append(other)
+    gb = [gb]
+    gb.append(other)
+
+    if gm.gameboard_equal(gb, reversed_cols):
+        return 'no'
+    elif gm.gameboard_equal(gb, reversed_rows):
+        return 'no'
+    
+    return reversed_cols, reversed_rows
+
