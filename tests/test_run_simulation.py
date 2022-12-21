@@ -124,5 +124,12 @@ class TestSimulation(unittest.TestCase):
     def test_rotate_exists(self):
         gb_to_test = sim.convert_to_gameboard('(5, 5):(1, 2)|(3, 3):2:0x4e')
         gb_to_compare = sim.convert_to_gameboard('(3, 3):(0, 0)|(3, 3):1:0xe4')
-        res = sim.compare_rotated(gb_to_compare, gb_to_test)
+        res = sim.check_similar_exists(gb_to_compare, gb_to_test)
         assert res == True
+
+    def test_simulation_generations(self):
+        sim.simulation_for_generations()
+
+    def test_reflect_gameboard(self):
+        gb = sim.convert_to_gameboard('(4, 4):(0, 0)|(4, 4):1:0x701e')
+        gam.reflect_gameboard(gb)
