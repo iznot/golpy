@@ -7,6 +7,7 @@ import csv
 import datetime as dt
 import operator
 from ast import literal_eval
+from joblib import Parallel, delayed
 
 
 def run_simulation(gameboard, max_runs):
@@ -139,17 +140,19 @@ def convert_to_gameboard(gameboard_str):
 #generate csv file
 
 
-def generate_simulation(rows,cols,max_runs):
+def generate_simulation(rows,cols,max_runs, sum_filter = None, filter_die_fasts = False, debug = False):
     cells = rows * cols
     max_value = (2**cells)-1
 
     results_header = ['start_gameboard', 'end_gameboard', 'exit_criteria', 'periodicity', 'rows', 'cols', 'max_height', 'max_width', 'runs']
 
-    with open(f'simulation_results_{rows}_{cols}.csv', 'w',  newline='') as file:
+    file_name = f'simulation_results_{rows}_{cols}.csv' if sum_filter is None else f'simulation_results_{rows}_{cols}_{sum_filter}.csv'
+
+    with open(file_name, 'w',  newline='') as file:
         writer = csv.writer(file)
         writer.writerow(results_header)
 
-        gameboard_sim_start_history = []
+        gameboard_sim_start_history = {}
 
         simulation_count = 0
 
@@ -158,21 +161,30 @@ def generate_simulation(rows,cols,max_runs):
 
         start = dt.datetime.now()
 
-        for gameboard_int in range(max_value):
+        modu = int(max_value / 100)
+        for gameboard_int in range(max_value if not debug else 1000):
 
             gb_bin = bin(gameboard_int)[2:]
             gb_bin = gb_bin.zfill(cells)
             gb_array_1D = np.fromstring(gb_bin,'u1') - ord('0')
+
+
+            if gameboard_int > 0 and  gameboard_int % modu == 0:
+                dt_diff = dt.datetime.now() - start
+                prog = gameboard_int/max_value
+                expected_end = dt.datetime.now() + dt_diff * (1.0 - prog) / prog
+                print(f'Sum {sum_filter}: {simulation_count} simulations for {gameboard_int}/{max_value} gameboards. Max p/h/w/r: {max_p}/{max_max_width}/{max_max_height}/{max_max_runs} Progress: {int(100*prog)}%. Expected end: {expected_end}')
+
+            if sum_filter is not None:
+                if np.sum(gb_array_1D) != sum_filter:
+                    continue
+
             gb_array_2D = np.reshape(gb_array_1D, (rows, cols))
             gameboard = gm.create_gameboard(gb_array_2D.astype(bool))
 
             gameboard = gam.cut_both_axis(gameboard)
             
-            if gameboard_int > 0 and  gameboard_int % 1000 == 0:
-                dt_diff = dt.datetime.now() - start
-                prog = gameboard_int/max_value
-                expected_end = dt.datetime.now() + dt_diff * (1.0 - prog) / prog
-                print(f'{simulation_count} simulations for {gameboard_int}/{max_value} gameboards. Max p/h/w/r: {max_p}/{max_max_width}/{max_max_height}/{max_max_runs} Progress: {int(100*prog)}%. Expected end: {expected_end}')
+            
 
             if gameboard[0].shape[0] < rows and gameboard[0].shape[1] < cols:
                 #skipping non-full
@@ -182,18 +194,18 @@ def generate_simulation(rows,cols,max_runs):
             
             
             # filter "boring" cases (to improve performance)
-            gameboards, exit_criteria, periodicity, runs = run_simulation(gameboard, 2)
+            
+            if filter_die_fasts:
+                gameboards, exit_criteria, periodicity, runs = run_simulation(gameboard, 2)
 
-            if exit_criteria == 'extinct' or exit_criteria == 'stable':
-                continue
+                if exit_criteria == 'extinct' or exit_criteria == 'stable':
+                    continue
 
             # check if current gb is in history
-            already_simulated = check_similar_exists(gameboard, gameboard_sim_start_history)
+            exists = check_similar_exists(gameboard, gameboard_sim_start_history)
 
-            if already_simulated:
-              continue              
-            else:
-                gameboard_sim_start_history.append(gameboard)
+            if exists:
+                continue
 
             gameboards, exit_criteria, periodicity, runs = run_simulation(gameboard, max_runs)
            
@@ -219,13 +231,18 @@ def check_similar_exists(gb, gameboard_sim_start_history):
 
     gb_rotations = gam.turn_gb(gb)
 
-    for gb_rot in gb_rotations:
-        for past_gameboard in gameboard_sim_start_history:
-            exists = gm.gameboard_equal(gb_rot,past_gameboard, check_origin=False)
+    for gb_variation in gb_rotations:
+        shape = gb[0].shape
+        key = 10*shape[0]+shape[1]
+        if key not in gameboard_sim_start_history:
+            gameboard_sim_start_history[key] = []
+        for past_gameboard in gameboard_sim_start_history[key]:
+            exists = gm.gameboard_equal(gb_variation,past_gameboard, check_origin=False)
             if exists:
                 return True
+        gameboard_sim_start_history[key].append(gb_variation)
+    return False
     
-    return False    
     
     
 
@@ -233,8 +250,23 @@ def check_similar_exists(gb, gameboard_sim_start_history):
     
 def main():
     #generate_simulation(2,2,100)
-    generate_simulation(3,3,100)
+    #generate_simulation(3,3,100)
     #generate_simulation(4,4,100)
+
+
+    
+    def process(i):
+        generate_simulation(5,5,100, i, debug=False)
+    
+    r1 = range(15,9, -1)
+    r2 = range(16,26)
+    r3 = range(9, 3, -1)
+    rng = list(r1) + list(r2) + list(r3)
+
+    Parallel(n_jobs=18)(delayed(process)(i) for i in rng)
+    
+
+    
 
 if __name__ == "__main__":
     main()

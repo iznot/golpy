@@ -54,4 +54,7 @@ def turn_gb(gb):
     gb1 = gm.create_gameboard(np.rot90(gb[0]))
     gb2 = gm.create_gameboard(np.rot90(gb1[0]))
     gb3 = gm.create_gameboard(np.rot90(gb2[0]))
-    return gb, gb1, gb2, gb3
+    gb4 = gm.create_gameboard(np.flip(gb[0], axis = 0))
+    gb5 = gm.create_gameboard(np.flip(gb[0], axis = 1))
+
+    return gb, gb1, gb2, gb3, gb4, gb5
