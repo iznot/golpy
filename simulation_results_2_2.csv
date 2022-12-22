@@ -1,2 +1,0 @@
-start_gameboard,end_gameboard,exit_criteria,periodicity,rows,cols,max_height,max_width,runs
-"(2, 2):(0, 0)|(2, 2):1:0x7","(2, 2):(0, 0)|(2, 2):0:0xf",stable,0,2,2,2,2,2

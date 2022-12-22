@@ -195,3 +195,12 @@ class TestSolution(unittest.TestCase):
         g1 = gam.cut_both_axis(g1)
         assert g1[1] == (0, 1)
 
+
+    def test_get_neighbors(self):
+        g0 = gm.create_gameboard(rows = 3, cols = 3)
+        g0[0][0,0] = True
+        g0[0][0,2] = True
+        g0[0][2,2] = True
+        gm.print_gameboard(g0)
+        nc = gm.get_neighbour_count(g0)
+        print(nc)

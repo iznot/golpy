@@ -21,14 +21,24 @@ class DrawableGrid(tk.Frame):
         self.canvas = tk.Canvas(self, bd=0, highlightthickness=0, width=canvas_width, height=canvas_height)
         self.canvas.pack(fill="both", expand=True, padx=2, pady=2)
 
+        nc = gm.get_neighbour_count(gameboard)
+
+        next_gen = gm.play(gameboard)
+
         for row in range(self.height):
             for column in range(self.width):
                 x0, y0 = (column * self.size), (row*self.size)
                 x1, y1 = (x0 + self.size), (y0 + self.size)
                 color = "black" if gameboard[0][row, column] == True else "white"
+                
                 self.canvas.create_rectangle(x0, y0, x1, y1,
-                                             fill=color, outline="gray",
+                                             fill=color, outline="gray", 
                                              tags=(self._tag(row, column),"cell" ))
+                
+                if nc[row, column] > 0:
+                    color = "green" if next_gen[0][row, column] == True else "red"
+                    self.canvas.create_text(x0 + 0.5*self.size, y0 + 0.5*self.size, fill=color,font="Consolas 14",
+                        text=str(nc[row, column]), tags = (self._tag(row, column),"cell" ))
 
         self.canvas.tag_bind("cell", "<B1-Motion>", self.paint)
         self.canvas.tag_bind("cell", "<1>", self.paint)
@@ -77,6 +87,9 @@ class DrawableGrid(tk.Frame):
 
     def paint(self, event):
         cell = self.canvas.find_closest(event.x, event.y)
+        if self.canvas.type(cell) == 'text':
+            cell = self.canvas.find_below(cell)
+
         color = self.canvas.itemcget(cell, "fill")
         color = "black" if color == "white" else "white"
         self.canvas.itemconfigure(cell, fill=color)

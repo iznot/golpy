@@ -1,5 +1,6 @@
 import numpy as np
 import os
+from scipy.ndimage import convolve
 
 
 def create_gameboard(input_array = None, rows = None, cols = None, origin=(0,0)):
@@ -108,79 +109,26 @@ def get_gameboard_text_compact(gameboard : np.array) -> str:
 
 
 
-def play(gameboard) -> np.array:
-    """Macht einen Spielzug
+def get_neighbour_count(gameboard) -> np.array:
+    kernel = [[1, 1, 1],
+              [1, 0, 1],
+              [1, 1, 1]]
 
-    Args:
-        gameboard (np.array): das gambeboard vor dem Spielzug
+    nc = convolve(gameboard[0].astype('int'), kernel, mode = 'wrap')
+    return nc
 
-    Returns:
-        np.array: das gameboard nach dem Spielzug
-    """
+def play(gameboard):
+    neighbor_count = get_neighbour_count(gameboard)
 
-    rows = gameboard[0].shape[0]
-    cols = gameboard[0].shape[1]
+    get_alive = np.logical_and(gameboard[0] == False, neighbor_count == 3)
+    stay_alive = np.logical_and(gameboard[0] == True, np.logical_or(neighbor_count == 2, neighbor_count == 3))
 
-    # 1. Resultat (shallow copy, wir wollen das Input-Object nicht verändern)
-    gameboard_new = (np.copy(gameboard[0]), gameboard[1])
-    
-   
-    # 2. durch rows iterieren
-    for row in range(rows):
-        # 3. durch cols (respektive cells) iterieren
-        for col in range(cols):
-            
-            alive = gameboard[0][row, col]
-            
-            # 4. Die Nachbarn zählen
-            
-            ni = get_neighbour_indices(row, col, rows, cols)
-            toprow = ni[0]
-            bottomrow = ni[1]
-            leftcol = ni[2]
-            rightcol = ni[3]
+    gb_a = np.logical_or(get_alive, stay_alive)
+
+    gb = (gb_a, gameboard[1])
+    return gb
 
 
-            # wir brauche 8 neighbours. Bei N startend im Uhrzeigersinn:
-            neighbour = [
-                gameboard[0][toprow, col], # N
-                gameboard[0][toprow, rightcol], # N-E
-                gameboard[0][row, rightcol], # E
-                gameboard[0][bottomrow, rightcol], # S-E
-                gameboard[0][bottomrow, col], # S
-                gameboard[0][bottomrow, leftcol], # S-W
-                gameboard[0][row, leftcol], # W
-                gameboard[0][toprow, leftcol] # N-W
-            ]
-            
-            
-            # 5. rund um die Zelle marschieren, und die Neighbours zählen
-            neighbour_count = neighbour.count(True)
-            # 6. if abfrage, um Business Logic zu implementieren (Status = True oder False) 
-            
-            if not alive:
-                if neighbour_count == 3:
-                    #Eine tote Zelle mit genau drei lebenden Nachbarn wird in der Folgegeneration „geboren“ (zum Leben erweckt).
-                    gameboard_new[0][row, col] = True 
-                else:
-                    gameboard_new[0][row, col] = False
-
-            else:
-                if neighbour_count < 2:
-                    #Eine lebende Zelle mit weniger als zwei lebenden Nachbarn stirbt in der Folgegeneration (an Einsamkeit).
-                    gameboard_new[0][row, col] = False
-
-                elif (neighbour_count == 2 or neighbour_count == 3):
-                    # Eine lebende Zelle mit zwei oder drei lebenden Nachbarn bleibt in der Folgegeneration am Leben. 
-                    gameboard_new[0][row, col] = True
-            
-                elif neighbour_count > 3:
-                    # Eine lebende Zelle mit mehr als drei lebenden Nachbarn stirbt in der Folgegeneration (an Überbevölkerung). 
-                    gameboard_new[0][row, col] = False
-            
-                
-
-    return gameboard_new
 
 def gameboard_equal(gameboard_1, gameboard_2, check_origin: bool = True):
     if gameboard_1[0].shape != gameboard_2[0].shape:
