@@ -1,0 +1,8 @@
+TODO Nummerierung bei title
+TODO Gänsefüsschen immer die gleichen
+TODO Darstellung von Gameboards wie bei GolpyGui, Farbe welche sterben
+TODO Alle "Konfiguration" zu Anfangskonfiguration" ändern
+TODO konsistent mit entweder 4x4 oder 5x5 Spielfeld
+TODO Begrifferklärung Glossar kann dann freier schreiben
+TODO nicht noch mehr Programmierzeugs, kategorisieren kurz halten
+TODO wie lange gedauert und solche Zahlen

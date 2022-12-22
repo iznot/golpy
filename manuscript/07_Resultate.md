@@ -16,5 +16,6 @@ Wenig überraschend ist auch, dass die "überlebenden" Konfigurationen die grös
 Auch kam heraus, dass die meisten oszillierenden Objekte eine Periodizität von 2 haben, nur 14 haben eine von 3. Eine andere Periodizität besteht bei Oszillatoren auf einem 4x4 Spielfeld nicht. Gleitende Objekte haben hier alle eine Periodizität von 4.
 
 ## Aufgabenbezogene Resultate
+TODO Ziel erreicht und so formulieren
 Meine erste Funktion kann anhand der aus der Simulation entstandenen Liste zuordnen, welches Objekt einer Konfiguration entspricht. Die zweite Funktion ist dazu in der Lage, wiederzugeben, ob eine Konfiguration aus der anderen entstehen kann oder nicht.
 

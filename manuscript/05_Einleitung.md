@@ -10,7 +10,7 @@ Ihm war es wichtig, die Mathematik den Leuten näherzubringen. Dadurch unterrich
 
 Schon als Kind hatte er eine Faszination für Spiele, welche ihn später in die Unterhaltungsmathematik führte. Er war eine der ersten Personen, die eine Theorie zur Lösung des Rubic Scubes veröffentlichte, konnte dank einer selbstentwickelten Methode innerhalb von Sekunden den Wochentag beliebiger Daten ausrechnen und wurde von seinen Kollegen «Mathemagier» genannt. 
 
-Der Öffentlichkeit wurde er durch die Entwicklung des «Game of Life» bekannt. Dieses «no-player, never ending game», wie er es auch nannte, entwickelte er in den 70er Jahren. Dieses Spiel war der Startschuss für Simulationen auf dem Gebiet der Komplexitätswissenschaft und viele liessen sich dafür begeistern. Unzählige versuchten das «Leben» zu hacken, in dem sie neue Lebensformen entdecken. Die ansteigende Popularität seiner Entwicklung gefiel Conway gar nicht, weshalb er Fragen über seine Kreation mit dem Satz «I hate Life» auswich. Gegen das Ende seines realen Lebens konnte er sich jedoch wieder damit anfreunden: «Ich gab irgendwo einen Vortrag und wurde als ‘John Conway, Schöpfer des Lebens’ vorgestellt. Und ich dachte ‘Oh das ist eine nette Art bekannt zu sein’.». 
+Der Öffentlichkeit wurde er durch die Entwicklung des «Game of Life» bekannt. Dieses «no-player, never ending game», wie er es auch nannte, entwickelte er in den 70er Jahren. Dieses Spiel war der Startschuss für Simulationen auf dem Gebiet der Komplexitätswissenschaft und viele liessen sich dafür begeistern. Unzählige versuchten das «Leben» zu hacken, in dem sie neue Lebensformen entdecken. Die ansteigende Popularität seiner Entwicklung gefiel Conway gar nicht, weshalb er Fragen über seine Kreation mit dem Satz «I hate Life» auswich. Gegen das Ende seines realen Lebens konnte er sich jedoch wieder damit anfreunden: «Ich gab irgendwo einen Vortrag und wurde als ‘John Conway, Schöpfer des Lebens vorgestellt. Und ich dachte ‘Oh das ist eine nette Art, bekannt zu sein’.». 
 
 Die Faszination des Spieles liegt darin, dass ein einfaches Konzept mit vier simplen Regeln komplexe Themen behandelt. Wie der Musiker Brian Eno sagte, «Wir sind an die Idee gewöhnt, dass alles Komplexe aus etwas noch Komplexerem hervorgehen muss. […] Life zeigt uns komplexe, virtuelle Organismen, erschafft durch die Interaktion mit ein paar einfachen Regeln.»
 
@@ -38,15 +38,17 @@ Konfiguration:            1. Generation:           2. Generation:
  --- --- --- --- ---      --- --- --- --- ---      --- --- --- --- ---             
 ```
 
-## Objekte    
+## Objekte   
+TODO Objekte definieren 
 
 Über die Jahre sind viele unterschiedliche Objekte entdeckt worden. Diese können in verschiedene Kategorien eingeteilt werden:
 
 ### Statische Objekte
 
 Statische Objekte, oft auch «Stillleben» genannt, definieren sich dadurch, dass sie ohne äussere Einflüsse stillstehen. Dies ist möglich, wenn jede lebende Zelle zwei oder drei Nachbarn hat, aber keine der tote genau drei.
-Die 2. Generation von eben ist ein Beispiel für ein staatisches Objekt:
+Die 2. Generation von eben ist ein Beispiel für ein statisches Objekt:
 
+TODO verdeutlichen mit mehreren Generationen
 {title: "Statisches Objekt", id:stable_gb}
 ```text
  --- --- --- --- ---
@@ -136,7 +138,10 @@ Konfiguration:
 ```
 
 ### Gleitende Objekte
+
 Wie auch die Oszillatoren verändern sich diese Objekte periodisch nach einem bestimmten Schema. Der Unterschied liegt aber darin, dass sie ihre Position ändern. Auf einem endlosen Spielfeld hören sie also, ohne äusseren Einfluss, nie auf, sich fortzubewegen.
+
+TODO Bewegung muss sichtbar sein auf Darstellung
 {title: "Gleitende Objekte", id:spaceship_gb}
 ```text
 Konfiguration:         1. Generation:         2.Generation:               
@@ -168,10 +173,10 @@ Konfiguration:         1. Generation:         2.Generation:
 
 ### Selbstauslöschende Objekte
 
-Diese Objekte enden nach beliebeg vielen Generationen in einem leeren Spielfeld
+Diese Objekte enden nach beliebig vielen Generationen in einem leeren Spielfeld
 
 
-{text:"Selbstauslöschendes Objekt", id:erased_gb}
+{text: "Selbst auslöschendes Objekt", id:erased_gb}
 ```text
 Konfiguration:                1.Generation                  2. Generation:
  --- --- --- --- ---           --- --- --- --- ---           --- --- --- --- ---   
@@ -188,9 +193,13 @@ Konfiguration:                1.Generation                  2. Generation:
 ```
 
 
-Es gibt noch weitere Objekte wie Gleiterkanonen, die in einem periodischem Zeitabstand immer wieder Gleiter erzeugen, Puffer, die eine Art Gleiter mit Überbleibsel darstellen oder völlig chaotische Objekte. Diese Objekte werden in dieser Arbeit jedoch nicht konkret berücksichtigt.
+Es gibt noch weitere Objekte wie Gleiterkanonen, die in einem periodischen Zeitabstand immer wieder Gleiter erzeugen, Puffer, die eine Art Gleiter mit Überbleibsel darstellen oder völlig chaotische Objekte. Diese Objekte werden in dieser Arbeit jedoch nicht konkret berücksichtigt.
 
 ## Probleme
-Der Anwendungsbereich des «Game of Life» greift viele Themenbereiche auf und löst somit auch bei vielen Menschen eine Faszination aus. Aufgrund dessen beschäftigen sich Mathematiker, Informatiker, Physiker und viele mehr mit den ungelösten Problemen, die das Spiel mit sich bringt. Einige der Probleme sind mit der Zeit bereits gelöst worden, andere noch nicht. In der Theoretischen Informatik ist das Spiel besonders als Entscheidungsproblem interessant. Es existiert keinen Algorithmus, der mit dem Input zweier Konfiguration entscheiden kann, ob die eine aus der anderen entstehen kann. Zudem ist auch kein Algorithmus bekannt, der bestimmen kann, was der Endzustand einer gegebenen Konfiguration ist. In dieser Arbeit versuche ich, mich diesen beiden Problemen zu widmen.
+TODO Probleme klarer auflisten
+TODO Themenbereiche Beispiele bringen.
+Der Anwendungsbereich des «Game of Life» greift viele Themenbereiche auf und löst somit auch bei vielen Menschen eine Faszination aus. Aufgrund dessen beschäftigen sich Mathematiker, Informatiker, Physiker und viele mehr mit den ungelösten Problemen, die das Spiel mit sich bringt. Einige der Probleme sind mit der Zeit bereits gelöst worden, andere noch nicht. In der theoretischen Informatik ist das Spiel besonders als Entscheidungsproblem interessant. Es existiert keinen Algorithmus, der mit dem Input zweier Konfiguration entscheiden kann, ob die eine aus der anderen entstehen kann. Zudem ist auch kein Algorithmus bekannt, der bestimmen kann, was der Endzustand einer gegebenen Konfiguration ist. In dieser Arbeit versuche ich, mich diesen beiden Problemen zu widmen.
+
+NOTE Englische zitate übersetzt in Fussnote mitteilen
 
 

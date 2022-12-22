@@ -130,6 +130,3 @@ class TestSimulation(unittest.TestCase):
     def test_simulation_generations(self):
         sim.simulation_for_generations()
 
-    def test_reflect_gameboard(self):
-        gb = sim.convert_to_gameboard('(4, 4):(0, 0)|(4, 4):1:0x701e')
-        gam.reflect_gameboard(gb)

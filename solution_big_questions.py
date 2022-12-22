@@ -22,7 +22,7 @@ def check_gb_origin(gameboard_int, gameboard_to_compare):
     gb_rot_1 = np.rot90(gameboard_int)
     gb_rot_2 = np.rot90(gb_rot_1)
     gb_rot_3 = np.rot90(gb_rot_2)
-
+    
 
     for row in csv_file:
         if gameboard_to_compare == row[0]:
