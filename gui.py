@@ -47,8 +47,8 @@ class DrawableGrid(tk.Frame):
 
         for idx in idxs:
             color = "green" if next_gen[0][idx] == True else "red"
-            self.canvas.create_text(x0 + 0.5*self.size, y0 + 0.5*self.size, fill=color,font="Consolas 14",
-            text=str(nc[row, column]), tags = (self._tag(row, column),"cell" ))
+            #self.canvas.create_text(x0 + 0.5*self.size, y0 + 0.5*self.size, fill=color,font="Consolas 14",
+            #text=str(nc[row, column]), tags = (self._tag(row, column),"cell" ))
 
 
     def hide_neighbour_count(self):

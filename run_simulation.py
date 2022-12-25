@@ -7,7 +7,7 @@ import datetime as dt
 import operator
 from ast import literal_eval
 from joblib import Parallel, delayed
-
+import os
 
 def run_simulation(gameboard, max_runs):
     
@@ -138,16 +138,20 @@ def convert_to_gameboard(gameboard_str):
 
 #generate csv file
 
-# TODO: repl. sum_filter mit shape
-
-def generate_simulation(rows,cols,max_runs, sum_filter = None, filter_die_fasts = False, debug = False):
-    cells = rows * cols
-    max_value = (2**cells)-1
+def generate_simulation(shape, max_runs, folder = "sim", debug = False):
+    cells = shape[0] * shape[1]
+    max_value = (2**cells)
 
     results_header = ['start_gameboard', 'end_gameboard', 'exit_criteria', 'periodicity', 'rows', 'cols', 'max_height', 'max_width', 'runs']
 
-    # TODO: if und sum_filter nicht mehr notwendig im Filenamen
-    file_name = f'simulation_results_{rows}_{cols}.csv' if sum_filter is None else f'simulation_results_{rows}_{cols}_{sum_filter}.csv'
+
+    file_name = f'{folder}/simulation_results_{shape[0]}_{shape[1]}.csv'
+
+    folder_exists = os.path.exists(folder)
+
+    if not folder_exists:
+        os.makedirs(folder)
+    
 
     with open(file_name, 'w',  newline='') as file:
         writer = csv.writer(file)
@@ -162,9 +166,10 @@ def generate_simulation(rows,cols,max_runs, sum_filter = None, filter_die_fasts 
 
         start = dt.datetime.now()
 
-        modu = int(max_value / 100)
+        modu = int(max_value / min(100, max_value))
         for gameboard_int in range(max_value if not debug else 1000):
 
+            # TODO: check that 2: is correct
             gb_bin = bin(gameboard_int)[2:]
             gb_bin = gb_bin.zfill(cells)
             gb_array_1D = np.fromstring(gb_bin,'u1') - ord('0')
@@ -174,36 +179,18 @@ def generate_simulation(rows,cols,max_runs, sum_filter = None, filter_die_fasts 
                 dt_diff = dt.datetime.now() - start
                 prog = gameboard_int/max_value
                 expected_end = dt.datetime.now() + dt_diff * (1.0 - prog) / prog
-                print(f'Sum {sum_filter}: {simulation_count} simulations for {gameboard_int}/{max_value} gameboards. Max p/h/w/r: {max_p}/{max_max_width}/{max_max_height}/{max_max_runs} Progress: {int(100*prog)}%. Expected end: {expected_end}')
+                print(f'{simulation_count} simulations for {gameboard_int}/{max_value} gameboards. Max p/h/w/r: {max_p}/{max_max_width}/{max_max_height}/{max_max_runs} Progress: {int(100*prog)}%. Expected end: {expected_end}')
 
-            if sum_filter is not None:
-                if np.sum(gb_array_1D) != sum_filter:
-                    continue
-
-            gb_array_2D = np.reshape(gb_array_1D, (rows, cols))
+            gb_array_2D = np.reshape(gb_array_1D, (shape[0], shape[1]))
             gameboard = gm.create_gameboard(gb_array_2D.astype(bool))
 
             gameboard = gam.cut_both_axis(gameboard)
             
-            
-
-            # TODO: teste ob input shape
-            if gameboard[0].shape[0] < rows and gameboard[0].shape[1] < cols:
+            if not (gameboard[0].shape[0] == shape[0] and gameboard[0].shape[1] == shape[1]):
                 #skipping non-full
                 continue
             
-
-            # TODO: teste ob quadratisch oder flach -> sonst continue
             
-            
-            # filter "boring" cases (to improve performance)
-            #NOTE löschen?
-            if filter_die_fasts:
-                gameboards, exit_criteria, periodicity, runs = run_simulation(gameboard, 2)
-
-                if exit_criteria == 'extinct' or exit_criteria == 'stable':
-                    continue
-
             # check if current gb is in history
             exists = check_similar_exists(gameboard, gameboard_sim_start_history)
 
@@ -225,7 +212,7 @@ def generate_simulation(rows,cols,max_runs, sum_filter = None, filter_die_fasts 
             max_max_height = max(max_max_height, max_height)
             max_max_width = max(max_max_width, max_width)
 
-            new_row = [start_gameboard, end_gameboard, exit_criteria, periodicity, rows, cols, max_max_height, max_max_width, runs]
+            new_row = [start_gameboard, end_gameboard, exit_criteria, periodicity, shape[0], shape[1], max_max_height, max_max_width, runs]
 
             writer.writerow(new_row)
 
@@ -243,22 +230,21 @@ def check_similar_exists(gb, gameboard_sim_start_history):
     #   value = Liste mit gbs
 
 
+    gb_variations = gam.get_gameboard_variations(gb)
 
-
-
-    gb_variations = gam.turn_gb(gb)
-
-    for gb_variation in gb_variations:
-        shape = gb[0].shape
-        key = 10*shape[0]+shape[1]
-        if key not in gameboard_sim_start_history:
-            gameboard_sim_start_history[key] = []
-        for past_gameboard in gameboard_sim_start_history[key]:
-            exists = gm.gameboard_equal(gb_variation,past_gameboard, check_origin=False)
+    alive_count = np.sum(gb[0])
+    if alive_count not in gameboard_sim_start_history:
+        gameboard_sim_start_history[alive_count] = []
+    
+    for gb_variation in gb_variations:    
+        for already_tested_gb in gameboard_sim_start_history[alive_count]:
+            exists = gm.gameboard_equal(gb_variation,already_tested_gb, check_origin=False)
             if exists:
-                return True
-        gameboard_sim_start_history[key].append(gb_variation)
+               return True
+    
+    gameboard_sim_start_history[alive_count].append(gb)
     return False
+
     
     
 def simulation_for_generations(rows, cols, max_runs):
@@ -305,34 +291,26 @@ def get_dimensions(i, j):
         if lpl[n][0] > lpl[n][1]:
             del lpl[n]
 
+
+    lpl.reverse()
     return lpl
 
 
 def main():
-    #generate_simulation(2,2,100)
-    #generate_simulation(3,3,100)
-    #generate_simulation(4,4,100)
-
-
     
-    def process(i):
-        # TODO: anstatt i (Anzahl True) soll hier die Shape mitgegeben werden
-        generate_simulation(5,5,100, i, debug=False)
+    dims = get_dimensions(3, 3)
     
-    r1 = range(15,9, -1)
-    r2 = range(16,26)
-    r3 = range(9, 3, -1)
-    rng = list(r1) + list(r2) + list(r3)
+    # TODO: Fehler
+    # das gibt einen Fehler ((2, 3):(0, 0)|(2, 3):2:0xc)
+    dims = [(2, 2)]
 
-    # TODO: anstatt eine List von Summen (True) soll hier eine Liste von Shapes erstellt werden
-    # z.b. für (5, 5) haben wir:
-    # - (1, 1)
-    # - (1, 2)
-    # - ...
-    # - (2, 1) -> nein! weil wir haben ja schon (1, 2) und mit Drehen und Spiegelung gibt es dasselbe
-    # ...
-    # - (5, 5)
-    Parallel(n_jobs=18)(delayed(process)(i) for i in rng)
+    def process(dim):
+        generate_simulation(dim ,100, debug=False)
+    
+    #Parallel(n_jobs=18)(delayed(process)(dim) for dim in dims)
+
+    for dim in dims:
+        process(dim)
     
 
     

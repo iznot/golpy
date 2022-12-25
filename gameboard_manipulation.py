@@ -50,17 +50,56 @@ def expand_gameboard_if_necessary(gb):
     return gb
 
 
-def turn_gb(gb):
+def get_gameboard_variations(gb):
+    """Gibt eine Liste von allen unterschiedlichen "ähnlichen" Gameboards.
+    D.h. gespiegelt und gedreht.
 
-    #TODO: wir wollen hier MINIMALE Anzahl von Varianten, d.h
-    # - wenn quadratisch: gb + rota1 + rota2 + rota3, gb horifilp + rota1 + rota2 + rota3
-    # - wenn flach: gb + rota2, gb horiflip + rota 2
-    gb1 = gm.create_gameboard(np.rot90(gb[0]))
-    gb2 = gm.create_gameboard(np.rot90(gb1[0]))
-    gb3 = gm.create_gameboard(np.rot90(gb2[0]))
-    gb4 = gm.create_gameboard(np.flip(gb[0], axis = 0))
-    gb5 = gm.create_gameboard(np.flip(gb[0], axis = 1))
+    Args:
+        gb (_type_): Das Gameboard, für welches wir die Variationen suchen.
 
-    #TODO: doppelte entfernen
+    Returns:
+        _type_: _description_
+    """    
+    quadratic = gb[0].shape[0] == gb[0].shape[1]
 
-    return gb, gb1, gb2, gb3, gb4, gb5
+    
+    gb_rota_1 = gm.create_gameboard(np.rot90(gb[0]))
+    gb_rota_2 = gm.create_gameboard(np.rot90(gb_rota_1[0]))
+    
+    
+    gb_reflected = gm.create_gameboard(np.flip(gb[0], axis = 0))
+    gb_reflected_rota_1 = gm.create_gameboard(np.rot90(gb_reflected[0]))
+    gb_reflected_rota_2 = gm.create_gameboard(np.rot90(gb_reflected_rota_1[0]))
+    
+
+    if quadratic:
+        
+        gb_rota_3 = gm.create_gameboard(np.rot90(gb_rota_2[0]))
+        gb_reflected_rota_3 = gm.create_gameboard(np.rot90(gb_reflected_rota_2[0]))
+
+        gb_variatons = [gb,
+                   gb_rota_1, 
+                   gb_rota_2, 
+                   gb_rota_3, 
+                   gb_reflected,
+                   gb_reflected_rota_1, 
+                   gb_reflected_rota_2, 
+                   gb_reflected_rota_3]
+
+    else:
+        gb_variatons = [gb, 
+                   gb_rota_2,
+                   gb_reflected,
+                   gb_reflected_rota_2]
+
+        
+    res_list = []
+
+    for gb_item in gb_variatons:
+        for gb_in_res in res_list:
+            if gm.gameboard_equal(gb_item, gb_in_res, check_origin=False):
+                # continue to test other variations
+                break
+        res_list.append(gb_item)
+
+    return res_list
