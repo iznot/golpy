@@ -121,12 +121,6 @@ class TestSimulation(unittest.TestCase):
         print(gb_str)
         assert gb_str == "(10, 8):(0, 0)|(10, 8):4:0x8a8002810a825202020"
 
-    def test_rotate_exists(self):
-        gb_to_test = sim.convert_to_gameboard('(5, 5):(1, 2)|(3, 3):2:0x4e')
-        gb_to_compare = sim.convert_to_gameboard('(3, 3):(0, 0)|(3, 3):1:0xe4')
-        res = sim.check_similar_exists(gb_to_compare, gb_to_test)
-        assert res == True
-
-    def test_simulation_generations(self):
-        sim.simulation_for_generations()
+    def test_get_dimensions(self):
+        res = sim.get_dimensions(5,5)
 
