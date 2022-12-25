@@ -1,8 +1,7 @@
 import numpy as np
-from itertools import product
 import gameboard_manipulation as gam
 import basic_game_functions as gm
-
+import itertools as ito
 import csv
 import datetime as dt
 import operator
@@ -198,7 +197,7 @@ def generate_simulation(rows,cols,max_runs, sum_filter = None, filter_die_fasts 
             
             
             # filter "boring" cases (to improve performance)
-            
+            #NOTE löschen?
             if filter_die_fasts:
                 gameboards, exit_criteria, periodicity, runs = run_simulation(gameboard, 2)
 
@@ -235,9 +234,6 @@ def generate_simulation(rows,cols,max_runs, sum_filter = None, filter_die_fasts 
 def check_similar_exists(gb, gameboard_sim_start_history):
 
 
-
-    gb_variations = gam.turn_gb(gb)
-
     #TODO: um Performance zu verbessern, machen wir einen dict of dict
     # L1: 
     #   key = Anzahl lebende
@@ -245,6 +241,12 @@ def check_similar_exists(gb, gameboard_sim_start_history):
     # L2:
     #   key = Anzahl lebende im onion ring (egal falls Ecken doppelt)
     #   value = Liste mit gbs
+
+
+
+
+
+    gb_variations = gam.turn_gb(gb)
 
     for gb_variation in gb_variations:
         shape = gb[0].shape
@@ -293,7 +295,19 @@ def simulation_for_generations(rows, cols, max_runs):
         writer.writerow(new_row)
 
         
+def get_dimensions(i, j):
+    list1 = list(range(1, i + 1))
+    list2 = list(range(1, j + 1))
     
+    lp = ito.product(list1, list2)
+    lpl = list(lp)
+    for n in range(len(lpl)-1, 0, -1):
+        if lpl[n][0] > lpl[n][1]:
+            del lpl[n]
+
+    return lpl
+
+
 def main():
     #generate_simulation(2,2,100)
     #generate_simulation(3,3,100)
