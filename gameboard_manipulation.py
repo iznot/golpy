@@ -77,7 +77,7 @@ def get_gameboard_variations(gb):
         gb_rota_3 = gm.create_gameboard(np.rot90(gb_rota_2[0]))
         gb_reflected_rota_3 = gm.create_gameboard(np.rot90(gb_reflected_rota_2[0]))
 
-        gb_variatons = [gb,
+        gb_variations = [gb,
                    gb_rota_1, 
                    gb_rota_2, 
                    gb_rota_3, 
@@ -87,7 +87,7 @@ def get_gameboard_variations(gb):
                    gb_reflected_rota_3]
 
     else:
-        gb_variatons = [gb, 
+        gb_variations = [gb, 
                    gb_rota_2,
                    gb_reflected,
                    gb_reflected_rota_2]
@@ -95,11 +95,15 @@ def get_gameboard_variations(gb):
         
     res_list = []
 
-    for gb_item in gb_variatons:
+    for gb_item in gb_variations:
+        does_exist = False
         for gb_in_res in res_list:
             if gm.gameboard_equal(gb_item, gb_in_res, check_origin=False):
                 # continue to test other variations
+                does_exist = True
                 break
-        res_list.append(gb_item)
+        if not does_exist:
+            res_list.append(gb_item)
+    
 
     return res_list

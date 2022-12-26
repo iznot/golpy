@@ -179,7 +179,7 @@ def generate_simulation(shape, max_runs, folder = "sim", debug = False):
                 dt_diff = dt.datetime.now() - start
                 prog = gameboard_int/max_value
                 expected_end = dt.datetime.now() + dt_diff * (1.0 - prog) / prog
-                print(f'{simulation_count} simulations for {gameboard_int}/{max_value} gameboards. Max p/h/w/r: {max_p}/{max_max_width}/{max_max_height}/{max_max_runs} Progress: {int(100*prog)}%. Expected end: {expected_end}')
+                print(f'Shape {shape[0]}x{shape[1]} {simulation_count} simulations for {gameboard_int}/{max_value} gameboards. Max p/h/w/r: {max_p}/{max_max_width}/{max_max_height}/{max_max_runs} Progress: {int(100*prog)}%. Expected end: {expected_end}')
 
             gb_array_2D = np.reshape(gb_array_1D, (shape[0], shape[1]))
             gameboard = gm.create_gameboard(gb_array_2D.astype(bool))
@@ -298,16 +298,16 @@ def get_dimensions(i, j):
 
 def main():
     
-    dims = get_dimensions(3, 3)
+    dims = get_dimensions(4, 4)
     
     # TODO: Fehler
     # das gibt einen Fehler ((2, 3):(0, 0)|(2, 3):2:0xc)
-    dims = [(2, 2)]
+    #dims = [(2, 3)]
 
     def process(dim):
         generate_simulation(dim ,100, debug=False)
     
-    #Parallel(n_jobs=18)(delayed(process)(dim) for dim in dims)
+    Parallel(n_jobs=18)(delayed(process)(dim) for dim in dims)
 
     for dim in dims:
         process(dim)
