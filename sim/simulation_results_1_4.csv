@@ -1,4 +1,0 @@
-start_gameboard,end_gameboard,exit_criteria,periodicity,rows,cols,max_height,max_width,runs
-"(1, 4):(0, 0)|(1, 4):0:0x9","(1, 1):(0, 0)|(1, 1):1:0x0",extinct,0,1,4,1,1,1
-"(1, 4):(0, 0)|(1, 4):0:0xb","(1, 1):(0, 0)|(1, 1):1:0x0",extinct,0,1,4,1,1,1
-"(1, 4):(0, 0)|(1, 4):0:0xf","(3, 4):(0, 0)|(3, 4):1:0x696",stable,0,1,4,3,4,3

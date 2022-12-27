@@ -138,14 +138,16 @@ def convert_to_gameboard(gameboard_str):
 
 #generate csv file
 
-def generate_simulation(shape, max_runs, folder = "sim", debug = False):
+def generate_simulation(shape, alive_count, max_runs, folder = "sim", debug = False):
+    if alive_count == 1 and not (shape[0] == shape[1] == 1):
+        return
     cells = shape[0] * shape[1]
     max_value = (2**cells)
 
-    results_header = ['start_gameboard', 'end_gameboard', 'exit_criteria', 'periodicity', 'rows', 'cols', 'max_height', 'max_width', 'runs']
+    results_header = ['start_gameboard', 'alive_count', 'end_gameboard', 'exit_criteria', 'periodicity', 'rows', 'cols', 'max_height', 'max_width', 'runs']
 
 
-    file_name = f'{folder}/simulation_results_{shape[0]}_{shape[1]}.csv'
+    file_name = f'{folder}/simulation_results_{shape[0]}_{shape[1]}_{alive_count}.csv'
 
     folder_exists = os.path.exists(folder)
 
@@ -173,7 +175,7 @@ def generate_simulation(shape, max_runs, folder = "sim", debug = False):
                 dt_diff = dt.datetime.now() - start
                 prog = gameboard_int/max_value
                 expected_end = dt.datetime.now() + dt_diff * (1.0 - prog) / prog
-                print(f'Shape {shape[0]}x{shape[1]} {simulation_count} simulations for {gameboard_int}/{max_value} gameboards. Max p/h/w/r: {max_p}/{max_max_width}/{max_max_height}/{max_max_runs} Progress: {int(100*prog)}%. Expected end: {expected_end}')
+                print(f'Shape {shape[0]}x{shape[1]} alive: {alive_count} {simulation_count} simulations for {gameboard_int}/{max_value} gameboards. Max p/h/w/r: {max_p}/{max_max_width}/{max_max_height}/{max_max_runs} Progress: {int(100*prog)}%. Expected end: {expected_end}')
 
             
             if gameboard_int in gb_already_checked_set:
@@ -183,6 +185,8 @@ def generate_simulation(shape, max_runs, folder = "sim", debug = False):
             gb_bin = gb_bin.zfill(cells)
             gb_array_1D = np.fromstring(gb_bin,'u1') - ord('0')
 
+            if not np.sum(gb_array_1D) == alive_count:
+                continue
 
             
             gb_array_2D = np.reshape(gb_array_1D, (shape[0], shape[1]))
@@ -214,7 +218,7 @@ def generate_simulation(shape, max_runs, folder = "sim", debug = False):
             max_max_height = max(max_max_height, max_height)
             max_max_width = max(max_max_width, max_width)
 
-            new_row = [start_gameboard, end_gameboard, exit_criteria, periodicity, shape[0], shape[1], max_max_height, max_max_width, runs]
+            new_row = [start_gameboard, alive_count, end_gameboard, exit_criteria, periodicity, shape[0], shape[1], max_max_height, max_max_width, runs]
 
             writer.writerow(new_row)
 
@@ -280,14 +284,14 @@ def get_dimensions(i, j):
 
 def main():
     
-    dims = get_dimensions(4, 4)
+    dims = get_dimensions(5, 5)
     
     #dims = [(1,4)]
 
-    def process(dim):
-        generate_simulation(dim ,100, debug=False)
+    def process(dim, alive_count):
+        generate_simulation(dim , alive_count, 100, debug=False)
     
-    Parallel(n_jobs=18)(delayed(process)(dim) for dim in dims)
+    Parallel(n_jobs=8)(delayed(process)(dim, alive_count) for dim in dims for alive_count in range(1, dim[0]*dim[1] + 1))
 
     #for dim in dims: process(dim)
     
