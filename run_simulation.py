@@ -157,7 +157,7 @@ def generate_simulation(shape, max_runs, folder = "sim", debug = False):
         writer = csv.writer(file)
         writer.writerow(results_header)
 
-        gameboard_sim_start_history = {}
+        gb_already_checked_set = set()
 
         simulation_count = 0
 
@@ -169,18 +169,22 @@ def generate_simulation(shape, max_runs, folder = "sim", debug = False):
         modu = int(max_value / min(100, max_value))
         for gameboard_int in range(max_value if not debug else 1000):
 
-            # TODO: check that 2: is correct
-            gb_bin = bin(gameboard_int)[2:]
-            gb_bin = gb_bin.zfill(cells)
-            gb_array_1D = np.fromstring(gb_bin,'u1') - ord('0')
-
-
             if gameboard_int > 0 and  gameboard_int % modu == 0:
                 dt_diff = dt.datetime.now() - start
                 prog = gameboard_int/max_value
                 expected_end = dt.datetime.now() + dt_diff * (1.0 - prog) / prog
                 print(f'Shape {shape[0]}x{shape[1]} {simulation_count} simulations for {gameboard_int}/{max_value} gameboards. Max p/h/w/r: {max_p}/{max_max_width}/{max_max_height}/{max_max_runs} Progress: {int(100*prog)}%. Expected end: {expected_end}')
 
+            
+            if gameboard_int in gb_already_checked_set:
+                continue
+
+            gb_bin = bin(gameboard_int)[2:]
+            gb_bin = gb_bin.zfill(cells)
+            gb_array_1D = np.fromstring(gb_bin,'u1') - ord('0')
+
+
+            
             gb_array_2D = np.reshape(gb_array_1D, (shape[0], shape[1]))
             gameboard = gm.create_gameboard(gb_array_2D.astype(bool))
 
@@ -192,11 +196,9 @@ def generate_simulation(shape, max_runs, folder = "sim", debug = False):
             
             
             # check if current gb is in history
-            exists = check_similar_exists(gameboard, gameboard_sim_start_history)
+            add_gb_variations(gameboard, gb_already_checked_set)
 
-            if exists:
-                continue
-
+            
             gameboards, exit_criteria, periodicity, runs = run_simulation(gameboard, max_runs)
            
 
@@ -218,32 +220,12 @@ def generate_simulation(shape, max_runs, folder = "sim", debug = False):
 
             simulation_count += 1
 
-def check_similar_exists(gb, gameboard_sim_start_history):
+def add_gb_variations(gb, gb_already_checked_set):
 
+    gb_variation_set = gam.get_gameboard_variations(gb)
 
-    #TODO: um Performance zu verbessern, machen wir einen dict of dict
-    # L1: 
-    #   key = Anzahl lebende
-    #   value = dict L2
-    # L2:
-    #   key = Anzahl lebende im onion ring (egal falls Ecken doppelt)
-    #   value = Liste mit gbs
-
-
-    gb_variations = gam.get_gameboard_variations(gb)
-
-    alive_count = np.sum(gb[0])
-    if alive_count not in gameboard_sim_start_history:
-        gameboard_sim_start_history[alive_count] = []
+    gb_already_checked_set.update(gb_variation_set)
     
-    for gb_variation in gb_variations:    
-        for already_tested_gb in gameboard_sim_start_history[alive_count]:
-            exists = gm.gameboard_equal(gb_variation,already_tested_gb, check_origin=False)
-            if exists:
-               return True
-    
-    gameboard_sim_start_history[alive_count].append(gb)
-    return False
 
     
     
@@ -300,17 +282,14 @@ def main():
     
     dims = get_dimensions(4, 4)
     
-    # TODO: Fehler
-    # das gibt einen Fehler ((2, 3):(0, 0)|(2, 3):2:0xc)
-    #dims = [(2, 3)]
+    #dims = [(1,4)]
 
     def process(dim):
         generate_simulation(dim ,100, debug=False)
     
     Parallel(n_jobs=18)(delayed(process)(dim) for dim in dims)
 
-    for dim in dims:
-        process(dim)
+    #for dim in dims: process(dim)
     
 
     

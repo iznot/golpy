@@ -63,47 +63,45 @@ def get_gameboard_variations(gb):
     quadratic = gb[0].shape[0] == gb[0].shape[1]
 
     
-    gb_rota_1 = gm.create_gameboard(np.rot90(gb[0]))
-    gb_rota_2 = gm.create_gameboard(np.rot90(gb_rota_1[0]))
+    gb_rota_1 = np.rot90(gb[0])
+    gb_rota_2 = np.rot90(gb_rota_1)
     
     
-    gb_reflected = gm.create_gameboard(np.flip(gb[0], axis = 0))
-    gb_reflected_rota_1 = gm.create_gameboard(np.rot90(gb_reflected[0]))
-    gb_reflected_rota_2 = gm.create_gameboard(np.rot90(gb_reflected_rota_1[0]))
+    gb_reflected = np.flip(gb[0], axis = 0)
+    gb_reflected_rota_1 = np.rot90(gb_reflected)
+    gb_reflected_rota_2 = np.rot90(gb_reflected_rota_1)
     
 
     if quadratic:
         
-        gb_rota_3 = gm.create_gameboard(np.rot90(gb_rota_2[0]))
-        gb_reflected_rota_3 = gm.create_gameboard(np.rot90(gb_reflected_rota_2[0]))
+        gb_rota_3 = np.rot90(gb_rota_2)
+        gb_reflected_rota_3 = np.rot90(gb_reflected_rota_2)
 
-        gb_variations = [gb,
-                   gb_rota_1, 
-                   gb_rota_2, 
-                   gb_rota_3, 
-                   gb_reflected,
-                   gb_reflected_rota_1, 
-                   gb_reflected_rota_2, 
-                   gb_reflected_rota_3]
+        gb_variations_number_set = {get_gb_nbr(gb[0]),
+                        get_gb_nbr(gb_rota_1), 
+                        get_gb_nbr(gb_rota_2), 
+                        get_gb_nbr(gb_rota_3), 
+                        get_gb_nbr(gb_reflected),
+                        get_gb_nbr(gb_reflected_rota_1), 
+                        get_gb_nbr(gb_reflected_rota_2), 
+                        get_gb_nbr(gb_reflected_rota_3)}
 
     else:
-        gb_variations = [gb, 
-                   gb_rota_2,
-                   gb_reflected,
-                   gb_reflected_rota_2]
+        gb_variations_number_set = {get_gb_nbr(gb[0]), 
+                        get_gb_nbr(gb_rota_2),
+                        get_gb_nbr(gb_reflected),
+                        get_gb_nbr(gb_reflected_rota_2)}
 
-        
-    res_list = []
-
-    for gb_item in gb_variations:
-        does_exist = False
-        for gb_in_res in res_list:
-            if gm.gameboard_equal(gb_item, gb_in_res, check_origin=False):
-                # continue to test other variations
-                does_exist = True
-                break
-        if not does_exist:
-            res_list.append(gb_item)
+    return gb_variations_number_set
     
+def get_gb_nbr(gb):
+    
+    gb_array = gb.ravel()
+    gb_bits = gb_array.astype(int)
 
-    return res_list
+    # gb_int = bits_to_int(gb_bits)
+
+    gb_str = ''.join(map(str, gb_bits))
+    gb_int = int(gb_str, 2)
+
+    return gb_int
