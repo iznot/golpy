@@ -284,9 +284,9 @@ def get_dimensions(i, j):
 
 def main():
     
-    dims = get_dimensions(5, 5)
+    #dims = get_dimensions(5, 5)
     
-    #dims = [(1,4)]
+    dims = [(5,6)]
 
     def process(dim, alive_count):
         generate_simulation(dim , alive_count, 100, debug=False)
