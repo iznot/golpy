@@ -1,15 +1,18 @@
 # Material und Methode
 
-Um mich diesen grossen Fragen des «Game of Life» stellen zu können, programmiere ich als erstes das einfache Grundkonzept des Spieles. Danach konzentriere ich mich auf die Programmierung einer Simulation, die für mich schlussendlich auf einem beliebig grossen Spielfeld alle möglichen Konfiguration durchspielen soll. 
+Um mich diesen grossen Fragen des «Game of Life» stellen zu können, programmierte ich als Erstes das einfache Grundkonzept des Spieles. Danach konzentrierte ich mich auf die Programmierung einer Simulation, die auf einem beliebig grossen Spielfeld alle möglichen und unterschiedlichen Konfiguration durchspielen sollte. Da ich mich lediglich in Python, auch wenn nur dürftig, auskannte, wählte ich diese Programmiersprache für meine Arbeit. 
+Mein Vater spielte eine grosse Rolle bei anfälligen Fragen oder als Anlaufstelle bei Unsicherheiten und Problemen. 
 
 ## Das Grundkonzept
-TODO Absatz besser strukturieren
-Während dem Programmieren des Grundkonzeptes filterten sich mehrere Probleme heraus. Als Programmieranfängerin war das ganze natürlich noch schwieriger. Ich entschied mich dazu, das Programm in Python zu schreiben, da dies die einzige Programmiersprache war, die ich ein bisschen kannte. Mein Vater spielte bei diesem Prozess eine grosse Rolle bei anfälligen Fragen und als Anlaufstelle bei Unsicherheiten oder Problemen. 
+
+Das Programmieren des Gameboards und der Spielfunktion stellte sich im Nachhinein als die kleinste aller Herausforderungen heraus. Denoch beanspruchte dies viel Zeit, da ich eine Anfängerin im Programmieren war.   
+
 
 ### Das Gameboard
 TODO einfacher gestalten, zB. Gameboard wie Schachbrett, Booleans weglassen
 TODO Column = Spalte
-Das Gameboard ist ein numpy Array bestehend aus Booleans. Die Reihen sind auf der Achse mit dem Index 0 und die Kollonen auf der mit dem Index 1. Die Kollonen werden durch Bindestriche ('---') und die Reihen durch Trennstriche ('|') dargestellt. Zusammen bilden sie eine Zelle. Somit sieht ein Gameboard mit der Grösse 5x5 wie folgt aus:
+
+Das Gameboard erinnert an ein Schachbrett und wird durch eine binäre Matrix dargestellt. Die Zellen mit Nullen symbolisieren die toten Zellen und sind somit leer, die Zellen mit Einsen die lebenden und werden durch "o" verkörpert. Die Spalten werden durch drei Bindestriche ("---") und die Reihen durch Trennstriche ("|") dargestellt. Zusammen begrenzen sie eine Zelle. Somit sieht ein Gameboard mit einer einzelnen lebenden Zelle und der Grösse 5x5 wie folgt aus:
 
 TODO Reihe numerieren
 {title: "Leeres Gameboard", id: gb-leer}
@@ -20,7 +23,7 @@ TODO Reihe numerieren
  --- --- --- --- ---
 |   |   |   |   |   |
  --- --- --- --- ---
-|   |   |   |   |   |
+|   |   | o |   |   |
  --- --- --- --- ---
 |   |   |   |   |   |
  --- --- --- --- ---
@@ -28,14 +31,21 @@ TODO Reihe numerieren
  --- --- --- --- ---
  ```
 
-### Play
+Da diese Darstellung nicht besonders schön ist, programmierte mein Vater ohne mein Mitwirken eine überschaubare Version, die ich für die restliche Arbeit verwenden werde.  
 
-Als nächstes machte ich mich an die Spielfunktion. Jede Zelle hat einen Index[Reihe, Kollone], ähnlich wie in einem Koordinatensystem. Wenn dieser mit 'True' gleichgesetzt wird, ist die Zelle am Leben:
+
+### Play
+TODO ab hier alle Darstellungen von Gameboards mit Gui.
+
+Als Nächstes machte ich mich an die Spielfunktion. Jede Zelle hat einen Index [Reihe, Spalte], ähnlich wie in einem Koordinatensystem. Die Nummerierung fängt bei null an da sie Computerbasiert ist. In der Informatik gilt null gleich "False" und eins gleich "True". Eine Zelle muss also mit "True" gleichgesetzt werden, um als lebend zu gelten:
 
 TODO mit Farben
+
 1. Zelle[2,1] = True
-1. Zelle[3,2] = True
-1. Zelle[4,0] = True
+2. Zelle[3,2] = True
+3. Zelle[4,0] = True
+
+TODO Schauen ob ROWS und COLS nummeriert werden können
 
 {title: "Beispiel lebendige Zellen", id: gb-1}
 ```text
@@ -52,17 +62,17 @@ TODO mit Farben
  --- --- --- --- ---
  ```
 
-Um eine Konfiguration durchspielen zu können, muss der Status der Nachbarszellen bekannt sein. Zuerst iteriere ich also durch das Spielfeld, um alle lebendigen Zellen herauszufinden. Als nächstes marschiere ich um jede lebendige Zelle herum und zähle, wie viele der Nachbarszellen lebendig sind. Nun muss nur noch den bereits bekannten Regeln gefolgt werden und ein neues Gameboard ausgedruckt werden. 
+Um eine Konfiguration durchspielen zu können, muss der Status der Nachbarzellen bekannt sein. Zuerst iteriere ich also durch das Spielfeld, um alle lebendigen Zellen herauszufinden. Als Nächstes marschiere ich um jede lebendige Zelle herum und zähle, wie viele der Nachbarzellen lebendig sind. Nun muss nur noch den bereits bekannten Regeln gefolgt werden und ein neues Gameboard ausgedruckt werden. 
 
  
 
-### Grenzfälle
+### Randzellen
 
-TODO Grenzfälle zu Randfelder ändern
 TODO nicht "linkste" sondern oberste links
 TODO besser erklären
 TODO evt. Grenzfälle gar nicht erwähnen
-Ein Problem stellen die Grenzfälle dar. Eine Zelle am Rand hat nur fünf existente Nachbarn und eine in einem Ecken sogar nur drei. Zuerst löste ich das Problem damit, dass die oberste linkste Zelle die oberste rechteste Zelle als direkten linken Nachbarn hat und umgekehrt. Als direkten oberen Nachbarn hat sie die unterste linkste Zelle und als schräg-oberen, rechten Nachbarn die rechte unterste. Eine Zelle am linken Rand hat die Zelle am rechten Rand in der gleichen Reihe als direkten Nachbarn, eine Zelle am oberem Rand hat die Zelle in derselben Spalte am unteren Rand als Nachbarn und so weiter. Die folgenden Zellen sind also alle Nachbarn:
+
+Ein Problem stellen die Ränder dar. Eine Zelle am Rand hat nur fünf existente Nachbarn und eine in einer Ecke sogar nur drei. Zuerst löste ich das Problem damit, dass die oberste Zelle links die oberste Zelle rechts als direkten linken Nachbarn hat und umgekehrt. Als direkten oberen Nachbarn hat sie die unterste Zelle links und als schräg-oberen, rechten Nachbarn die unterste Zelle rechts. Eine Zelle am linken Rand hat die Zelle am rechten Rand in der gleichen Reihe als direkten Nachbarn, eine Zelle am oberem Rand hat die Zelle in derselben Spalte am unteren Rand als Nachbarn und so weiter. Die folgenden Zellen sind also alle Nachbarn:
 
 {title: "Grenzfälle Nachbarn", id: unexpanded_gb}
 ```text

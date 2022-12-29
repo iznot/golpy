@@ -1,0 +1,6 @@
+(5, 5):(0, 0)|(5, 5):1:0xd9c66d - develops to new oscillator
+(5, 5):(0, 0)|(5, 5):0:0x1bdffff - develops to oscillator
+
+(16, 16):(4, 2)|(4, 5):2:0x22a2e - develops simetrical to stable
+
+(4, 5):(0, 0)|(4, 5):0:0x9c6ff - develops to Gleiter
