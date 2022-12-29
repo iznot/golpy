@@ -1,0 +1,1 @@
+Get-ChildItem -Filter .\sim\*.csv | Select-Object -ExpandProperty FullName | Import-Csv | Export-Csv .\sim_all\all_results.csv -NoTypeInformation -Append
