@@ -21,10 +21,6 @@ class DrawableGrid(tk.Frame):
         self.canvas = tk.Canvas(self, bd=0, highlightthickness=0, width=canvas_width, height=canvas_height)
         self.canvas.pack(fill="both", expand=True, padx=2, pady=2)
 
-        nc = gm.get_neighbour_count(gameboard)
-
-        
-
         for row in range(self.height):
             for column in range(self.width):
                 x0, y0 = (column * self.size), (row*self.size)
@@ -39,20 +35,35 @@ class DrawableGrid(tk.Frame):
         self.canvas.tag_bind("cell", "<B1-Motion>", self.paint)
         self.canvas.tag_bind("cell", "<1>", self.paint)
 
-
     def show_neighbour_count(self):
         next_gen = gm.play(self.gameboard)
+        nc = gm.get_neighbour_count(self.gameboard)
 
-        idxs = np.where(next_gen > 0)
+        idxs = np.where(nc > 0)
 
-        for idx in idxs:
-            color = "green" if next_gen[0][idx] == True else "red"
-            #self.canvas.create_text(x0 + 0.5*self.size, y0 + 0.5*self.size, fill=color,font="Consolas 14",
-            #text=str(nc[row, column]), tags = (self._tag(row, column),"cell" ))
+        for idx in zip(idxs[0], idxs[1]):
+            #color = "green" if next_gen[0][idx] == True else "red"
+            if self.gameboard[0][idx] == True:
+                color = "#00FF00" if next_gen[0][idx] == True else "#FFB6C1"
+            else:
+                color = "#008000" if next_gen[0][idx] == True else "#FF0000"
+            row = idx[0]
+            column = idx[1]
+            x0, y0 = (column * self.size), (row*self.size)
+            self.canvas.create_text(x0 + 0.5*self.size, y0 + 0.5*self.size, fill=color,font="Consolas 14",
+            text=str(nc[row, column]), tags = (self._tag(row, column),"cell" ))
 
 
     def hide_neighbour_count(self):
-        pass
+        for row in range(self.height):
+            for column in range(self.width):
+                x0, y0 = (column * self.size) + 0.5*self.size, (row*self.size) + 0.5*self.size
+                #x1, y1 = (x0 + self.size), (y0 + self.size)
+                cell = self.canvas.find_closest(x0, y0)
+                if self.canvas.type(cell) == 'text':
+                    #TODO: remove
+                    self.canvas.delete(cell)
+                
 
 
     def _tag(self, row, column):
@@ -61,7 +72,7 @@ class DrawableGrid(tk.Frame):
         return tag
 
     def get_pixels(self):
-        row = ""
+        #row = ""
         for row in range(self.height):
             output = ""
             for column in range(self.width):
@@ -98,6 +109,7 @@ class DrawableGrid(tk.Frame):
         
 
     def paint(self, event):
+        self.golpy.neighbour_count(False)
         cell = self.canvas.find_closest(event.x, event.y)
         if self.canvas.type(cell) == 'text':
             cell = self.canvas.find_below(cell)
@@ -107,6 +119,7 @@ class DrawableGrid(tk.Frame):
         self.canvas.itemconfigure(cell, fill=color)
         self.golpy.set_text_to_value("")
         self.gameboard = self.golpy.gameboard = self.get_gameboard()
+        self.golpy.reset_counter()
         
 
 
@@ -201,35 +214,93 @@ class GolpyGui():
             command = self.runCallBack
         )
 
+        self.number_button = tk.Button(
+            self.button_frame,
+            text = "show #",
+            width=15,
+            height = 3,
+            bg="#BC8F8F",
+            fg = "#F0F0F0",
+            command = self.toggle_neighbour_count
+        )
+
+        self.show_numbers = False
+
         self.running = False
     
+        self.speed_label = tk.Label(self.button_frame, text = "Speed:")
         self.speed = tk.Scale(self.button_frame, from_= 1, to = 10, orient = tk.HORIZONTAL)
+        
+        self.size_label = tk.Label(self.button_frame, text = "Size:")
+        self.size = tk.Scale(self.button_frame, from_= 5, to = 25, orient = tk.HORIZONTAL, command= self.set_size )
+        self.size.set(20)
+        
+        self.counter_lbl = tk.Label(self.button_frame, text = "0", font=('Consolas 24'))
+        self.counter = 0
+        
 
         self.expand = tk.IntVar()
         self.expand_checkbox = tk.Checkbutton(self.button_frame, text = "expand", variable= self.expand)
 
-        self.nxt_button.grid(row=0, column = 0, padx='5', pady='5')
-        self.run_button.grid(row = 0, column = 1, padx='5', pady='5')
-        self.speed.grid(row = 0, column =2, padx='5', pady='5')
-        self.expand_checkbox.grid(row = 0, column = 3, padx='5', pady='5')
+        self.nxt_button.grid(row=0, column = 0, padx='5', pady='5', rowspan=2)
+        self.run_button.grid(row = 0, column = 1, padx='5', pady='5', rowspan=2)
+        self.number_button.grid(row = 0, column = 2, padx= '5', pady='5', rowspan=2)
+        
+        self.speed_label.grid(row = 0, column = 3)
+        self.speed.grid(row = 1, column =3, padx='5', pady='5')
+        
+        self.size_label.grid(row = 0, column = 4)
+        self.size.grid(row = 1, column =4, padx='5', pady='5')
+        self.expand_checkbox.grid(row = 0, column = 5, padx='5', pady='5')
+
+        self.counter_lbl.grid(row = 0, column=6, rowspan=2)
         self.button_frame.pack()
      
 
         self.gameboard = gm.create_gameboard(rows= 20, cols = 20)
-        self.canvas = DrawableGrid(self.window, self, self.gameboard, size=20)
+        self.canvas = DrawableGrid(self.window, self, self.gameboard, size = self.size.get())
         self.canvas.pack(fill="both", expand=True)
 
 
         tk.mainloop()
     
-    
+    def reset_counter(self):
+        self.counter = 0
+        self.counter_lbl['text'] = self.counter
+
+    def increase_counter(self):
+        self.counter += 1
+        self.counter_lbl['text'] = self.counter
+
+    def set_size(self, size):
+        self.canvas.pack_forget()
+        self.canvas = DrawableGrid(self.window, self, self.gameboard, size = self.size.get())
+        self.canvas.pack(fill="both", expand=False)
+        self.neighbour_count(False)
+
+    def toggle_neighbour_count(self):
+        self.neighbour_count(not self.show_numbers)
+
+    def neighbour_count(self, target_state):
+        if self.show_numbers == False and target_state == True:
+            self.canvas.show_neighbour_count()
+            self.number_button['text'] = "hide #"
+            self.show_numbers = True
+        elif self.show_numbers == True and target_state == False:
+            self.canvas.hide_neighbour_count()
+            self.number_button['text'] = "show #"
+            self.show_numbers = False
+        else:
+            return target_state
+
     def paint_gameboard(self):
         gb_txt = self.text_field.get(1.0, tk.END)
         
         self.gameboard = sim.convert_to_gameboard(gb_txt)
         
         self.canvas.pack_forget()
-        self.canvas = DrawableGrid(self.window, self, self.gameboard, size = 20)
+        self.canvas = DrawableGrid(self.window, self, self.gameboard, size = self.size.get())
+        self.reset_counter()
         self.canvas.pack(fill="both", expand=True)
 
 
@@ -249,10 +320,13 @@ class GolpyGui():
 
     def nextCallBack(self):
         self.set_text_to_value("")
+        self.neighbour_count(False)
         gb_orig = self.gameboard
         if self.expand.get() == 1:
             self.gameboard = gam.expand_gameboard_if_necessary(self.gameboard)
         gb = gm.play(self.gameboard)
+        self.increase_counter()
+
         if gm.gameboard_equal(gb, self.gameboard):
             self.running = False
             self.run_button["text"] = "run"
@@ -262,7 +336,7 @@ class GolpyGui():
         if self.gameboard[0].shape != gb_orig[0].shape:
             
             self.canvas.pack_forget()
-            self.canvas = DrawableGrid(self.window, self, self.gameboard, size = 20)
+            self.canvas = DrawableGrid(self.window, self, self.gameboard, size = self.size.get())
             self.canvas.pack(fill="both", expand=True)
 
         else:
