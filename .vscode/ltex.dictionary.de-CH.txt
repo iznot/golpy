@@ -1,2 +1,5 @@
 Horton
 Conway
+Kachelstrategie
+Gameboard
+Gameboards
