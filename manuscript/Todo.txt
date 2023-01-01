@@ -6,3 +6,7 @@ TODO konsistent mit entweder 4x4 oder 5x5 Spielfeld
 TODO Begrifferklärung Glossar kann dann freier schreiben
 TODO nicht noch mehr Programmierzeugs, kategorisieren kurz halten
 TODO wie lange gedauert und solche Zahlen
+
+
+TODO wusste nicht das Ursprung gebraucht wird
+TODO evt. Kernel erwähnen weil mathematisch
