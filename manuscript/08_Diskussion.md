@@ -1,13 +1,16 @@
 # Diskussion
-TODO Beispiele für wie effizienter
-TODO Gleiter wieso nur Periodizität von 4
-TODO aufzeigen wo gescheitert und wieso
 
 Meine beiden Algorithmen sind funktionsfähig und können das gewünschte Resultat wiedergeben. Allerdings sind die beiden Probleme damit nicht gelöst. Keine beliebige Funktion kann abgefragt werden, sondern nur eine, die zuvor schon einmal abgespielt wurden. Zudem beschränken sich diese gespielten Konfigurationen auf ein 5x5 Feld, da das Abspielen aller Simulationen zu lange dauert. In einem nächsten Versuch müsste also die simulierende Funktion effizienter gemacht werden. Dies wäre dadurch möglich, in dem die maximale Zahl je nach Anzahl Lebenden berechnet würde und der jeweilige Parallelprozess bereits nach dem Erreichen dieser Zahl abbräche. Zudem könnte die Simulation in noch mehr Parallelprozesse aufgeteilt werden, zum Beispiel nach Anzahl lebenden im äussersten Ring, dann im zweit äussersten und so weiter. Auch würde ein leistungsstärkerer Computer benötigt, der so viele Parallelprozesse auf mal abspielen kann.
 
-Um die Probleme aber richtig lösen zu können, müsste ein Algorithmus gefunden werden, der ohne vorgespielte Konfigurationen weiss, wie der Spielverlauf der Konfiguration aussieht. 
+Zudem wäre es gut, wenn die Simulation nach noch mehr Objekten filtern könnte. Über eine Million Anfangskonfigurationen wurden zu den überlebenden Objekten gezählt, was doch 26 % aller Anfangskonfigurationen ausmacht. So müsste sicher nach Objekten gefiltert werden, die sowohl gleitende als auch stabile beziehungsweise oszillierende Objekte beinhalten, da meine Unterteilung dies nicht kann. So würden viele dieser überlebenden Objekte schon vor dem Erreichen des Grenzwertes erkennt und aussortiert, unter anderem auch Gleiterkanonen. Falls zusätzlich noch ein Erkennungsalgorithmus für unendlich wachsende Objekte gefunden würde, bräuchte die Simulation gar keinen Grenzwert mehr und auch Anfangskonfigurationen die erst nach 100 Durchgängen die Form ihrer Objektgruppe annehmen, würden richtig zugeordnet.
+
+Um die Probleme aber richtig lösen zu können, müsste ein Algorithmus gefunden werden, der ohne gespielte Konfigurationen weiss, wie der Spielverlauf der Konfiguration aussieht. 
 
 Ein Lösungsansatz für das Voraussagen der Objektgruppe bestimmter Konfigurationen wäre, alle Konfigurationen, die im selben Objekt münden, zu vergleichen und nach Gemeinsamkeiten zu untersuchen. Wenn Gemeinsamkeiten gefunden werden können, sollte eine Funktion geschrieben werden, die die gegebene Konfiguration nach diesen untersucht und daraus folgert, zu welcher Objektgruppe die Konfiguration gehören muss. 
-Dies ist durch meine Ergebnisse stark eingeschränkt möglich. So weiss ich, dass eine Konfiguration mit drei lebenden Zellen sicher kein Gleiter wird. 
+Dies ist durch meine Ergebnisse bereits stark eingeschränkt möglich. So weiss ich, dass eine Konfiguration mit weniger als 5 lebenden Zellen sicher kein Gleiter wird. Sobald eine Konfiguration nur noch zwei lebende Zellen hat, gehört diese sicher zu der Gruppe der selbst auslöschenden Objekte. Des Weiteren sind statische und oszillierende Objekte meist schon sehr früh symmetrisch.
 
-Eine Idee zur Lösung des zweiten Problems, also ob eine Konfiguration aus der anderen entstehen kann, kommt mir nicht. 
+Dies könnte auch dadurch erreicht werden, indem eine Funktion alle Anfangskonfigurationen mit allen Generationen der jeweils anderen Anfangskonfigurationen abgleicht. Wenn eine Übereinstimmung gefunden wird, kann der Spielverlauf der Anfangskonfiguration besser nachempfunden werden. Welche Konfiguration entsteht aus welcher anderer und wie viele verschiedene Anfangskonfigurationen gibt es wirklich? Vielleicht sind es gar nicht so viele, als dass der Spielverlauf so unvorhersehbar ist, als wie gedacht. Falls dieser Ansatz zu einem brauchbaren Ergebnis führte, könnte damit auch das zweite Problem angegangen werden. 
+
+Ob diese Ansätze überhaupt zu etwas führen, ist zu dem Zeitpunkt nicht bestimmbar. Vielleicht ist die Vorhersage der Lebensentwicklung wirklich nicht möglich, oder wenn dann nur beschränkt. 
+Fest steht aber, das Game of Life ist weitaus fesselnder, als auf den ersten Blick gedacht.
+ 
