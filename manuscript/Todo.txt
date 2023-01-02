@@ -1,9 +1,9 @@
 TODO Nummerierung bei title
-TODO Gänsefüsschen immer die gleichen
 
 TODO Big question solution anschauen ob korrekt
 TODO Zweite Simulation testen und laufen lassen
 TODO Code aufräumen und kommentieren
 
+TODO ag Reihen durch Zeilen ersetzen (auch in Grafik)
 
-TODO evt. Kernel erwähnen weil mathematisch
+

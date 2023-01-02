@@ -3,3 +3,4 @@ Conway
 Kachelstrategie
 Gameboard
 Gameboards
+Spielzug
