@@ -14,7 +14,7 @@ Grundkonfiguration
 Anfangskonfiguration
 : Eine Konfiguration bevor sie je abgespielt wurde. Die Anfangskonfiguration wird dann simuliert.
 
-Spielzug
+Spielzug (Play)
 : Ein Spielzug bezeichnet die Anwendung der Spielregeln auf eine Konfiguration. Durch einen Spielzug entsteht aus einer Konfiguration eine neue Konfiguration.
 : `basic_game_functions.play(gameboard)`$
 
@@ -37,6 +37,9 @@ Spielklassen
 
 Objekt
 : Konfigurationen, die in Simulationen immer wieder auftauchen, werden als Objekte bezeichnet und benannt, z.B.: Gleiter, Tümmler, Blinker, Uhr, Fresser, Segler, etc. Objekte verhalten sich nach Spielklassen, d.h. statisch, oszillierend, gleitend, selbst auslöschend, überlebend.
+
+Periodizität
+: <!-- TODO: ag Periodizität definieren>
 
 Affine Konfigurationen
 : Zwei Konfigurationen sind affin, wenn die relative Konfiguration der einen durch mindestens eine der folgenden Operationen in die relative Konfiguration der anderen transformiert werden kann:

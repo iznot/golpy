@@ -1,7 +1,7 @@
 # Material und Methode
 
-Um mich diesen grossen Fragen des «Game of Life» stellen zu können, programmierte ich als Erstes das einfache Grundkonzept des Spieles. Danach konzentrierte ich mich auf die Programmierung einer Simulation, die auf einem beliebig grossen Spielfeld alle möglichen und unterschiedlichen Konfiguration durchspielen sollte. Da ich mich lediglich in Python, auch wenn nur dürftig, auskannte, wählte ich diese Programmiersprache für meine Arbeit. 
-Mein Vater spielte eine grosse Rolle bei anfälligen Fragen oder als Anlaufstelle bei Unsicherheiten und Problemen. 
+Um mich diesen grossen Fragen des "Game of Life" widmen zu können, programmierte ich als Erstes das einfache Grundkonzept des Spieles. Danach konzentrierte ich mich auf die Programmierung einer Simulation, die auf einem beliebig grossen Spielfeld alle möglichen und unterschiedlichen Konfiguration durchspielen sollte. Da ich mich lediglich in Python, (wenn auch nur dürftig), auskannte, wählte ich diese Programmiersprache für meine Arbeit. 
+Mein Vater spielte eine grosse Rolle bei anfälligen Fragen oder als Anlaufstelle bei Unsicherheiten und Problemen. <!-- QUESTION: willst du das nochmals sagen? Du hast es ja schon im Vorwort gesagt.>
 
 ## Das Grundkonzept
 
@@ -10,16 +10,20 @@ Das Programmieren des Gameboards und der Spielfunktion stellte sich im Nachhinei
 
 ### Das Gameboard
 
-Das Gameboard erinnert an ein Schachbrett und wird durch eine binäre Matrix dargestellt. Die Zellen mit Nullen symbolisieren die toten Zellen und sind somit leer, die Zellen mit Einsen die lebenden und sind schwarz ausgefüllt. Somit sieht ein Gameboard mit einer einzelnen lebenden Zelle und der Grösse 5x5 wie folgt aus:
+Das Gameboard erinnert an ein Schachbrett - wobei es keine schwarzen und weissen Felder gibt, sondern nur quadratische Häuschen. Im Programmiercode wird das Gameboard durch eine Matrix dargestellt. 
+
+### Die Konfiguration
+
+Die Konfiguration setzt sozusagen die lebenden Zellen auf das Gameboard. Dies wird mit einer binären Matrix programmiert. Die Zellen mit Nullen symbolisieren die toten Zellen und sind somit leer, die Zellen mit Einsen die lebenden. Diese werden schwarz ausgefüllt dargestellt. Somit sieht ein Gameboard mit einer einzelnen lebenden Zelle und der Grösse 5x5 wie folgt aus:
 
 
 {width: "16.666666667%"}
 ![Abb. 7: Beispielsgameboard](example_gb.png)  
 
 
-### Play
+### Spielzug (Play)
 
-Als Nächstes machte ich mich an die Spielfunktion. Jede Zelle hat einen Index [Reihe, Spalte], ähnlich wie in einem Koordinatensystem. Die Nummerierung fängt bei null an da sie Computerbasiert ist. In der Informatik gilt null gleich "False" und eins gleich "True". Eine Zelle muss also mit "True" gleichgesetzt werden, um als lebend zu gelten:
+Als Nächstes machte ich mich an die Spielfunktion. Jede Zelle hat einen Index [Zeile, Spalte], ähnlich wie in einem Koordinatensystem. Die Nummerierung fängt bei null (wie in Pyhton üblich). In der Informatik gilt null gleich "False" und eins gleich "True". Eine Zelle muss also mit "True" gleichgesetzt werden, um als lebend zu gelten:
 
 
 1. Zelle[2,1] = True
@@ -41,6 +45,7 @@ Um eine Konfiguration nun durchspielen zu können, muss der Status der Nachbarze
 ```
 Für jede Zelle wird dieser Kernel darüber gelegt, sodass das null auf der besagten Zelle liegt. Nun werden alle Zellen, auf denen eine Eins liegt, überprüft und zusammengezählt. Eine tote Zelle hat den Wert Null und eine lebende den Wert Eins. Sobald die Summe der Nachbarzellen nun bekannt ist, muss nur noch den Regeln gefolgt werden um den Status besagter Zelle für die nächste Generation herauszufinden.   
  
+Diese Funktion wird in Pyhton in der Bibliothek `skipy` durch die Funktion `convolve` zur Verfügung gestellt.
 
 ### Randzellen
 
@@ -48,14 +53,14 @@ Ein Problem stellen die Ränder dar. Eine Zelle am Rand hat nur fünf existente 
 
 Zuerst löste ich das Problem mit der sogenannten Kachelstrategie. Dabei werden die Gameboards auf allen acht Seiten (N, NE, E, SE, S, SW, W, NW) wiederholt. Beispielsweise hat die oberste Zelle links als linken (West-) Nachbarn die oberste Zelle rechts und umgekehrt.
 
-Mit dem Hinblick auf die Simulation die ich später erstellen würde, ist diese Lösung allerdings nicht die beste. Für die Simulation ist es nämlich wichtig, dass dieselben Bedingungen wie auf einem endlosen Spielbrett herrschen, da sonst die folgende Generation verfälscht werden könnte. Also schrieb ich eine Funktion, die jedes Mal, wenn eine Zelle am Rand des Gameboards ankommt, dieses um eine Reihe oder Spalte, je nach Fall, vergrössert. Somit ist sichergestellt, dass jede Zelle immer acht echte Nachbarn hat.
+Mit dem Hinblick auf die Simulation, die ich später erstellen würde, ist diese Lösung allerdings nicht die beste. Für die Simulation ist es nämlich wichtig, dass dieselben Bedingungen wie auf einem endlosen Spielbrett herrschen, da sonst die folgende Generation verfälscht werden könnte. Also schrieb ich eine Funktion, die jedes Mal, wenn eine Zelle am Rand des Gameboards ankommt, dieses um eine Reihe oder Spalte, je nach Fall, vergrössert. Somit ist sichergestellt, dass jede Zelle immer acht echte Nachbarn hat.
 Zur Veranschaulichung nehmen wir folgendes Gameboard:
 
 
 {width: "16.666667%"}
 ![Abb. 9: Grenzfälle Nachbarn](corner_case_gb.png)  
 
-Bevor das Spielbrett nun abgespielt wird, beziehungsweise die nächste Generation errechnet würde, kommt auf jeder Seite eine Reihe oder Spalte hinzu. Das Gameboard besitzt also nicht mehr die Grössenverhältnisse 5x5, sondern 7x7:
+Bevor der nächste Spielzug errechnet wird, kommt auf jeder der vier Hauptseiten eine leere Zeile oder Spalte hinzu. Das Gameboard besitzt also nicht mehr die Grössenverhältnisse 5x5, sondern 7x7:
 
 
 {width: "21%"}
@@ -63,29 +68,27 @@ Bevor das Spielbrett nun abgespielt wird, beziehungsweise die nächste Generatio
 
 Die Zellen sterben durch diese Funktion also bereits nach einer Generation aus. Für sie gelten nun dieselben Bedingungen wie für Zellen eines endlos grossen Spielfelds. 
 
- ## Die Simulation
+ ## Simulation
 
 Die Simulation ist der Schlüssel zur Beantwortung der Fragestellungen. 
-Wenn alle möglichen Konfigurationen eines Spielfelds einmal durchgespielt wurden, sind auch all deren Endzustände bekannt. Wenn nun also irgendeine Konfiguration auf diesem begrenzten Spielfeld abgefragt wird, kann ich den Endzustand sozusagen "hervorsagen", bevor diese erneut durchgespielt wird. 
+Wenn alle möglichen Konfigurationen eines Spielfelds einmal durchgespielt werden, sind auch all deren Endzustände bekannt. Wenn nun also eine beliebige Konfiguration auf diesem begrenzten Spielfeld abgefragt wird, kann ich den Endzustand sozusagen "vorhersagen", ohne diese erneut durchzuspielen. Dabei handelt es sich nicht um einen echten Algorithmus, sondern eher um einen Katalog aller möglichen Konfigurationen.
 
-Zudem sind mir die einzelnen Generationen jeder Konfiguration dieses Spielfeldes bekannt. Um herauszufinden, ob eine Konfiguration aus der anderen entstehen kann, muss diese also nur mit den abgespeicherten Generationen der zu vergleichenden Konfiguration abgeglichen werden. Wenn sie mit einer übereinstimmt, ist die Antwort klar. 
+Zudem sind mir die einzelnen Generationen jeder Konfiguration dieses Spielfeldes bekannt. Um herauszufinden, ob eine Konfiguration X aus einer Konfiguration Y entstehen kann, muss Konfiguration X also nur mit den abgespeicherten Generationen des Spiels vergleichen, das aus Konfiguration Y entsteht. 
 
 ### Endzustand
 
-Als Erstes legte ich fest, nach welchen möglichen Endzuständen ich unterscheiden will. Ich entschied mich für die vier bekanntesten und nicht allzu seltenen Objekten:
+Als Erstes legte ich fest, nach welchen möglichen Endzuständen ich unterscheiden will. Ich entschied mich für die vier bekanntesten und nicht allzu seltenen Spielklassen:
 
 1. Selbst auslöschende Objekte
 1. Statische Objekte
 1. Oszillierende Objekte
 1. Gleitende Objekte
-   
 
+Zudem brauchte es noch eine weitere Objektgruppe, falls es sich um keines der obigen Objekte handelt, wie beispielsweise eine Gleiterkanone. Also fügte ich eine fünfte Möglichkeit hinzu, die alle restlichen Fälle abdeckt:
 
-Zudem brauchte es noch eine weitere Objektgruppe, falls es sich um keines der obigen Objekte handelt, wie beispielsweise eine Gleiterkanone. Also fügte ich eine fünfte Möglichkeit hinzu:
+5. Überlebende Objekte
 
-1. Überlebende Objekte
-
-Für jede Generation der Anfangskonfiguration muss nach jedem dieser Objekte geprüft werden. Sobald eines übereinstimmt, bricht das Spiel ab.
+Für jede Generation des Spiels auf eine bestimmte Anfangskonfiguration muss nach jeder dieser Spielklasse geprüft werden. Sobald Spielklassen 1 - 4 identifiziert wurden, bricht das Spiel ab, und die Endkonfiguration wird festgehalten.
 
 #### Selbst auslöschende Objekte (Erased)
 

@@ -6,4 +6,6 @@ TODO Code aufräumen und kommentieren
 
 TODO ag Reihen durch Zeilen ersetzen (auch in Grafik)
 
-
+TODO ag Im Code alle gameboards durch configuration ersetzen
+TODO ag im Code cut_both_axis durch get_base_configuration ersetzen
+TODO ag im Code Funktionsnamen klar zwischen Spiel (game), Spielzug (play) und Simulation unterscheiden
