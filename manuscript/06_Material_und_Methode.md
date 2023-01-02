@@ -12,9 +12,8 @@ Das Programmieren des Gameboards und der Spielfunktion stellte sich im Nachhinei
 
 Das Gameboard erinnert an ein Schachbrett und wird durch eine binäre Matrix dargestellt. Die Zellen mit Nullen symbolisieren die toten Zellen und sind somit leer, die Zellen mit Einsen die lebenden und sind schwarz ausgefüllt. Somit sieht ein Gameboard mit einer einzelnen lebenden Zelle und der Grösse 5x5 wie folgt aus:
 
-TODO Bild Einfügen 7
 
-{width: "20%"}
+{width: "16.666666667%"}
 ![Abb. 7: Beispielsgameboard](example_gb.png)  
 
 
@@ -28,12 +27,19 @@ Als Nächstes machte ich mich an die Spielfunktion. Jede Zelle hat einen Index [
 3. Zelle[4,0] = True
 
 
-
 {width: "30%"}
 ![Abb. 8: Beispiel lebendige Zellen](example_alive_gb.png)  
 
-Um eine Konfiguration durchspielen zu können, muss der Status der Nachbarzellen bekannt sein. Zuerst iteriere ich also durch das Spielfeld, um alle lebendigen Zellen herauszufinden. Als Nächstes marschiere ich um jede lebendige Zelle herum und zähle, wie viele der Nachbarzellen lebendig sind. Nun muss nur noch den bereits bekannten Regeln gefolgt werden und ein neues Gameboard ausgedruckt werden. 
 
+Um eine Konfiguration nun durchspielen zu können, muss der Status der Nachbarzellen bekannt sein. Diesen finde ich durch einen Kernel heraus. 
+
+{caption: "Kernel"}
+```
+[1, 1, 1]
+[1, 0, 1]
+[1, 1, 1]
+```
+Für jede Zelle wird dieser Kernel darüber gelegt, sodass das null auf der besagten Zelle liegt. Nun werden alle Zellen, auf denen eine Eins liegt, überprüft und zusammengezählt. Eine tote Zelle hat den Wert Null und eine lebende den Wert Eins. Sobald die Summe der Nachbarzellen nun bekannt ist, muss nur noch den Regeln gefolgt werden um den Status besagter Zelle für die nächste Generation herauszufinden.   
  
 
 ### Randzellen
@@ -46,17 +52,16 @@ Mit dem Hinblick auf die Simulation die ich später erstellen würde, ist diese 
 Zur Veranschaulichung nehmen wir folgendes Gameboard:
 
 
-{width: "20%"}
+{width: "16.666667%"}
 ![Abb. 9: Grenzfälle Nachbarn](corner_case_gb.png)  
 
 Bevor das Spielbrett nun abgespielt wird, beziehungsweise die nächste Generation errechnet würde, kommt auf jeder Seite eine Reihe oder Spalte hinzu. Das Gameboard besitzt also nicht mehr die Grössenverhältnisse 5x5, sondern 7x7:
 
 
-{width: "28%"}
+{width: "21%"}
 ![Abb. 10: Expandiertes Gameboard](expanded_gb.png)  
 
- Die Zellen sterben durch diese Funktion also bereits nach einer Generation aus. Für sie gelten nun dieselben
- Bedingungen wie für Zellen eines endlos grossen Spielfelds. 
+Die Zellen sterben durch diese Funktion also bereits nach einer Generation aus. Für sie gelten nun dieselben Bedingungen wie für Zellen eines endlos grossen Spielfelds. 
 
  ## Die Simulation
 
@@ -73,10 +78,10 @@ Als Erstes legte ich fest, nach welchen möglichen Endzuständen ich unterscheid
 1. Statische Objekte
 1. Oszillierende Objekte
 1. Gleitende Objekte
-2. 
-TODO nicht "Fehlerbehebung"
+   
 
-Zudem brauchte es noch eine Fehlerbehebung, falls es sich um ein anderes Objekt handelt, wie zum Beispiel eine Gleiterkanone. Also fügte ich eine fünfte Möglichkeit hinzu:
+
+Zudem brauchte es noch eine weitere Objektgruppe, falls es sich um keines der obigen Objekte handelt, wie beispielsweise eine Gleiterkanone. Also fügte ich eine fünfte Möglichkeit hinzu:
 
 1. Überlebende Objekte
 
@@ -90,13 +95,12 @@ Diese Objekte sind sichtlich einfach erkennbar. Eine Funktion prüft, ob in dem 
 
 Auch diese Objekte stellen kein Problem dar. Jede Konfiguration der vorherigen Generationen wird abgespeichert. Das letzte Objekt dieser Liste ist die Muttergeneration der aktuellen Konfiguration. Wenn diese beiden identisch sind, ist das Objekt statisch. Falls nicht, muss weiter geprüft werden.
 
-#### Oszilierende Objekte (Oscillator)
+#### Oszillierende Objekte (Oscillator)
 
 Oszillatoren zeichnen sich dadurch aus, dass sie nach einer bestimmten Periode wieder dieselbe Konfiguration darstellen. Die aktuelle Generation muss nun also mit allen vorherigen Generation abgeglichen werden. Wenn keine Übereinstimmung vorhanden ist, muss weiter geprüft werden.
 
 #### Gleitende Objekte (Spaceship)
 
-TODO Erklärung anschauen und evt verbessern.
 Diese Objekte sind etwas schwieriger zum Herausfiltern. Die einzelnen Generationen sehen zwar gleich aus, haben aber unterschiedliche Positionen. Es muss also eine Kopie des relativen Gameboards aller Generationen seit der Anfangskonfiguration bis zur jetzigen Generation erstellt und abgespeichert werden.
 
 Für das relative Gameboard müssen zuerst die leeren Spalten und Reihen bis zu den ersten lebenden Zellen herausgefunden werden. Damit nicht auch tote Zellen zwischen zwei lebendigen Zellen abgeschnitten werden, müssen die überflüssigen Reihen und Spalten von jeder Seite einzeln gezählt werden. Sobald diese Zahlen bekannt sind, kann bis zum Index der ersten lebenden Zelle abgeschnitten werden. 
@@ -117,15 +121,15 @@ Die Zahl des Spielbrettes ergibt sich aus dem Gameboard als binäre Zahl, die Nu
 
 
 
-{width: "55%"}
+{width: "65%"}
 ![Abb. 12: Gameboard als Zahl](gb_number_explained.png)  
 
-TODO Zähler evt als erstes Thema.
+
 ### Zähler
 
 Diese soeben erklärte Methode verwende ich ähnlich um die einzelnen zu simulierenden Anfangskonfigurationen zu generieren. Ein Zähler zählt jedes Mal, wenn eine neue Anfangskonfiguration in die Simulation gegeben wird, herauf. Einzig die höchste Zahl muss bekannt sein, also wie viele verschiedene Konfigurationen auf diesem Spielfeld generiert werden können. Da hier eine Wahrscheinlichkeit mit zwei möglichen Ausgängen besteht, muss jeweils `2^{Anzahl Zellen}`$ gerechnet werden. Bei einem 5x5 Spielfeld würden alle Möglichkeiten zusammen also `2^{5\cdot5} = 33'554'432`$ ergeben. Nun zählt der Zähler hoch, bis diese Zahl erreicht wird. Jede Zahl wird zuerst in eine binäre Zahl umgewandelt. Diese wird nun mit dem leeren Spielfeld als binäre Zahl verglichen und von vorne aufgefüllt, bis sie auf die gleiche Länge kommen. Da die Länge und Breite des Spielbrettes bekannt sind, kann nun aus dieser binären Zahl einfach ein Spielbrett mit der gewünschten Konfiguration erstellt werden. 
 
-
+TODO Zahlen entfernen an linkem Rand bei Leanpub
 {title: "Dezimalzahl als Spielbrett", id: decimale_gb}
 ```text
 Zahl:  Binärzahl:  Zellen:    Aufgefüllte Zahl:    Gameboard:

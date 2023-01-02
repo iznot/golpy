@@ -12,5 +12,5 @@ Dies ist durch meine Ergebnisse bereits stark eingeschränkt möglich. So weiss 
 Dies könnte auch dadurch erreicht werden, indem eine Funktion alle Anfangskonfigurationen mit allen Generationen der jeweils anderen Anfangskonfigurationen abgleicht. Wenn eine Übereinstimmung gefunden wird, kann der Spielverlauf der Anfangskonfiguration besser nachempfunden werden. Welche Konfiguration entsteht aus welcher anderer und wie viele verschiedene Anfangskonfigurationen gibt es wirklich? Vielleicht sind es gar nicht so viele, als dass der Spielverlauf so unvorhersehbar ist, als wie gedacht. Falls dieser Ansatz zu einem brauchbaren Ergebnis führte, könnte damit auch das zweite Problem angegangen werden. 
 
 Ob diese Ansätze überhaupt zu etwas führen, ist zu dem Zeitpunkt nicht bestimmbar. Vielleicht ist die Vorhersage der Lebensentwicklung wirklich nicht möglich, oder wenn dann nur beschränkt. 
-Fest steht aber, das Game of Life ist weitaus fesselnder, als auf den ersten Blick gedacht.
+Fest steht aber, das Game of Life ist weitaus komplexer, als auf den ersten Blick gedacht.
  
