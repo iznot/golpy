@@ -41,7 +41,7 @@ Objekt
 
 
 Periodizität
-: <!-- TODO: ag Periodizität definieren>
+: Die Anzahl an Generationen bis eine Konfiguration entsteht, deren Grundkonfiguration der Grundkonfiguration der vorherigen Konfiguration entspricht.
 
 
 Doppelgänger
