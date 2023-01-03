@@ -13,13 +13,17 @@ Schon als Kind hatte er eine Faszination für Spiele, welche ihn später in die 
 
 Der Öffentlichkeit wurde er durch die Entwicklung des "Game of Life" bekannt. Dieses "no-player, never ending game", wie er es auch nannte, entwickelte er in den 70er Jahren. Das Spiel war der Startschuss für Simulationen auf dem Gebiet der Komplexitätswissenschaft. Ganze Generationen von Mathematikern, Informatikern und Tüftlern liessen sich dafür begeistern. Die ansteigende Popularität seiner Entwicklung gefiel Conway gar nicht, weshalb er Fragen über seine Kreation mit dem Satz "I hate life" auswich. Gegen das Ende seines eigenen Lebens konnte er sich jedoch wieder mit seiner Rolle als Schöpfer des "Game of Life" anfreunden: 
 
-> "Ich gab irgendwo einen Vortrag und wurde als 'John Conway, Schöpfer des Lebens.' vorgestellt. Und ich dachte 'Oh das ist eine nette Art, bekannt zu sein'.". [^footnote-1]
+> "Ich gab irgendwo einen Vortrag und wurde als 'John Conway, Schöpfer des Lebens.' vorgestellt. Und ich dachte 'Oh das ist eine nette Art, bekannt zu sein'." [^footnote-1]
+>
+> - *John Conway*
 
 Die Faszination des Spieles liegt darin, dass ein einfaches Konzept mit vier simplen Regeln hochkomplexe Themen behandelt. Wie der Musiker Brian Eno sagte:
 
-> "Wir sind an die Idee gewöhnt, dass alles Komplexe aus etwas noch Komplexerem hervorgehen muss. […] Life zeigt uns komplexe, virtuelle Organismen, erschaffen durch die Interaktion mit ein paar einfachen Regeln." [*Roberts* 2020](#Roberts)
+> "Wir sind an die Idee gewöhnt, dass alles Komplexe aus etwas noch Komplexerem hervorgehen muss. […] Life zeigt uns komplexe, virtuelle Organismen, erschaffen durch die Interaktion mit ein paar einfachen Regeln." 
+> 
+> - *Brian Eno* [*Roberts* 2020](#Roberts)
 
-[^footnote-1]: Dieses und nachfolgende Zitate wurden von mir aus dem Englischen übersetzt.
+[^footnote-1]: Zitate wurden von mir aus dem Englischen übersetzt.
 
 ## Regeln
 
