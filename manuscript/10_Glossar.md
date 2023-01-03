@@ -1,3 +1,4 @@
+{#glossar}
 # Glossar
 
 Gameboard
@@ -36,10 +37,15 @@ Spielklassen
 : Spiele können in verschiedene Klassen eingeteilt werden, je nachdem wie sich die Konfigurationen über den Spielverlauf entwickeln. Unterschieden werden folgende Spielklassen: statisch, oszillierend, gleitend, selbst auslöschend, überlebend.
 
 Objekt
-: Konfigurationen, die in Simulationen immer wieder auftauchen, werden als Objekte bezeichnet und benannt, z.B.: Gleiter, Tümmler, Blinker, Uhr, Fresser, Segler, etc. Objekte verhalten sich nach Spielklassen, d.h. statisch, oszillierend, gleitend, selbst auslöschend, überlebend.
+: Konfigurationen, die in Simulationen immer wieder auftauchen, werden als Objekte bezeichnet und benannt, z.B.: Gleiter, Tümmler, Blinker, Uhr, Fresser, Segler, etc. Objekte verhalten sich nach Spielklassen, d.h. statisch, oszillierend, gleitend, selbst auslöschend, überlebend. In einer Konfiguration können grundsätzlich auch mehrere Objekte vorkommen. Zum Beispiel eine Kanone, die immer wieder Gleiter schiesst. In meiner Arbeit habe ich nicht zwischen Objekt und Grundkonfiguration unterschieden.
+
 
 Periodizität
 : <!-- TODO: ag Periodizität definieren>
+
+
+Doppelgänger
+: <!-- TODO: ag -->
 
 Affine Konfigurationen
 : Zwei Konfigurationen sind affin, wenn die relative Konfiguration der einen durch mindestens eine der folgenden Operationen in die relative Konfiguration der anderen transformiert werden kann:

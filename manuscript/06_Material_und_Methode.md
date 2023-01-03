@@ -47,6 +47,7 @@ Für jede Zelle wird dieser Kernel darüber gelegt, sodass das null auf der besa
  
 Diese Funktion wird in Pyhton in der Bibliothek `skipy` durch die Funktion `convolve` zur Verfügung gestellt.
 
+{#randzellen}
 ### Randzellen
 
 Ein Problem stellen die Ränder dar. Eine Zelle am Rand hat nur fünf existente Nachbarn. Eine Eckzelle sogar nur drei. 
@@ -102,11 +103,15 @@ Auch diese Objekte stellen kein Problem dar. Jede Konfiguration der vorherigen G
 
 Oszillatoren zeichnen sich dadurch aus, dass sie nach einer bestimmten Periode wieder dieselbe Konfiguration darstellen. Die aktuelle Generation muss nun also mit allen vorherigen Generation abgeglichen werden. Wenn keine Übereinstimmung vorhanden ist, muss weiter geprüft werden.
 
+Ein Problem, das sich mir dabei stellte, war, dass ein oszillierendes Objekt grösser und dann wieder kleiner werden kann. Es kann also notwendig sein, das Gameboard zu erweitern, wie oben im Abschnitt (Randzellen)[#randzellen] beschrieben. Um jedoch zwei Generationen in einem Spiel vergleichen zu können, musste ich beim Zusammenziehen eines Objektes das Gameboard wieder auf die Grundform reduzieren.
+
 #### Gleitende Objekte (Spaceship)
 
-Diese Objekte sind etwas schwieriger zum Herausfiltern. Die einzelnen Generationen sehen zwar gleich aus, haben aber unterschiedliche Positionen. Es muss also eine Kopie des relativen Gameboards aller Generationen seit der Anfangskonfiguration bis zur jetzigen Generation erstellt und abgespeichert werden.
+Durch die Reduktion auf die Grundform, die für oszillierende Objekte notwendig ist, ist es nicht einfach, die gleitenden Objekte von oszillierenden Objekten zu unterscheiden. Durch das Vereinfachen einer Konfiguration auf die Grundkonfiguration geht bei einem gleitenden Objekt die relative Position auf dem Gameboard verloren. Um dieses Problem zu lösen, musste ich zusätzlich zur Konfiguration noch die relative Position jeder Konfiguration in einem Spiel speichern und vergleichen. Bleibt die relative Position über Generationen hinweg gleich, so handelt es sich um ein oszillierendes Objekt. Ändert sich die relative Position, so handelt es sich um ein gleitendes Objekt.
 
 Für das relative Gameboard müssen zuerst die leeren Spalten und Reihen bis zu den ersten lebenden Zellen herausgefunden werden. Damit nicht auch tote Zellen zwischen zwei lebendigen Zellen abgeschnitten werden, müssen die überflüssigen Reihen und Spalten von jeder Seite einzeln gezählt werden. Sobald diese Zahlen bekannt sind, kann bis zum Index der ersten lebenden Zelle abgeschnitten werden. 
+
+<!-- TODO: das stimmt noch nicht ganz. Die Grundform brauchen wir für die Oszillatoren, die relative Position für die gleitenden Objekte. -->
 
 ![Abb. 11: Relatives Gameboard von Gleiter](relative_gb.png)  
 
@@ -114,15 +119,19 @@ Diese relativen Gameboards werden nun nach dem Schema der Oszillatoren abgeglich
 
 #### Überlebende Objekte (Survival)
 
-Falls die Konfiguration bis jetzt nicht herausgefiltert wurde, gilt es als überlebendes Objekt. Damit diese nun nicht endlos weiterlaufen, baue ich einen Grenzwert ein. Dieser impliziert zwar eine Fehlerquote für Konfiguration, die Objekte darstellen, diese aber erst nach dem vorgegebenen Grenzwert erreichen. Würde dieser Grenzwert aber weggelassen werden, würde die Simulation endlos lange dauern. Wenn nach dem Erreichen dieses Wertes die Konfiguration also immer noch keinem Objekt entspricht, bricht die Simulation ab und die Konfiguration gilt als überlebend. Den Grenzwert wählte ich bei 100.
+Falls der Objekttyp bis jetzt nicht identifiziert wurde, klassifizieren wir ein Spiel als überlebend. Damit diese Spiele nun nicht endlos weiterlaufen, baue ich eine maximale Zahl von erlaubten Spielzügen ein. Dieser Maximalwert impliziert eine Fehlerquote für Anfangskonfigurationen, die ein Objekt erst nach dem vorgegebenen Grenzwert erreichen. Würde dieser Grenzwert aber weggelassen werden, würde die Simulation endlos lange dauern. Den Grenzwert setzte ich bei meinen Simulationen auf 100.
 
 ### Speicherform des Spielbrettes 
 
-Um diese simulierten Konfigurationen und deren Endzustände abzuspeichern, müssen die Spielbretter in eine andere Form gebracht werden. Wenn sie bei einem herkömmlichen Spielfeld belassen werden würden, würde viel zu viel Speicherplatz benötigt werden. Also will ich das Spielbrett in eine Zahl verwandeln. Zuerst kommt die Grösse des Spielfelds, dann die Position der Konfiguration auf dem Spielfeld. Darauf folgt die eigentliche Grösse der Konfiguration, die Anzahl an toten Zellen bis zur ersten lebendigen Zelle und schlussendlich noch die Zahl des Spielbrettes. 
+Um die Spiele später analysieren zu können, wollte ich nicht alle Generationen, sondern nur die Anfangskonfiguration und den Endzustände abspeichern. Um eine Konfiguration in ein Excel schreiben zu können, muss die Konfiguration in ein Format gebracht werden, das sich dafür eignet. Eine Möglichkeit wäre, jede Konfiguration durch eine Reihe von Nullen und Einsen darzustellen. Dadurch würde viel zu viel Speicherplatz benötigt werden. Ausserdem wäre noch nicht klar, wie wir z.B. ein 4x5 Gameboard von einem 5x4 Gameboard unterscheiden. Also formattiere ich die Konfiguration nach folgendem Schema: 
 
-Die Zahl des Spielbrettes ergibt sich aus dem Gameboard als binäre Zahl, die Nullen stellen die toten Zellen und die Einsen die lebendigen dar. Diese Zahl wird in eine hexadezimale Zahl umgewandelt, um weiteren Speicherplatz zu sparen. Somit erhält jedes Gameboard eine individuelle Nummer. Das folgende Spielbrett sieht dann also wie folgt aus:
-
-
+1. Zuerst kommt die Grösse des Gameboards
+2. Dann kommt die relative Position des Objekts auf dem Gameboard. 
+3. Darauf folgt die eigentliche Grösse des Objekts (also der Grundform der Konfiguration).
+4. Jetzt kommt die Anzahl an toten Zellen bis zur ersten lebendigen Zelle
+5. Schlussendlich kommt noch die "Zahl" des Spielbrettes. Die Zahl des Spielbrettes ergibt sich aus dem Gameboard als binäre Zahl, die Nullen stellen die toten Zellen und die Einsen die lebendigen dar. Diese Zahl wird in eine hexadezimale Zahl umgewandelt, um weiteren Speicherplatz zu sparen. Somit erhält jedes Objekt eine individuelle Objektzahl. 
+   
+Das folgende Spielbrett sieht dann also wie folgt aus:
 
 {width: "65%"}
 ![Abb. 12: Gameboard als Zahl](gb_number_explained.png)  
@@ -130,7 +139,9 @@ Die Zahl des Spielbrettes ergibt sich aus dem Gameboard als binäre Zahl, die Nu
 
 ### Zähler
 
-Diese soeben erklärte Methode verwende ich ähnlich um die einzelnen zu simulierenden Anfangskonfigurationen zu generieren. Ein Zähler zählt jedes Mal, wenn eine neue Anfangskonfiguration in die Simulation gegeben wird, herauf. Einzig die höchste Zahl muss bekannt sein, also wie viele verschiedene Konfigurationen auf diesem Spielfeld generiert werden können. Da hier eine Wahrscheinlichkeit mit zwei möglichen Ausgängen besteht, muss jeweils `2^{Anzahl Zellen}`$ gerechnet werden. Bei einem 5x5 Spielfeld würden alle Möglichkeiten zusammen also `2^{5\cdot5} = 33'554'432`$ ergeben. Nun zählt der Zähler hoch, bis diese Zahl erreicht wird. Jede Zahl wird zuerst in eine binäre Zahl umgewandelt. Diese wird nun mit dem leeren Spielfeld als binäre Zahl verglichen und von vorne aufgefüllt, bis sie auf die gleiche Länge kommen. Da die Länge und Breite des Spielbrettes bekannt sind, kann nun aus dieser binären Zahl einfach ein Spielbrett mit der gewünschten Konfiguration erstellt werden. 
+Die soeben erklärte Methode der Objektzahl verwende ich auch, um die einzelnen zu simulierenden Anfangskonfigurationen zu generieren. Ein (dezimaler) Zähler zählt in einer `for` Schleife von 0 aufwärts. Einzig die höchste Zahl muss bekannt sein, also wie viele verschiedene Konfigurationen auf diesem Spielfeld maximal generiert werden können. Da hier eine Wahrscheinlichkeit mit zwei möglichen Ausgängen besteht (lebendig oder tot), liegt die Anzahl von unterschiedlichen Konfigurationen bei `2^{Anzahl Zellen}`$. Bei einem 5x5 Spielfeld gibt es also `2^{5\cdot5} = 33'554'432`$ Möglichkeiten. 
+
+Nun zählt der Zähler hoch, bis diese Zahl erreicht wird. Jede Zahl wird zuerst in eine binäre Zahl umgewandelt. Diese wird nun mit dem leeren Spielfeld als binäre Zahl verglichen und von vorne (von links) mit Nullen aufgefüllt, bis sie auf die gleiche Länge kommen. Da die Länge und Breite des Spielbrettes bekannt sind, kann nun aus dieser binären Zahl einfach ein Spielbrett mit der gewünschten Konfiguration erstellt werden. 
 
 TODO Zahlen entfernen an linkem Rand bei Leanpub
 {title: "Dezimalzahl als Spielbrett", id: decimale_gb}
@@ -145,8 +156,24 @@ Zahl:  Binärzahl:  Zellen:    Aufgefüllte Zahl:    Gameboard:
 ```
 ### Aussortieren
 
-Durch das Generieren der Anfangskonfigurationen durch den dezimalen Zähler entsteht das Problem, dass jede Konfiguration viel zu oft abgespielt wird. 
-Zum einen, wenn sie an einer anderen Position vorkommen, eigentlich aber identisch sind. Dieses Problem ist relativ einfach zu lösen. In der Simulation werden immer nur Anfangskonfigurationen abgespielt, die den vorgegebenen Massen entsprechen. Also, wenn ich eine Simulation mit der vorgegebenen Grösse 5x5 starte, wird eine Anfangskonfiguration mit der relativen Grösse von 3x3 nicht abgespielt. So sind schon einmal die ersten Doppelgänger aussortiert. Ausserdem werden alle Anfangskonfigurationen in einem Set gespeichert. Jede neue Anfangskonfiguration wird mit allen vorherigen abgeglichen und falls eine Affinität gefunden wird, abgebrochen. Somit werden keine Konfigurationen, die als einzigen Unterschied eine unterschiedliche Position auf dem Spielfeld haben, mehr als einmal abgespielt. 
+Durch das Generieren der Anfangskonfigurationen durch den dezimalen Zähler entsteht das Problem, dass jede Konfiguration viel zu oft abgespielt wird, und zwar aus zwei Gründen:
+
+1. Doppelgänger
+2. affine Konfigurationen
+
+#### Aussortieren von Doppelgängern
+
+Das gleiche Objekt kann mehrfach auf einem Gameboard vorkommen, nämlich an einer anderen relativen Position. Dieses Problem ist relativ einfach zu lösen. In der Simulation werden immer nur Anfangskonfigurationen abgespielt, die der vorgegebenen Zielgrösse eines Gameboards *genau* entsprechen. Wenn ich also eine Simulation mit der vorgegebenen Grösse 5x5 starte, wird eine Anfangskonfiguration mit der relativen Grösse von 3x3 gar nicht abgespielt. So sind alle 3x3 Doppelgänger aussortiert. Wir dann die 3x3 Simulation durchgespielt, so gibt es keine 3x3-Doppelgänger mehr.
+
+<!-- TODO: hier würde ich noch ein grafisches Beispiel einfügen. -->
+
+#### Aussortieren von affinen Konfigurationen
+
+Konfigurationen, die "ähnlich" sind, weil die eine durch Spiegelung oder Drehung in die andere transformiert werden kann, will ich ebenfalls nicht mehrfach spielen, da ich an *unterschiedlichen* Konfigurationen interessiert bin. Ich nenne diese Konfigurationen *affine Konfigurationen*. Siehe (Glossar)[#glossar].
+
+Es werden alle nicht-affinen Anfangskonfigurationen in einem Set gespeichert. Jede neue Anfangskonfiguration wird mit allen vorherigen abgeglichen und falls eine Affinität gefunden wird, wird das Spiel nicht durchgeführt. 
+
+<!-- TODO: klarer zwische Doppelgänger und affinen Konfigurationen unterscheiden -->
 
 Trotz diesem Filter wird jede Anfangskonfiguration immer noch siebenmal zu oft abgespielt. Zur Veranschaulichung ein Beispiel. Die folgenden Konfigurationen sind eigentlich dieselben, nur entweder gedreht oder gespiegelt, deren dazugehörigen Dezimalzahlen allerdings komplett unterschiedlich:
 
@@ -157,9 +184,13 @@ Um zu vermeiden, dass all diese abgespielt und gespeichert werden, muss also sow
 
 ### Abspeichern
 
-Alles, was ich abspeichern will, speichere ich in ein CSV-File. Dieses Format eignet sich besonders gut, da es einfach in eine Exceltabelle transformiert werden kann. Für das erste Problem, das Vorhersagen des Endzustandes, würde das Abspeichern jeder einzelnen Generation einer Konfiguration zu viel Speicherplatz brauchen. Deshalb werden diese hier auf die Anzahl an Generationen beschränkt. Die Anfangs- und Endlänge beziehungsweise -breite, die Anfangs- und Endkonfiguration und die Definition des Objektes werden auch abgespeichert. Zudem noch die Periodizität, falls es sich um ein oszillierendes oder gleitendes Objekt handelt. 
+Ich speichere alle Spiele in ein CSV-File. <!-- TODO: ag Referenz einfügen --> Dieses Text-Format eignet sich besonders gut, da es einfach in eine Exceltabelle transformiert werden kann. 
 
-Für das zweite Problem, der Vergleich zweier Konfigurationen, werden alle Generationen jeder Konfiguration abgespeichert. Ansonsten wird nichts benötigt.
+Für das erste Problem, das Vorhersagen des Endzustandes, würde das Abspeichern jeder einzelnen Generation einer Konfiguration zu viel Speicherplatz brauchen. Deshalb werden diese hier auf die Anzahl an Generationen beschränkt. Die Anfangs- und Endlänge beziehungsweise -breite, die Anfangs- und Endkonfiguration und die Definition des Objektes werden auch abgespeichert. Zudem noch die Periodizität, falls es sich um ein oszillierendes oder gleitendes Objekt handelt. 
+
+<!-- TODO: ag screenshot eines csvs in Excel einfügen -->
+
+Für das zweite Problem, den Vergleich zweier Konfigurationen, werden alle Generationen jeder Konfiguration abgespeichert. Ansonsten wird nichts benötigt.
 
 
 
