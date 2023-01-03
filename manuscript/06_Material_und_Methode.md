@@ -1,7 +1,7 @@
 # Material und Methode
 
 Um mich diesen grossen Fragen des "Game of Life" widmen zu können, programmierte ich als Erstes das einfache Grundkonzept des Spieles. Danach konzentrierte ich mich auf die Programmierung einer Simulation, die auf einem beliebig grossen Spielfeld alle möglichen und unterschiedlichen Konfiguration durchspielen sollte. Da ich mich lediglich in Python, (wenn auch nur dürftig), auskannte, wählte ich diese Programmiersprache für meine Arbeit. 
-Mein Vater spielte eine grosse Rolle bei anfälligen Fragen oder als Anlaufstelle bei Unsicherheiten und Problemen. <!-- QUESTION: willst du das nochmals sagen? Du hast es ja schon im Vorwort gesagt.>
+Mein Vater spielte eine grosse Rolle bei anfälligen Fragen oder als Anlaufstelle bei Unsicherheiten und Problemen. 
 
 ## Das Grundkonzept
 
