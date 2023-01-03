@@ -9,3 +9,5 @@ TODO ag Reihen durch Zeilen ersetzen (auch in Grafik)
 TODO ag Im Code alle gameboards durch configuration ersetzen
 TODO ag im Code cut_both_axis durch get_base_configuration ersetzen
 TODO ag im Code Funktionsnamen klar zwischen Spiel (game), Spielzug (play) und Simulation unterscheiden
+
+TODO ag Du erwähnst Excel, aber eigentlich war es Power BI. Das solltest du unbedingt erwähnen, da jeder weiss dass man mit Excel nicht 4 Millionen Zeilen analysieren kann
