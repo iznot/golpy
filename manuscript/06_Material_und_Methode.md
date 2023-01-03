@@ -35,7 +35,7 @@ Als Nächstes machte ich mich an die Spielfunktion. Jede Zelle hat einen Index [
 ![Abb. 8: Beispiel lebendige Zellen](example_alive.png)  
 
 
-Um eine Konfiguration nun durchspielen zu können, muss der Status der Nachbarzellen bekannt sein. Diesen finde ich durch einen Kernel heraus. 
+Um eine Konfiguration nun durchspielen zu können, muss der Status der Nachbarzellen bekannt sein. Diesen finde ich durch folgenden Kernel heraus:
 
 {title: "Kernel", id: kernel}
 ```
@@ -43,9 +43,9 @@ Um eine Konfiguration nun durchspielen zu können, muss der Status der Nachbarze
 [1, 0, 1]
 [1, 1, 1]
 ```
-Für jede Zelle wird dieser Kernel darüber gelegt, sodass das null auf der besagten Zelle liegt. Nun werden alle Zellen, auf denen eine Eins liegt, überprüft und zusammengezählt. Eine tote Zelle hat den Wert Null und eine lebende den Wert Eins. Sobald die Summe der Nachbarzellen nun bekannt ist, muss nur noch den Regeln gefolgt werden um den Status besagter Zelle für die nächste Generation herauszufinden.   
+Für jede Zelle wird dieser Kernel darüber gelegt, sodass das null auf der besagten Zelle liegt. Nun werden alle Zellen, auf denen im Kernel eine Eins liegt, überprüft und zusammengezählt. Eine tote Zelle hat den Wert Null und eine lebende den Wert Eins. Sobald die Summe der Nachbarzellen nun bekannt ist, muss nur noch den Regeln gefolgt werden um den Status besagter Zelle für die nächste Generation herauszufinden.   
  
-Diese Funktion wird in Pyhton in der Bibliothek `skipy` durch die Funktion `convolve` zur Verfügung gestellt.
+Diese Funktion wird in Pyhton in der Bibliothek `scipy` durch die Funktion `convolve` zur Verfügung gestellt.
 
 {#randzellen}
 ### Randzellen
@@ -101,7 +101,7 @@ Auch diese Objekte stellen kein Problem dar. Jede Konfiguration der vorherigen G
 
 #### Oszillierende Objekte (Oscillator)
 
-Oszillatoren zeichnen sich dadurch aus, dass sie nach einer bestimmten Periode wieder dieselbe Konfiguration darstellen. Die aktuelle Generation muss nun also mit allen vorherigen Generation abgeglichen werden. Wenn keine Übereinstimmung vorhanden ist, muss weiter geprüft werden.
+Oszillatoren zeichnen sich dadurch aus, dass sie nach einer bestimmten Periode wieder dieselbe Konfiguration darstellen. Die aktuelle Generation muss nun also mit allen vorherigen Generation abgeglichen werden. Wenn keine Übereinstimmung vorhanden ist, handelt es sich (noch) nicht um ein oszillierendes Objekt.
 
 Ein Problem, das sich mir dabei stellte, war, dass ein oszillierendes Objekt grösser und dann wieder kleiner werden kann. Es kann also notwendig sein, das Gameboard zu erweitern, wie oben im Abschnitt (Randzellen)[#randzellen] beschrieben. Um jedoch zwei Generationen in einem Spiel vergleichen zu können, musste ich beim Zusammenziehen eines Objektes das Gameboard wieder auf die Grundform reduzieren.
 

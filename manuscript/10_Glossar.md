@@ -1,23 +1,28 @@
 {#glossar}
 # Glossar
 
+Angegeben wird für jeden Begriff zuerst eine Erklärung, sowie zusätzlich ein Bezug auf den Python-Code wo sinnvoll.
+
 Gameboard
 : Das Spielbrett des Conway's Game of Life. In meiner Arbeit habe ich mit 5x5 Gameboards gearbeitet.
-: `basic_game_functions.create_gameboard(input_array = None, rows = None, cols = None, origin=(0,0))`$
+: `basic_game_functions.create_gameboard(input_array = None, rows = None, cols = None, origin=(0,0))`
 
 Konfiguration
 : Ein bestimmtes Gameboard mit festgelegten lebenden und toten Zellen.
-: `gameboard`$
+: `gameboard`
 
 Grundkonfiguration
 : Die Konfiguration, die übrig bleibt, wenn vom Rand des Gameboards alle nicht lebenden Zeilen und Spalten abgeschnitten werden.
+
+Relative Position
+: <!-- TODO: ag>
 
 Anfangskonfiguration
 : Eine Konfiguration bevor sie je abgespielt wurde. Die Anfangskonfiguration wird dann simuliert.
 
 Spielzug (Play)
 : Ein Spielzug bezeichnet die Anwendung der Spielregeln auf eine Konfiguration. Durch einen Spielzug entsteht aus einer Konfiguration eine neue Konfiguration.
-: `basic_game_functions.play(gameboard)`$
+: `basic_game_functions.play(gameboard)`
 
 Die n. Generation
 : Die Konfiguration, die nach dem n. nacheinander folgenden Spielzug aus der Anfangskonfiguration entsteht. 
@@ -27,11 +32,11 @@ Endzustand
 
 Spiel
 : Werden auf eine Anfangskonfiguration wiederholt Spielzüge ausgeführt bis der Endzustand erreicht ist, so sprechen wir von einem Spiel.
-: `run_simulation.run_simulation(gameboard, max_runs)`$
+: `run_simulation.run_simulation(gameboard, max_runs)`
 
 Simulation
 : Die Spiele aller möglichen Konfigurationen auf einem Gameboard einer bestimmten Grösse (hier 5x5).
-: `run_simulation.generate_simulation(shape, alive_count, max_runs, folder = "sim", debug = False)`$
+: `run_simulation.generate_simulation(shape, alive_count, max_runs, folder = "sim", debug = False)`
 
 Spielklassen
 : Spiele können in verschiedene Klassen eingeteilt werden, je nachdem wie sich die Konfigurationen über den Spielverlauf entwickeln. Unterschieden werden folgende Spielklassen: statisch, oszillierend, gleitend, selbst auslöschend, überlebend.
@@ -41,8 +46,7 @@ Objekt
 
 
 Periodizität
-: Die Anzahl an Generationen bis eine Konfiguration entsteht, deren Grundkonfiguration der Grundkonfiguration der vorherigen Konfiguration entspricht.
-
+: Die Anzahl an Generationen bis wieder dieselbe Grundkonfiguration entsteht. Dies ist nur bei gleitenden und oszillierenden Spielen relevant. 
 
 Doppelgänger
 : Zwei identische Grundkonfigurationen mit unterschiedlichen Positionen auf dem Gameboard.

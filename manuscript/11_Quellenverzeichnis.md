@@ -1,11 +1,17 @@
 # Quellenverzeichnis
 
+## Code
+
+- **Golpy{#golpy}: Der Python Sourcecode zu dieser Arbeit ist verfügbar auf <https://github.com/iznot/golpy>.
+
 ## Bildquellen
+
 - **Abb. 1: John Horton Conway**{#Abb. 1: John Horton Conway}: Applewhite, Denise, 2020. **Mathematician John Horton Conway, a ‘magical genius’ known for inventing de ‘Game of Life’, dies at age 82.**. Princeton University. <!-- https://www.princeton.edu/news/2020/04/14/mathematician-john-horton-conway-magical-genius-known-inventing-game-life-dies-age -->
 
 Alle restlichen Abbildung sind eigene Darstellung.
 
 ## Textquellen
+
 - **Emergenz**{#Sedlacek}: Sedlacek, Klaus-Dieter. 2021. **Emergenz - Strukturen der Selbstorganisation in Natur und Technik**. Books on Demand. *Nur elektronisch verfügbar*. S. 192.
 - **Neu Zürcher Zeitung**{#Szpiro}: Szpiro, George (2020). **John Conway- der “Mathemagier” ist an den Folgen einer Covid-19-Erkrankung verstorben.** <!--https://www.nzz.ch/wissenschaft/john-conway-der-mathemagier-starb-an-den-folgen-einer-covid-19-erkrankung-ld.1552062-->
 - **Spektrum**{#Strick}: Strick, Heinz (2022). **John Horton Conway, das rastlose Genie.** <!--https://www.spektrum.de/wissen/mathematik-john-horton-conway-das-rastlose-genie/1996372-->
