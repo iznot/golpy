@@ -35,7 +35,7 @@ Als Nächstes machte ich mich an die Spielfunktion. Jede Zelle hat einen Index [
 ![Abb. 8: Beispiel lebendige Zellen](example_alive_gb.png)  
 
 
-Um eine Konfiguration nun durchspielen zu können, muss der Status der Nachbarzellen bekannt sein. Diesen finde ich durch einen Kernel heraus. 
+Um eine Konfiguration nun durchspielen zu können, muss der Status der Nachbarzellen bekannt sein. Diesen finde ich durch folgenden Kernel heraus:
 
 {caption: "Kernel"}
 ```
@@ -43,9 +43,9 @@ Um eine Konfiguration nun durchspielen zu können, muss der Status der Nachbarze
 [1, 0, 1]
 [1, 1, 1]
 ```
-Für jede Zelle wird dieser Kernel darüber gelegt, sodass das null auf der besagten Zelle liegt. Nun werden alle Zellen, auf denen eine Eins liegt, überprüft und zusammengezählt. Eine tote Zelle hat den Wert Null und eine lebende den Wert Eins. Sobald die Summe der Nachbarzellen nun bekannt ist, muss nur noch den Regeln gefolgt werden um den Status besagter Zelle für die nächste Generation herauszufinden.   
+Für jede Zelle wird dieser Kernel darüber gelegt, sodass das null auf der besagten Zelle liegt. Nun werden alle Zellen, auf denen im Kernel eine Eins liegt, überprüft und zusammengezählt. Eine tote Zelle hat den Wert Null und eine lebende den Wert Eins. Sobald die Summe der Nachbarzellen nun bekannt ist, muss nur noch den Regeln gefolgt werden um den Status besagter Zelle für die nächste Generation herauszufinden.   
  
-Diese Funktion wird in Pyhton in der Bibliothek `skipy` durch die Funktion `convolve` zur Verfügung gestellt.
+Diese Funktion wird in Pyhton in der Bibliothek `scipy` durch die Funktion `convolve` zur Verfügung gestellt.
 
 {#randzellen}
 ### Randzellen

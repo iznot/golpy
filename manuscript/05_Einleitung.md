@@ -1,4 +1,4 @@
-# Einleitung #
+# Einleitung
 
 ## John Conway
 John Horton Conway ist ein bedeutender Mathematiker aus dem 20. Jahrhundert. Er wurde 1937 in Liverpool geboren und verstarb vor zwei Jahren im Alter von 82 Jahren an Covid-19. Er studierte Mathematik an der Universität Cambridge, wo er später mathematische Logik unterrichtete. Während dieser Zeit machte er sich einen Namen in dem Gebiet der Gruppentheorie. Er entdeckte eine endliche Gruppe mit über 8 Trillionen Elementen in einem 24-dimensionalem Raum, die nach ihm benannt wurde. (*Strick* 2022)
@@ -11,11 +11,15 @@ Ihm war es wichtig, die Mathematik den Leuten näherzubringen. Dadurch unterrich
 
 Schon als Kind hatte er eine Faszination für Spiele, welche ihn später in die Unterhaltungsmathematik führte. Er war eine der ersten Personen, die eine Theorie zur Lösung des "Rubik's Cube" veröffentlichte. Ausserdem konnte er dank einer selbst entwickelten Methode innerhalb von Sekunden den Wochentag beliebiger Daten ausrechnen. Er wurde von seinen Kollegen "Mathemagier" genannt. (*Strick* 2022)
 
-Der Öffentlichkeit wurde er durch die Entwicklung des "Game of Life" bekannt. Dieses "no-player, never ending game", wie er es auch nannte, entwickelte er in den 70er Jahren. Das Spiel war der Startschuss für Simulationen auf dem Gebiet der Komplexitätswissenschaft. Ganze Generationen von Mathematikern, Informatikern und Tüftlern liessen sich dafür begeistern. Die ansteigende Popularität seiner Entwicklung gefiel Conway gar nicht, weshalb er Fragen über seine Kreation mit dem Satz "I hate life" auswich. Gegen das Ende seines eigenen Lebens konnte er sich jedoch wieder mit seiner Rolle als Schöpfer des "Game of Life" anfreunden: "Ich gab irgendwo einen Vortrag und wurde als 'John Conway, Schöpfer des Lebens.' vorgestellt. Und ich dachte 'Oh das ist eine nette Art, bekannt zu sein'.". [^footnote-1]
+Der Öffentlichkeit wurde er durch die Entwicklung des "Game of Life" bekannt. Dieses "no-player, never ending game", wie er es auch nannte, entwickelte er in den 70er Jahren. Das Spiel war der Startschuss für Simulationen auf dem Gebiet der Komplexitätswissenschaft. Ganze Generationen von Mathematikern, Informatikern und Tüftlern liessen sich dafür begeistern. Die ansteigende Popularität seiner Entwicklung gefiel Conway gar nicht, weshalb er Fragen über seine Kreation mit dem Satz "I hate life" auswich. Gegen das Ende seines eigenen Lebens konnte er sich jedoch wieder mit seiner Rolle als Schöpfer des "Game of Life" anfreunden: 
 
-Die Faszination des Spieles liegt darin, dass ein einfaches Konzept mit vier simplen Regeln hochkomplexe Themen behandelt. Wie der Musiker Brian Eno sagte, "Wir sind an die Idee gewöhnt, dass alles Komplexe aus etwas noch Komplexerem hervorgehen muss. […] Life zeigt uns komplexe, virtuelle Organismen, erschaffen durch die Interaktion mit ein paar einfachen Regeln." [^footnote-1] [*Roberts* 2020](#Roberts)
+> "Ich gab irgendwo einen Vortrag und wurde als 'John Conway, Schöpfer des Lebens.' vorgestellt. Und ich dachte 'Oh das ist eine nette Art, bekannt zu sein'.". [^footnote-1]
 
-[^footnote-1]: Zitat von mir aus dem Englischen übersetzt.
+Die Faszination des Spieles liegt darin, dass ein einfaches Konzept mit vier simplen Regeln hochkomplexe Themen behandelt. Wie der Musiker Brian Eno sagte:
+
+> "Wir sind an die Idee gewöhnt, dass alles Komplexe aus etwas noch Komplexerem hervorgehen muss. […] Life zeigt uns komplexe, virtuelle Organismen, erschaffen durch die Interaktion mit ein paar einfachen Regeln." [*Roberts* 2020](#Roberts)
+
+[^footnote-1]: Dieses und nachfolgende Zitate wurden von mir aus dem Englischen übersetzt.
 
 ## Regeln
 
