@@ -32,12 +32,12 @@ Als Nächstes machte ich mich an die Spielfunktion. Jede Zelle hat einen Index [
 
 
 {width: "30%"}
-![Abb. 8: Beispiel lebendige Zellen](example_alive_gb.png)  
+![Abb. 8: Beispiel lebendige Zellen](example_alive.png)  
 
 
 Um eine Konfiguration nun durchspielen zu können, muss der Status der Nachbarzellen bekannt sein. Diesen finde ich durch einen Kernel heraus. 
 
-{caption: "Kernel"}
+{title: "Kernel", id: kernel}
 ```
 [1, 1, 1]
 [1, 0, 1]
@@ -109,11 +109,7 @@ Ein Problem, das sich mir dabei stellte, war, dass ein oszillierendes Objekt gr�
 
 Durch die Reduktion auf die Grundform, die für oszillierende Objekte notwendig ist, ist es nicht einfach, die gleitenden Objekte von oszillierenden Objekten zu unterscheiden. Durch das Vereinfachen einer Konfiguration auf die Grundkonfiguration geht bei einem gleitenden Objekt die relative Position auf dem Gameboard verloren. Um dieses Problem zu lösen, musste ich zusätzlich zur Konfiguration noch die relative Position jeder Konfiguration in einem Spiel speichern und vergleichen. Bleibt die relative Position über Generationen hinweg gleich, so handelt es sich um ein oszillierendes Objekt. Ändert sich die relative Position, so handelt es sich um ein gleitendes Objekt.
 
-Für das relative Gameboard müssen zuerst die leeren Spalten und Reihen bis zu den ersten lebenden Zellen herausgefunden werden. Damit nicht auch tote Zellen zwischen zwei lebendigen Zellen abgeschnitten werden, müssen die überflüssigen Reihen und Spalten von jeder Seite einzeln gezählt werden. Sobald diese Zahlen bekannt sind, kann bis zum Index der ersten lebenden Zelle abgeschnitten werden. 
-
-<!-- TODO: das stimmt noch nicht ganz. Die Grundform brauchen wir für die Oszillatoren, die relative Position für die gleitenden Objekte. -->
-
-![Abb. 11: Relatives Gameboard von Gleiter](relative_gb.png)  
+![Abb. 11: Grundkonfiguration des Gleiters](relative_gb.png)  
 
 Diese relativen Gameboards werden nun nach dem Schema der Oszillatoren abgeglichen und falls eine Affinität besteht, gilt diese Konfiguration als gleitendes Objekt.
 
@@ -123,11 +119,11 @@ Falls der Objekttyp bis jetzt nicht identifiziert wurde, klassifizieren wir ein 
 
 ### Speicherform des Spielbrettes 
 
-Um die Spiele später analysieren zu können, wollte ich nicht alle Generationen, sondern nur die Anfangskonfiguration und den Endzustände abspeichern. Um eine Konfiguration in ein Excel schreiben zu können, muss die Konfiguration in ein Format gebracht werden, das sich dafür eignet. Eine Möglichkeit wäre, jede Konfiguration durch eine Reihe von Nullen und Einsen darzustellen. Dadurch würde viel zu viel Speicherplatz benötigt werden. Ausserdem wäre noch nicht klar, wie wir z.B. ein 4x5 Gameboard von einem 5x4 Gameboard unterscheiden. Also formattiere ich die Konfiguration nach folgendem Schema: 
+Um die Spiele später analysieren zu können, wollte ich nicht alle Generationen, sondern nur die Anfangskonfiguration und den Endzustände abspeichern. Um eine Konfiguration in ein Excel schreiben zu können, muss die Konfiguration in ein Format gebracht werden, das sich dafür eignet. Eine Möglichkeit wäre, jede Konfiguration durch eine Reihe von Nullen und Einsen darzustellen. Dadurch würde viel zu viel Speicherplatz benötigt werden. Ausserdem wäre noch nicht klar, wie wir z.B. ein 4x5 Gameboard von einem 5x4 Gameboard unterscheiden. Also formatiere ich die Konfiguration nach folgendem Schema: 
 
-1. Zuerst kommt die Grösse des Gameboards
+1. Zuerst kommt die Grösse des Gameboards.
 2. Dann kommt die relative Position des Objekts auf dem Gameboard. 
-3. Darauf folgt die eigentliche Grösse des Objekts (also der Grundform der Konfiguration).
+3. Darauf folgt die Grösse der Grundkonfiguration.
 4. Jetzt kommt die Anzahl an toten Zellen bis zur ersten lebendigen Zelle
 5. Schlussendlich kommt noch die "Zahl" des Spielbrettes. Die Zahl des Spielbrettes ergibt sich aus dem Gameboard als binäre Zahl, die Nullen stellen die toten Zellen und die Einsen die lebendigen dar. Diese Zahl wird in eine hexadezimale Zahl umgewandelt, um weiteren Speicherplatz zu sparen. Somit erhält jedes Objekt eine individuelle Objektzahl. 
    
@@ -163,24 +159,25 @@ Durch das Generieren der Anfangskonfigurationen durch den dezimalen Zähler ents
 
 #### Aussortieren von Doppelgängern
 
-Das gleiche Objekt kann mehrfach auf einem Gameboard vorkommen, nämlich an einer anderen relativen Position. Dieses Problem ist relativ einfach zu lösen. In der Simulation werden immer nur Anfangskonfigurationen abgespielt, die der vorgegebenen Zielgrösse eines Gameboards *genau* entsprechen. Wenn ich also eine Simulation mit der vorgegebenen Grösse 5x5 starte, wird eine Anfangskonfiguration mit der relativen Grösse von 3x3 gar nicht abgespielt. So sind alle 3x3 Doppelgänger aussortiert. Wir dann die 3x3 Simulation durchgespielt, so gibt es keine 3x3-Doppelgänger mehr.
+Das gleiche Objekt kann mehrfach auf einem Gameboard vorkommen, nämlich an einer anderen relativen Position. 
 
-<!-- TODO: hier würde ich noch ein grafisches Beispiel einfügen. -->
+{width: "40%"}
+![Abb. 13: Identische Gameboards](Doppelganger_gb.png)  
+
+Dieses Problem ist relativ einfach zu lösen. In der Simulation werden immer nur Anfangskonfigurationen abgespielt, die der vorgegebenen Zielgrösse eines Gameboards *genau* entsprechen. Wenn ich also eine Simulation mit der vorgegebenen Grösse 5x5 starte, wird eine Anfangskonfiguration mit der relativen Grösse von 3x3 gar nicht abgespielt. So sind alle 3x3 Doppelgänger aussortiert. Wird dann die 3x3 Simulation durchgespielt, so gibt es keine 3x3-Doppelgänger mehr.
+
 
 #### Aussortieren von affinen Konfigurationen
 
-Konfigurationen, die "ähnlich" sind, weil die eine durch Spiegelung oder Drehung in die andere transformiert werden kann, will ich ebenfalls nicht mehrfach spielen, da ich an *unterschiedlichen* Konfigurationen interessiert bin. Ich nenne diese Konfigurationen *affine Konfigurationen*. Siehe (Glossar)[#glossar].
-
-Es werden alle nicht-affinen Anfangskonfigurationen in einem Set gespeichert. Jede neue Anfangskonfiguration wird mit allen vorherigen abgeglichen und falls eine Affinität gefunden wird, wird das Spiel nicht durchgeführt. 
-
-<!-- TODO: klarer zwische Doppelgänger und affinen Konfigurationen unterscheiden -->
-
-Trotz diesem Filter wird jede Anfangskonfiguration immer noch siebenmal zu oft abgespielt. Zur Veranschaulichung ein Beispiel. Die folgenden Konfigurationen sind eigentlich dieselben, nur entweder gedreht oder gespiegelt, deren dazugehörigen Dezimalzahlen allerdings komplett unterschiedlich:
+Jede Konfiguration wird trotzdem noch siebenmal zu oft abgespielt, da sie entweder durch Spiegelung, Drehung oder beides, noch nicht als gleiche erkennt werden können.
 
 {width: "70%"}
-![Abb. 13: Identische Gameboards](identical_gbs.png)  
+![Abb. 14: Identische Gameboards](identical_gbs.png)  
 
-Um zu vermeiden, dass all diese abgespielt und gespeichert werden, muss also sowohl jede Anfangskonfiguration, als auch deren gespiegelten und gedrehten Variationen mit den bereits abgespielten Anfangskonfigurationen abgeglichen werden. Somit wird jede Konfiguration wirklich nur einmal abgespielt.
+Diese will ich ebenfalls nicht mehrfach spielen, da ich an *unterschiedlichen* Konfigurationen interessiert bin. Ich nenne diese Konfigurationen *affine Konfigurationen*. Siehe (Glossar)[#glossar].
+
+Um zu vermeiden, dass all diese affinen Konfigurationen abgespielt und gespeichert werden, muss also jeweils die Grundkonfiguration der Anfangskonfiguration und derer gespiegelten und gedrehten Variationen mit den bereits in einem Set gespeicherten, nicht-affinen Anfangskonfigurationen abgeglichen werden. Falls keine Affinität gefunden wird, wird diese Anfangskonfiguration auch abgespeichert, ansonsten wird das Spiel nicht durchgeführt.  
+
 
 ### Abspeichern
 

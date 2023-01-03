@@ -4,3 +4,5 @@
 (20, 21):(8, 8)|(4, 5):2:0x22a2e - develops simetrical to stable
 
 (4, 5):(0, 0)|(4, 5):0:0x9c6ff - develops to Gleiter
+
+(60, 60):(29, 28)|(2, 4):1:0x79 - survival but actually oscillator, beautiful
