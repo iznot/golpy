@@ -12,6 +12,9 @@ Konfiguration
 Grundkonfiguration
 : Die Konfiguration, die übrig bleibt, wenn vom Rand des Gameboards alle nicht lebenden Zeilen und Spalten abgeschnitten werden.
 
+Relative Position
+: <!-- TODO: ag>
+
 Anfangskonfiguration
 : Eine Konfiguration bevor sie je abgespielt wurde. Die Anfangskonfiguration wird dann simuliert.
 
@@ -41,8 +44,7 @@ Objekt
 
 
 Periodizität
-: Die Anzahl an Generationen bis eine Konfiguration entsteht, deren Grundkonfiguration der Grundkonfiguration der vorherigen Konfiguration entspricht.
-
+: Die Anzahl an Generationen bis wieder dieselbe Grundkonfiguration entsteht. Dies ist nur bei gleitenden und oszillierenden Spielen relevant. 
 
 Doppelgänger
 : <!-- TODO: ag -->

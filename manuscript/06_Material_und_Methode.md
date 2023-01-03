@@ -101,7 +101,7 @@ Auch diese Objekte stellen kein Problem dar. Jede Konfiguration der vorherigen G
 
 #### Oszillierende Objekte (Oscillator)
 
-Oszillatoren zeichnen sich dadurch aus, dass sie nach einer bestimmten Periode wieder dieselbe Konfiguration darstellen. Die aktuelle Generation muss nun also mit allen vorherigen Generation abgeglichen werden. Wenn keine Übereinstimmung vorhanden ist, muss weiter geprüft werden.
+Oszillatoren zeichnen sich dadurch aus, dass sie nach einer bestimmten Periode wieder dieselbe Konfiguration darstellen. Die aktuelle Generation muss nun also mit allen vorherigen Generation abgeglichen werden. Wenn keine Übereinstimmung vorhanden ist, handelt es sich (noch) nicht um ein oszillierendes Objekt.
 
 Ein Problem, das sich mir dabei stellte, war, dass ein oszillierendes Objekt grösser und dann wieder kleiner werden kann. Es kann also notwendig sein, das Gameboard zu erweitern, wie oben im Abschnitt (Randzellen)[#randzellen] beschrieben. Um jedoch zwei Generationen in einem Spiel vergleichen zu können, musste ich beim Zusammenziehen eines Objektes das Gameboard wieder auf die Grundform reduzieren.
 
