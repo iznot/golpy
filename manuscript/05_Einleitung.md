@@ -46,8 +46,8 @@ Die Zahlen auf der Abbildung zeigen an, wie viele Nachbarn die betroffene Zelle 
 Daneben gibt es noch weitere Objektklassen, die in dieser Arbeit nicht konkret berücksichtigt werden:
 
 - Gleiterkanonen erzeugen in einem periodischen Zeitabstand immer wieder Gleiter
-- Puffer stellen eine Art Gleiter mit Überbleibsel dar
-- Völlig chaotische Objekte. Diese Objekte werden in <!-- TODO: ag vervollständigen>
+- Puffer stellen eine Art gleitendes Objekt mit Überbleibsel dar
+- Völlig chaotische Objekte. Diese Objekte beinhalten viele verschiedene Objekte und können nicht klar zugeordnet werden.
 
 
 ### Statische Objekte
@@ -93,11 +93,11 @@ Diese Objekte enden nach `n`$ Generationen in einem leeren Spielfeld
 
 Die Anwendung des "Game of Life" ist für viele Themenbereiche interessant. So in der Biologie, wo das Spiel als ein Blick ins Mikroskop interpretiert werden kann. Das Interesse liegt also auf den verschiedenen Lebensformen und der Entwicklung von Zellen. Auch vertritt das Konzept einen ökonomischen Aspekt, wobei das Sterben und Gebären der Zellen das Angebot und die Nachfrage auf einem Finanzmarkt darstellen. Weiter ist das Spiel für die Physik interessant. Hierbei liegt das Augenmerk darauf, dass auf beliebig kleine Abweichungen der Anfangskonfiguration andere Resultate folgen, analog zu physikalischen Gleichungen. (*Sedlacek* 2021)[#Sedlacek] In der theoretischen Informatik ist das Spiel besonders als Entscheidungsproblem interessant.
 
-Durch diesen vielfältigen Anwendungsbereiche interessieren sich Wissenschaftler aus verschiedenen Fachbereichen für "Conway's Game of Life" und beschäftigen sich mit den ungelösten Problemen, die das Spiel mit sich bringt. Einige der Probleme sind mit der Zeit bereits gelöst worden, andere noch nicht. 
+Durch diesen vielfältigen Anwendungsbereich interessieren sich Wissenschaftler aus verschiedenen Fachbereichen für "Conway's Game of Life" und beschäftigen sich mit den ungelösten Problemen, die das Spiel mit sich bringt. Einige der Probleme sind mit der Zeit bereits gelöst worden, andere noch nicht. 
 
 Zwei der nach wie vor ungelösten Probleme, die die Wissenschaften weiterhin beschäftigen sind:
 
-1. Es existiert kein Algorithmus, der bestimmen kann, zu welchem Objekt die Anfangskonfiguration mutieren wird. <!-- TODO: ag siehe Bemerkung Zusammenfassung>
+1. Es existiert kein bekannter Algorithmus, der bestimmen kann, zu welcher Spielklasse eine Anfangskonfiguration gehört. 
 2. Es existiert kein Algorithmus, der für alle Konfigurationen bestimmen kann, ob die eine aus der anderen entstehen wird.
 
 In dieser Arbeit versuche ich, mich diesen beiden Problemen zu widmen.

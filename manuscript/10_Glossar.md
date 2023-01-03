@@ -39,7 +39,7 @@ Objekt
 : Konfigurationen, die in Simulationen immer wieder auftauchen, werden als Objekte bezeichnet und benannt, z.B.: Gleiter, Tümmler, Blinker, Uhr, Fresser, Segler, etc. Objekte verhalten sich nach Spielklassen, d.h. statisch, oszillierend, gleitend, selbst auslöschend, überlebend.
 
 Periodizität
-: <!-- TODO: ag Periodizität definieren>
+: Die Anzahl an Generationen bis eine Konfiguration entsteht, deren Grundkonfiguration der Grundkonfiguration der vorherigen Konfiguration entspricht.
 
 Affine Konfigurationen
 : Zwei Konfigurationen sind affin, wenn die relative Konfiguration der einen durch mindestens eine der folgenden Operationen in die relative Konfiguration der anderen transformiert werden kann:
