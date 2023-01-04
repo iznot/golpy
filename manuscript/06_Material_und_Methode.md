@@ -37,8 +37,8 @@ Als Nächstes machte ich mich an die Spielfunktion. Jede Zelle hat einen Index [
 
 Um eine Konfiguration nun durchspielen zu können, muss der Status der Nachbarzellen bekannt sein. Diesen finde ich durch folgenden Kernel heraus:
 
-{title: "Kernel", id: kernel}
-```
+{id: kernel}
+```text
 [1, 1, 1]
 [1, 0, 1]
 [1, 1, 1]
@@ -76,20 +76,19 @@ Wenn alle möglichen Konfigurationen eines Spielfelds einmal durchgespielt werde
 
 Zudem sind mir die einzelnen Generationen jeder Konfiguration dieses Spielfeldes bekannt. Um herauszufinden, ob eine Konfiguration X aus einer Konfiguration Y entstehen kann, muss Konfiguration X also nur mit den abgespeicherten Generationen des Spiels vergleichen, das aus Konfiguration Y entsteht. 
 
-### Endzustand
+### Spielklassen
 
-Als Erstes legte ich fest, nach welchen möglichen Endzuständen ich unterscheiden will. Ich entschied mich für die vier bekanntesten und nicht allzu seltenen Spielklassen:
+Als Erstes legte ich fest, nach welchen möglichen Spielklassen ich unterscheiden will. Ich entschied mich für die vier bekanntesten und nicht allzu seltenen Spielklassen, plus eine fünfte, die alle restlichen Fälle enthält:
 
 1. Selbst auslöschende Objekte
 1. Statische Objekte
 1. Oszillierende Objekte
 1. Gleitende Objekte
+1. Überlebende Objekte
 
-Zudem brauchte es noch eine weitere Objektgruppe, falls es sich um keines der obigen Objekte handelt, wie beispielsweise eine Gleiterkanone. Also fügte ich eine fünfte Möglichkeit hinzu, die alle restlichen Fälle abdeckt:
+Die letzte Spielklass "Überlebende Objekte" schliesst interessant Objekte wie beispielsweise eine Gleiterkanone mit ein. 
 
-5. Überlebende Objekte
-
-Für jede Generation des Spiels auf eine bestimmte Anfangskonfiguration muss nach jeder dieser Spielklasse geprüft werden. Sobald Spielklassen 1 - 4 identifiziert wurden, bricht das Spiel ab, und die Endkonfiguration wird festgehalten.
+Für jede Generation des Spiels auf eine bestimmte Anfangskonfiguration muss überprüft werden, ob das Spiel einer dieser Spielklassen angehört. Sobald Spielklassen 1 - 4 identifiziert wurden, bricht das Spiel ab, und die Endkonfiguration wird festgehalten.
 
 #### Selbst auslöschende Objekte (Erased)
 
