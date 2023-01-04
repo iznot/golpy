@@ -1,8 +1,5 @@
 # Quellenverzeichnis
 
-## Code
-
-- **Golpy{#golpy}: Der Python Sourcecode zu dieser Arbeit ist verfügbar auf <https://github.com/iznot/golpy>.
 
 ## Bildquellen
 

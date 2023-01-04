@@ -69,7 +69,7 @@ Bevor der nächste Spielzug errechnet wird, kommt auf jeder der vier Hauptseiten
 
 Die Zellen sterben durch diese Funktion also bereits nach einer Generation aus. Für sie gelten nun dieselben Bedingungen wie für Zellen eines endlos grossen Spielfelds. 
 
- ## Simulation
+## Simulation
 
 Die Simulation ist der Schlüssel zur Beantwortung der Fragestellungen. 
 Wenn alle möglichen Konfigurationen eines Spielfelds einmal durchgespielt werden, sind auch all deren Endzustände bekannt. Wenn nun also eine beliebige Konfiguration auf diesem begrenzten Spielfeld abgefragt wird, kann ich den Endzustand sozusagen "vorhersagen", ohne diese erneut durchzuspielen. Dabei handelt es sich nicht um einen echten Algorithmus, sondern eher um einen Katalog aller möglichen Konfigurationen.
@@ -149,6 +149,7 @@ Zahl:  Binärzahl:  Zellen:    Aufgefüllte Zahl:    Gameboard:
                                                    [True  True  False  True  True]
           
 ```
+
 ### Aussortieren
 
 Durch das Generieren der Anfangskonfigurationen durch den dezimalen Zähler entsteht das Problem, dass jede Konfiguration viel zu oft abgespielt wird, und zwar aus zwei Gründen:
