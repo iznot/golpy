@@ -7,7 +7,7 @@ Die Simulation speichert nur die Konfigurationen ab, die zuvor noch nicht in and
 Von 33'554'432 theoretisch möglichen Konfigurationen bei einem 5x5 Gameboard wurden durch Ausschluss von Doppelgängern und affinen Konfigurationen 3'956'995 unterschiedliche Anfangskonfigurationen identifiziert und abgespeichert. Das sind also knapp 12 % der theoretisch möglichen Konfigurationen. Der am längsten dauernde Prozess mit den meisten unterschiedlichen Konfigurationen war die 5x5 Simulation mit 13 lebenden Zellen in der Anfangskonfiguration. Diese Simulation dauerte auf einem handelsüblichen Notebook etwa sechs Stunden. 
 
 {width: "60%"}
-![Abb. 14: Säulendiagramm zu Objekten](occurence_of_objects.png)   
+![Abb. 16: Säulendiagramm zu Objekten](occurence_of_objects.png)   
 
 Am häufigsten kommen statische und selbst auslöschende Spiele vor. Überlebende Spiele kommen am zweithäufigsten vor. Gleitende Spiele sind mit Abstand am seltensten. 
 
@@ -15,7 +15,7 @@ Auch stellte sich heraus, dass die meisten oszillierenden Objekte eine Periodizi
 Gleitende Objekte haben alle eine Periodizität von 4. Dies deckt sich mit dem gegenwärtigen wissenschaftlichen Stand, wonach es keine bekannte gleitende Objekte mit Periodizität ungleich 4 gibt.
 
 {width: "60%"}
-![Abb. 14: Säulendiagramm zu Objekten nach Lebenden](objects_compared_alive.png)  
+![Abb. 17: Säulendiagramm zu Objekten nach Lebenden](objects_compared_alive.png)  
 
 Des Weiteren fand ich heraus, dass auf keinem Gameboard ein gleitendes Objekt entstehen kann, wenn die Startkonfiguration weniger als fünf lebende Zellen hat. Mit mehr als 22 lebenden Zellen kann auf einem 5x5 Gameboard ebenfalls kein gleitendes Objekt entstehen. Ein oszillierendes oder statisches Objekt kann bereits bei drei lebenden Zellen entstehen, letzteres sogar, wenn das gesamte 5x5 Gameboard nur aus lebenden Zellen besteht.     
 
@@ -25,16 +25,12 @@ Das erste Problem, das meine Arbeit untersucht, lautete:
 
 > Es existiert kein Algorithmus, der bestimmen kann, zu welchem Objekt die Anfangskonfiguration mutieren wird.
 
-Dieses Problem kann meine erste Funktion umgehen, indem sie die gegebene Konfiguration mit den getesteten Anfangskonfigurationen abgleicht. Sobald eine Übereinstimmung gefunden wird, ist bekannt, welcher Objektgruppe die Konfiguration angehört.
-
-<!-- TODO: das verstehe ich nicht. Was ist die erste Funktion? Was ist eine Objektgruppe? -->
-
+Dieses Problem kann nun eine Funktion umgehen, indem sie die gegebene Konfiguration mit den getesteten Anfangskonfigurationen abgleicht. Sobald eine Übereinstimmung gefunden wird, ist bekannt, welcher Spielklasse die Konfiguration angehört.
 
 Das zweite Problem lautete:
 
 > Es existiert kein Algorithmus, der für alle Konfigurationen bestimmen kann, ob die eine aus der anderen entstehen wird.
 
-Dieses Problem kann meine zweite Funktion umgehen, indem sie die zu vergleichende Konfiguration mit den getesteten Anfangskonfigurationen abgleicht. Sobald eine Affinität gefunden wird, gleicht sie die zu vergleichende Konfiguration mit den Generationen der übereinstimmenden Anfangskonfiguration ab. Falls hierbei eine Affinität gefunden wird, kann die zu testende Konfiguration aus der zu vergleichenden Konfiguration entstehen, ansonsten nicht.   
+Dieses Problem kann ebenfalls eine Funktion umgehen, indem sie die zu vergleichende Konfiguration mit den getesteten Anfangskonfigurationen abgleicht. Sobald eine Affinität gefunden wird, gleicht sie die zu vergleichende Konfiguration mit den Generationen der übereinstimmenden Anfangskonfiguration ab. Falls hierbei eine Affinität gefunden wird, kann die zu testende Konfiguration aus der zu vergleichenden Konfiguration entstehen, ansonsten nicht.   
 
-<!-- TODO: verstehe ich ebenfalls noch nicht>
 

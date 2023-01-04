@@ -15,7 +15,7 @@ Grundkonfiguration
 : Die Konfiguration, die übrig bleibt, wenn vom Rand des Gameboards alle nicht lebenden Zeilen und Spalten abgeschnitten werden.
 
 Relative Position
-: <!-- TODO: ag>
+: Die Position der Grundkonfiguration auf dem begrenzten Gameboard.
 
 Anfangskonfiguration
 : Eine Konfiguration bevor sie je abgespielt wurde. Die Anfangskonfiguration wird dann simuliert.
@@ -38,12 +38,14 @@ Simulation
 : Die Spiele aller möglichen Konfigurationen auf einem Gameboard einer bestimmten Grösse (hier 5x5).
 : `run_simulation.generate_simulation(shape, alive_count, max_runs, folder = "sim", debug = False)`
 
+Maximale Zahl
+: Die zuvor festgelegte Anzahl an Spielzügen, nach deren Erreichen die Simulation abbricht.
+
 Spielklassen
 : Spiele können in verschiedene Klassen eingeteilt werden, je nachdem wie sich die Konfigurationen über den Spielverlauf entwickeln. Unterschieden werden folgende Spielklassen: statisch, oszillierend, gleitend, selbst auslöschend, überlebend.
 
 Objekt
 : Konfigurationen, die in Simulationen immer wieder auftauchen, werden als Objekte bezeichnet und benannt, z.B.: Gleiter, Tümmler, Blinker, Uhr, Fresser, Segler, etc. Objekte verhalten sich nach Spielklassen, d.h. statisch, oszillierend, gleitend, selbst auslöschend, überlebend. In einer Konfiguration können grundsätzlich auch mehrere Objekte vorkommen. Zum Beispiel eine Kanone, die immer wieder Gleiter schiesst. In meiner Arbeit habe ich nicht zwischen Objekt und Grundkonfiguration unterschieden.
-
 
 Periodizität
 : Die Anzahl an Generationen bis wieder dieselbe Grundkonfiguration entsteht. Dies ist nur bei gleitenden und oszillierenden Spielen relevant. 

@@ -139,7 +139,7 @@ Die soeben erklärte Methode der Objektzahl verwende ich auch, um die einzelnen 
 
 Nun zählt der Zähler hoch, bis diese Zahl erreicht wird. Jede Zahl wird zuerst in eine binäre Zahl umgewandelt. Diese wird nun mit dem leeren Spielfeld als binäre Zahl verglichen und von vorne (von links) mit Nullen aufgefüllt, bis sie auf die gleiche Länge kommen. Da die Länge und Breite des Spielbrettes bekannt sind, kann nun aus dieser binären Zahl einfach ein Spielbrett mit der gewünschten Konfiguration erstellt werden. 
 
-TODO Zahlen entfernen an linkem Rand bei Leanpub
+
 {title: "Dezimalzahl als Spielbrett", id: decimale_gb}
 ```text
 Zahl:  Binärzahl:  Zellen:    Aufgefüllte Zahl:    Gameboard:
@@ -185,7 +185,8 @@ Ich speichere alle Spiele in ein CSV-File. <!-- TODO: ag Referenz einfügen --> 
 
 Für das erste Problem, das Vorhersagen des Endzustandes, würde das Abspeichern jeder einzelnen Generation einer Konfiguration zu viel Speicherplatz brauchen. Deshalb werden diese hier auf die Anzahl an Generationen beschränkt. Die Anfangs- und Endlänge beziehungsweise -breite, die Anfangs- und Endkonfiguration und die Definition des Objektes werden auch abgespeichert. Zudem noch die Periodizität, falls es sich um ein oszillierendes oder gleitendes Objekt handelt. 
 
-<!-- TODO: ag screenshot eines csvs in Excel einfügen -->
+{width: "80%"}
+![Abb. 15: Ausschnitt aus CSV-File](CSV-File.png)   
 
 Für das zweite Problem, den Vergleich zweier Konfigurationen, werden alle Generationen jeder Konfiguration abgespeichert. Ansonsten wird nichts benötigt.
 
