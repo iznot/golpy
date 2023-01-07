@@ -2,7 +2,7 @@ from ast import literal_eval
 
 import numpy as np
 
-import basic_game_functions as gm
+import play as play
 
 """Stellt Funktionen zur Verfügung, die benötigt werden um die Simulationen durchzuführen.
 """
@@ -183,7 +183,7 @@ def create_configuration_from_string(configuration_str):
     config_array_2D = np.reshape(config_array_1D, shape)
     input_array = config_array_2D.astype(bool)
 
-    config = gm.create_configuration(input_array)
+    config = play.create_configuration(input_array)
 
 
     # fit into large
@@ -196,7 +196,26 @@ def create_configuration_from_string(configuration_str):
     #NOTE: jetzt platzieren wir die Figur an die richtige Stelle, relativ zum Ursprung
     full_gameboard_a[ origin[0]:(origin[0]+shape[0])  , origin[1]:(origin[1]+shape[1])   ] = config[0]
 
-    config = gm.create_configuration(full_gameboard_a)
+    config = play.create_configuration(full_gameboard_a)
 
 
     return config
+
+
+def configuration_equal(configuration_1, configuration_2, check_origin: bool = True):
+    """Überprüft, ob zwei Konfigurationen identisch sind.
+
+    Args:
+        configuration_1: Die erste Konfiguration
+        configuration_2: Die zweite Konfiguration
+        check_origin (bool, optional): Wenn True (Default), dann wird die relative Position zum Ursprung ebenfalls geprüft.
+
+    Returns:
+        bool: True wenn die Konfigurationen identisch sind.
+    """    
+    if configuration_1[0].shape != configuration_2[0].shape:
+        return False
+    if check_origin and configuration_1[1] != configuration_2[1]:
+        return False
+    result = np.array_equal(configuration_1[0], configuration_2[0])
+    return result

@@ -1,10 +1,12 @@
 
-import numpy as np
+
+import unittest
+
+import gameboard_manipulation as gam
+import play
 import run_simulation as sim
 import samples as samp
-import unittest
-import basic_game_functions as gm
-import gameboard_manipulation as gam
+
 
 class TestSimulation(unittest.TestCase):
 
@@ -36,7 +38,7 @@ class TestSimulation(unittest.TestCase):
         configuration = samp.get_pulsator()
         configurations = [configuration]
         for i in range(20):
-            configuration_new = gm.play(configuration)
+            configuration_new = play.play(configuration)
             list.append(configurations, configuration_new)
             configuration = configuration_new
         
@@ -50,7 +52,7 @@ class TestSimulation(unittest.TestCase):
         configurations = [configuration]
         for i in range (7):
             configuration_new = gam.expand_gameboard_if_necessary(configuration)
-            configuration_new = gm.play(configuration_new)
+            configuration_new = play.play(configuration_new)
             configuration_new = gam.get_base_configuration( configuration_new )
             list.append(configurations, configuration_new)
             configuration = configuration_new
@@ -63,7 +65,7 @@ class TestSimulation(unittest.TestCase):
 
     def test_oscillator(self):
         configuration = gam.create_configuration_from_string('(20, 20):(9, 8)|(2, 4):0:0x8f')
-        configurations, exit_criteria, periodicity, i = sim.run_simulation(configuration,100)
+        configurations, exit_criteria, periodicity, i = sim.play_full_game(configuration,100)
         assert exit_criteria == 'oscillator'
         assert periodicity == 2
         assert i == len(configurations)-1
@@ -71,26 +73,26 @@ class TestSimulation(unittest.TestCase):
 
     def test_run_simulation(self):
         configuration = samp.get_gleiter()
-        configurations, exit_criteria, periodicity, i = sim.run_simulation(configuration, 30)
+        configurations, exit_criteria, periodicity, i = sim.play_full_game(configuration, 30)
         assert len(configurations) >= periodicity
         assert exit_criteria == 'spaceship'
         assert periodicity == 4
     
     def test_convert_to_string(self):
-        g0 = gm.create_configuration(rows = 5, cols = 4, origin=(-12, -15))
+        g0 = play.create_configuration(rows = 5, cols = 4, origin=(-12, -15))
         g0[0][1,0] = True
         g0[0][1,2] = True
         g0[0][2,1] = True
         res = gam.convert_to_string_representation(g0)
         assert res == '(5, 4):(1, 0)|(2, 3):0:0x2a'
         g1 = gam.create_configuration_from_string(res)
-        assert gm.configuration_equal(g0, g1, check_origin=False)
+        assert gam.configuration_equal(g0, g1, check_origin=False)
 
     
 
 
     def test_convert_to_string_2(self):
-        g0 = gm.create_configuration(rows = 12, cols = 12)
+        g0 = play.create_configuration(rows = 12, cols = 12)
         g0[0][1,1] = True
         g0[0][1,3] = True
         g0[0][3,3] = True
@@ -106,13 +108,13 @@ class TestSimulation(unittest.TestCase):
         assert gb_str_2 == gb_str
         
     def test_convert_huge_configuration(self):
-        g0 = gm.create_configuration(rows = 1000, cols = 900)
+        g0 = play.create_configuration(rows = 1000, cols = 900)
         g0[0][1,1] = True
         g0[0][1,3] = True
         g0[0][3,3] = True
         res = gam.convert_to_string_representation(g0)
         gb = gam.create_configuration_from_string(res)
-        assert gm.configuration_equal(gb, g0)
+        assert gam.configuration_equal(gb, g0)
     
     def test_new_cut(self):
         gb = gam.create_configuration_from_string('(12, 12):(2, 3)|(10, 8):4:0x8a8002810a825202020')

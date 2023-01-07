@@ -6,23 +6,33 @@ import os
 import numpy as np
 from joblib import Parallel, delayed
 
-import basic_game_functions as gm
+import play as play
 import gameboard_manipulation as gam
 
 
-def run_simulation(gameboard, max_runs):
-    
-    gameboards = [gameboard]
+def play_full_game(start_configuration, max_runs):
+    """Spielt ein Spiel.
+
+    Args:
+        start_configuration: Die Anfangskonfiguration
+        max_runs (int): Die maximale Anzahl Spielzüge.
+
+    Returns:
+        generations: Eine Liste aller Generationen.
+        exit_criteria (str): Die Spielklasse dieses Spiels, also 'survival', 'extinct', 'stable', 'oscillator', 'spaceship'
+        periodicity (int): Die Periodizität des Objekts falls exit_criteria = 'oscillator' | 'spaceship'. Sonst 0.
+        i (int): Die Anzahl Spielzüge bis zum Erkennen des exit_criteria (oder max_runs).
+    """    
+    generations = [start_configuration]
     for i in range(1, max_runs):
-        #NOTE: notwendig vorher, falls Anfangsposition am Rand
-        gameboard = gam.expand_gameboard_if_necessary(gameboard)
-        gameboard = gm.play(gameboard)
-        gameboard = gam.get_base_configuration(gameboard)
-        gameboards.append(gameboard)
-        exit_criteria, periodicity = check_exit_criteria(gameboards)
+        start_configuration = gam.expand_gameboard_if_necessary(start_configuration)
+        start_configuration = play.play(start_configuration)
+        start_configuration = gam.get_base_configuration(start_configuration)
+        generations.append(start_configuration)
+        exit_criteria, periodicity = check_exit_criteria(generations)
         if exit_criteria != 'survival':
-            return gameboards, exit_criteria, periodicity, i
-    return gameboards, 'survival', 0, i
+            return generations, exit_criteria, periodicity, i
+    return generations, 'survival', 0, i
 
 def check_exit_criteria(gameboards):
     length = len(gameboards)
@@ -39,7 +49,7 @@ def check_exit_criteria(gameboards):
 
     # check if equals
 
-    if gm.configuration_equal(last_gameboard, previous_gameboard, True):
+    if gam.configuration_equal(last_gameboard, previous_gameboard, True):
         return "stable", 0
     
     # check if oscillator
@@ -60,7 +70,7 @@ def check_exists(gameboard_to_check, gameboards, check_origin):
     
     for i in range(length-1, 0, -1):
         gameboard_to_compare = gameboards[i]
-        res = gm.configuration_equal(gameboard_to_check, gameboard_to_compare, check_origin)
+        res = gam.configuration_equal(gameboard_to_check, gameboard_to_compare, check_origin)
         if res: return True, length - i
     return False, -1
 
@@ -129,7 +139,7 @@ def generate_simulation(shape, alive_count, max_runs, folder = "sim", debug = Fa
 
             
             gb_array_2D = np.reshape(gb_array_1D, (shape[0], shape[1]))
-            gameboard = gm.create_configuration(gb_array_2D.astype(bool))
+            gameboard = play.create_configuration(gb_array_2D.astype(bool))
 
             gameboard = gam.get_base_configuration(gameboard)
             
@@ -142,7 +152,7 @@ def generate_simulation(shape, alive_count, max_runs, folder = "sim", debug = Fa
             add_gb_variations(gameboard, gb_already_checked_set)
 
             
-            gameboards, exit_criteria, periodicity, runs = run_simulation(gameboard, max_runs)
+            gameboards, exit_criteria, periodicity, runs = play_full_game(gameboard, max_runs)
            
 
             start_gameboard = gam.convert_to_string_representation(gameboard)
@@ -193,10 +203,10 @@ def simulation_for_generations(rows, cols, max_runs):
         gb_bin = gb_bin.zfill(cells)
         gb_array_1D = np.fromstring(gb_bin,'u1') - ord('0')
         gb_array_2D = np.reshape(gb_array_1D, (rows, cols))
-        gameboard = gm.create_configuration(gb_array_2D.astype(bool))
+        gameboard = play.create_configuration(gb_array_2D.astype(bool))
         gameboard = gam.get_base_configuration(gameboard)
 
-        gameboards, exit_criteria, periodicity, runs = run_simulation(gameboard, 2)
+        gameboards, exit_criteria, periodicity, runs = play_full_game(gameboard, 2)
 
         for gb in gameboards:
             gameboard = gam.get_base_configuration(gb)

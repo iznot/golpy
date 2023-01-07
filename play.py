@@ -113,20 +113,3 @@ def play(configuration):
 
 
 
-def configuration_equal(configuration_1, configuration_2, check_origin: bool = True):
-    """Überprüft, ob zwei Konfigurationen identisch sind.
-
-    Args:
-        configuration_1: Die erste Konfiguration
-        configuration_2: Die zweite Konfiguration
-        check_origin (bool, optional): Wenn True (Default), dann wird die relative Position zum Ursprung ebenfalls geprüft.
-
-    Returns:
-        bool: True wenn die Konfigurationen identisch sind.
-    """    
-    if configuration_1[0].shape != configuration_2[0].shape:
-        return False
-    if check_origin and configuration_1[1] != configuration_2[1]:
-        return False
-    result = np.array_equal(configuration_1[0], configuration_2[0])
-    return result

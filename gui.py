@@ -1,6 +1,6 @@
 from time import sleep
 
-import basic_game_functions as gm
+import play as play
 import gameboard_manipulation as gam
 import run_simulation as sim
 import samples
@@ -36,8 +36,8 @@ class DrawableGrid(tk.Frame):
         self.canvas.tag_bind("cell", "<1>", self.paint)
 
     def show_neighbour_count(self):
-        next_gen = gm.play(self.gameboard)
-        nc = gm.get_neighbour_count(self.gameboard)
+        next_gen = play.play(self.gameboard)
+        nc = play.get_neighbour_count(self.gameboard)
 
         idxs = np.where(nc > 0)
 
@@ -104,7 +104,7 @@ class DrawableGrid(tk.Frame):
                 color = self.canvas.itemcget(self._tag(row, column), "fill")
                 if color == "black":
                     gb_a[row, column] = True
-        gameboard = gm.create_configuration(gb_a)
+        gameboard = play.create_configuration(gb_a)
         return gameboard
         
 
@@ -257,7 +257,7 @@ class GolpyGui():
         self.button_frame.pack()
      
 
-        self.gameboard = gm.create_configuration(rows= 20, cols = 20)
+        self.gameboard = play.create_configuration(rows= 20, cols = 20)
         self.canvas = DrawableGrid(self.window, self, self.gameboard, size = self.size.get())
         self.canvas.pack(fill="both", expand=True)
 
@@ -315,7 +315,7 @@ class GolpyGui():
    
     def set_print(self):
         self.gameboard = self.canvas.get_gameboard()
-        gb_str = gm.get_gameboard_text(self.gameboard)
+        gb_str = play.get_gameboard_text(self.gameboard)
         self.set_text_to_value(gb_str)
 
     def nextCallBack(self):
@@ -324,10 +324,10 @@ class GolpyGui():
         gb_orig = self.gameboard
         if self.expand.get() == 1:
             self.gameboard = gam.expand_gameboard_if_necessary(self.gameboard)
-        gb = gm.play(self.gameboard)
+        gb = play.play(self.gameboard)
         self.increase_counter()
 
-        if gm.configuration_equal(gb, self.gameboard):
+        if play.configuration_equal(gb, self.gameboard):
             self.running = False
             self.run_button["text"] = "run"
         
