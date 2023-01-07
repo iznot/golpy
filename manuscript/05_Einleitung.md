@@ -3,7 +3,7 @@
 ## John Conway
 John Horton Conway ist ein bedeutender Mathematiker aus dem 20. Jahrhundert. Er wurde 1937 in Liverpool geboren und verstarb vor zwei Jahren im Alter von 82 Jahren an Covid-19. Er studierte Mathematik an der Universität Cambridge, wo er später mathematische Logik unterrichtete. Während dieser Zeit machte er sich einen Namen in dem Gebiet der Gruppentheorie. Er entdeckte eine endliche Gruppe mit über 8 Trillionen Elementen in einem 24-dimensionalem Raum, die nach ihm benannt wurde. [(*Strick 2022*)](#Strick)
 
-Ihm war es wichtig, die Mathematik den Leuten näherzubringen. Dadurch unterrichtete er nicht nur Hochbegabte an Universitäten, sondern auch jüngere und durchschnittlich-talentierte Kinder. Er gab viele Vorträge, bei denen er entweder gänzlich vom Thema abkam, oder gar nicht erst erschien. Er bezeichnete sich selbst als faul und ging stets barfuss oder in Sandalen. Er entsprach also genau dem Bild, das die Allgemeinheit von einem zerstreuten Professor hat. [(*Szpiro* 2020)](#Szpiro)
+Ihm war es wichtig, die Mathematik den Leuten näherzubringen. Dadurch unterrichtete er nicht nur Hochbegabte an Universitäten, sondern auch jüngere und durchschnittlich talentierte Kinder. Er hielt viele Vorträge, bei denen er entweder gänzlich vom Thema abkam oder gar nicht erst erschien. Er bezeichnete sich selbst als faul und ging stets barfuss oder in Sandalen. Er entsprach also genau dem Bild, das die Allgemeinheit von einem zerstreuten Professor hat. [(*Szpiro 2020*)](#Szpiro)
 
 {width: "30%"}
 ![Abb. 1: John Horton Conway](conway.png) 
@@ -34,7 +34,7 @@ Das "Game of Life" ist ein faszinierendes Spiel, welches auf vier einfachen Rege
 3.	Wenn weniger als zwei Nachbarn leben, stirbt eine lebendige Zelle an Einsamkeit.
 4.	Hat sie mehr als drei Nachbarn, stirbt sie an Überbevölkerung.
 
-[(*Sedlacek 2021*)](#Sedlacek)
+[(*Golombek 2005*)](#Golombek)
 
 {width: "50%"}
 ![Abb. 2: Lebensentwicklung](Lebensentwicklung.png)  
@@ -53,8 +53,8 @@ Die Zahlen auf der Abbildung zeigen an, wie viele Nachbarn die betroffene Zelle 
 
 Daneben gibt es noch weitere Objektklassen, die in dieser Arbeit nicht konkret berücksichtigt werden:
 
-- Gleiterkanonen erzeugen in einem periodischen Zeitabstand immer wieder Gleiter
-- Puffer stellen eine Art gleitendes Objekt mit Überbleibsel dar
+- Gleiterkanonen erzeugen in einem periodischen Zeitabstand immer wieder Gleiter.
+- Puffer stellen eine Art gleitendes Objekt mit Überbleibsel dar.
 - Völlig chaotische Objekte. Diese Objekte beinhalten viele verschiedene Objekte und können nicht klar zugeordnet werden.
 
 
@@ -99,16 +99,16 @@ Diese Objekte enden nach `n`$ Generationen in einem leeren Spielfeld
 
 ## Probleme
 
-Die Anwendung des "Game of Life" ist für viele Themenbereiche interessant. So in der Biologie, wo das Spiel als ein Blick ins Mikroskop interpretiert werden kann. Das Interesse liegt also auf den verschiedenen Lebensformen und der Entwicklung von Zellen. Auch vertritt das Konzept einen ökonomischen Aspekt, wobei das Sterben und Gebären der Zellen das Angebot und die Nachfrage auf einem Finanzmarkt darstellen. Weiter ist das Spiel für die Physik interessant. Hierbei liegt das Augenmerk darauf, dass auf beliebig kleine Abweichungen der Anfangskonfiguration andere Resultate folgen, analog zu physikalischen Gleichungen. (*Sedlacek* 2021)[#Sedlacek] In der theoretischen Informatik ist das Spiel besonders als Entscheidungsproblem interessant.
+Die Anwendung des "Game of Life" ist für viele Themenbereiche interessant. So in der Biologie, wo das Spiel als ein Blick ins Mikroskop interpretiert werden kann. Das Interesse liegt also auf den verschiedenen Lebensformen und der Entwicklung von Zellen. Auch vertritt das Konzept einen ökonomischen Aspekt, wobei das Sterben und Gebären der Zellen das Angebot und die Nachfrage auf einem Finanzmarkt darstellen. Weiter ist das Spiel für die Physik interessant. Hierbei liegt das Augenmerk darauf, dass auf beliebig kleine Abweichungen der Anfangskonfiguration andere Resultate folgen, analog zu physikalischen Gleichungen. In der theoretischen Informatik ist das Spiel besonders als Entscheidungsproblem interessant. (*Sedlacek* 2021)[#Sedlacek]
 
 Durch diesen vielfältigen Anwendungsbereich interessieren sich Wissenschaftler aus verschiedenen Fachbereichen für "Conway's Game of Life" und beschäftigen sich mit den ungelösten Problemen, die das Spiel mit sich bringt. Einige der Probleme sind mit der Zeit bereits gelöst worden, andere noch nicht. 
 
-Zwei der nach wie vor ungelösten Probleme, die die Wissenschaften weiterhin beschäftigen sind:
+Zwei der nach wie vor ungelösten Probleme, die die Wissenschaften weiterhin beschäftigen, sind:
 
 1. Es existiert kein bekannter Algorithmus, der bestimmen kann, zu welcher Spielklasse eine Anfangskonfiguration gehört. 
 2. Es existiert kein Algorithmus, der für alle Konfigurationen bestimmen kann, ob die eine aus der anderen entstehen wird.
 
-In dieser Arbeit versuche ich, mich diesen beiden Problemen zu widmen.
+In dieser Arbeit widme ich mich diesen beiden Problemen.
 
 [(*Golombek 2005*)](#Golombek)
 

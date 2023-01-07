@@ -1,0 +1,1 @@
+Die Simulation von Conway's Game of Life

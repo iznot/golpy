@@ -1,6 +1,8 @@
 # Vorwort
 
-Ich wurde von Herrn Künzle auf Conway's Game of Life aufmerksam gemacht. Während meiner Recherche las ich von Leuten, die einen grossen Anteil ihrer Lebenszeit mit diesem Spiel verbrachten. Zu diesem Zeitpunkt konnte ich dies in keiner Weise nachvollziehen. Je mehr Zeit ich aber in das 'Game of Life' investierte, desto mehr packte mich die Faszination dann auch. Aus ein paar beliebigen Quadraten kann ein hochkomplexes Muster entstehen, genauso gut aber auch ein leeres Spielfeld. Sobald der Status einer Zelle verändert wird, verhält sich die Spielentwicklung ganz anders. Diese undurchschaubare Vielfältigkeit trotz der Einfachheit der Spielregeln faszinieren mich. 
+Ich wurde von Herrn Künzle auf Conway's Game of Life aufmerksam gemacht, wofür ich ihm herzlich danke. Während meiner Recherche las ich von Leuten, die einen grossen Anteil ihrer Lebenszeit mit diesem Spiel verbrachten. Anfänglich konnte ich dies in keiner Weise nachvollziehen. Je mehr Zeit ich aber in das 'Game of Life' investierte, desto mehr packte mich dessen Faszination dann auch. Aus ein paar beliebigen Quadraten kann ein hochkomplexes Muster entstehen, genauso gut aber auch ein leeres Spielfeld. Sobald der Status einer Zelle verändert wird, ergibt sich eine ganz andere Spielentwicklung. Diese undurchschaubare Vielfältigkeit trotz der Einfachheit der Spielregeln faszinieren mich. 
 
-Während meiner Ideenfindung und der Verfassung der Arbeit unterstützte mich Herr Enz. Mein Vater, Christoph Glur, leistete mir grosse Unterstützung während der gesamten Entwicklung des Programmes. Er entwickelte das GUI (Graphical User Interface).
+Ich bedanke mich bei Herrn Enz, der mich während meiner Ideenfindung und der Verfassung der Arbeit begleitete. Ganz besonders danke ich meinem Vater, Christoph Glur, der mir grosse Unterstützung während der gesamten Entwicklung des Programms leistete. Er entwickelte das GUI (Graphical User Interface).
+
+
 

@@ -23,7 +23,7 @@ Die Konfiguration setzt sozusagen die lebenden Zellen auf das Gameboard. Dies wi
 
 ### Spielzug (Play)
 
-Als Nächstes machte ich mich an die Spielfunktion. Jede Zelle hat einen Index [Zeile, Spalte], ähnlich wie in einem Koordinatensystem. Die Nummerierung fängt bei null (wie in Pyhton üblich). In der Informatik gilt null gleich "False" und eins gleich "True". Eine Zelle muss also mit "True" gleichgesetzt werden, um als lebend zu gelten:
+Als Nächstes machte ich mich an die Spielfunktion. Jede Zelle hat einen Index [Zeile, Spalte], ähnlich wie in einem Koordinatensystem. Die Nummerierung fängt bei null an (wie in Python üblich). In der Informatik gilt null gleich "False" und eins gleich "True". Eine Zelle muss also mit "True" gleichgesetzt werden, um als lebend zu gelten:
 
 
 1. Zelle[2,1] = True
@@ -43,9 +43,9 @@ Um eine Konfiguration nun durchspielen zu können, muss der Status der Nachbarze
 [1, 0, 1]
 [1, 1, 1]
 ```
-Für jede Zelle wird dieser Kernel darüber gelegt, sodass das null auf der besagten Zelle liegt. Nun werden alle Zellen, auf denen im Kernel eine Eins liegt, überprüft und zusammengezählt. Eine tote Zelle hat den Wert Null und eine lebende den Wert Eins. Sobald die Summe der Nachbarzellen nun bekannt ist, muss nur noch den Regeln gefolgt werden um den Status besagter Zelle für die nächste Generation herauszufinden.   
+Für jede Zelle wird dieser Kernel darüber gelegt, sodass das Null auf der besagten Zelle liegt. Nun werden alle Zellen, auf denen im Kernel eine Eins liegt, überprüft und zusammengezählt. Eine tote Zelle hat den Wert Null und eine lebende den Wert Eins. Sobald die Summe der Nachbarzellen nun bekannt ist, muss nur noch den Regeln gefolgt werden, um den Status besagter Zelle für die nächste Generation herauszufinden.   
  
-Diese Funktion wird in Pyhton in der Bibliothek `scipy` durch die Funktion `convolve` zur Verfügung gestellt.
+Diese Funktion wird in Python in der Bibliothek `scipy` durch die Funktion `convolve` zur Verfügung gestellt.
 
 {#randzellen}
 ### Randzellen
@@ -74,7 +74,7 @@ Die Zellen sterben durch diese Funktion also bereits nach einer Generation aus. 
 Die Simulation ist der Schlüssel zur Beantwortung der Fragestellungen. 
 Wenn alle möglichen Konfigurationen eines Spielfelds einmal durchgespielt werden, sind auch all deren Endzustände bekannt. Wenn nun also eine beliebige Konfiguration auf diesem begrenzten Spielfeld abgefragt wird, kann ich den Endzustand sozusagen "vorhersagen", ohne diese erneut durchzuspielen. Dabei handelt es sich nicht um einen echten Algorithmus, sondern eher um einen Katalog aller möglichen Konfigurationen.
 
-Zudem sind mir die einzelnen Generationen jeder Konfiguration dieses Spielfeldes bekannt. Um herauszufinden, ob eine Konfiguration X aus einer Konfiguration Y entstehen kann, muss Konfiguration X also nur mit den abgespeicherten Generationen des Spiels vergleichen, das aus Konfiguration Y entsteht. 
+Zudem sind mir die einzelnen Generationen jeder Konfiguration dieses Spielfeldes bekannt. Um herauszufinden, ob eine Konfiguration X aus einer Konfiguration Y entstehen kann, muss man Konfiguration X also nur mit den abgespeicherten Generationen des Spiels vergleichen, die aus Konfiguration Y entstanden. 
 
 ### Spielklassen
 
@@ -86,13 +86,13 @@ Als Erstes legte ich fest, nach welchen möglichen Spielklassen ich unterscheide
 1. Gleitende Objekte
 1. Überlebende Objekte
 
-Die letzte Spielklass "Überlebende Objekte" schliesst interessant Objekte wie beispielsweise eine Gleiterkanone mit ein. 
+Die letzte Spielklasse, "Überlebende Objekte", schliesst interessante Objekte wie beispielsweise eine Gleiterkanone mit ein. 
 
 Für jede Generation des Spiels auf eine bestimmte Anfangskonfiguration muss überprüft werden, ob das Spiel einer dieser Spielklassen angehört. Sobald Spielklassen 1 - 4 identifiziert wurden, bricht das Spiel ab, und die Endkonfiguration wird festgehalten.
 
 #### Selbst auslöschende Objekte (Erased)
 
-Diese Objekte sind sichtlich einfach erkennbar. Eine Funktion prüft, ob in dem aktuellen Spielbrett lebende Zellen vorhanden sind. Falls nicht, zählt die Startkonfiguration zu den selbst auslöschenden Objekten. Falls lebende Zellen vorhanden sind, muss weiter geprüft werden. 
+Diese Objekte sind sichtlich einfach erkennbar. Eine Funktion prüft, ob im aktuellen Spielbrett lebende Zellen vorhanden sind. Falls nicht, zählt die Startkonfiguration zu den selbst auslöschenden Objekten. Falls lebende Zellen vorhanden sind, muss weiter geprüft werden. 
 
 #### Statische Objekte (Stable)
 
@@ -100,7 +100,7 @@ Auch diese Objekte stellen kein Problem dar. Jede Konfiguration der vorherigen G
 
 #### Oszillierende Objekte (Oscillator)
 
-Oszillatoren zeichnen sich dadurch aus, dass sie nach einer bestimmten Periode wieder dieselbe Konfiguration darstellen. Die aktuelle Generation muss nun also mit allen vorherigen Generation abgeglichen werden. Wenn keine Übereinstimmung vorhanden ist, handelt es sich (noch) nicht um ein oszillierendes Objekt.
+Oszillatoren zeichnen sich dadurch aus, dass sie nach einer bestimmten Periode wieder dieselbe Konfiguration darstellen. Die aktuelle Generation muss nun also mit allen vorherigen Generationen abgeglichen werden. Wenn keine Übereinstimmung vorhanden ist, handelt es sich (noch) nicht um ein oszillierendes Objekt.
 
 Ein Problem, das sich mir dabei stellte, war, dass ein oszillierendes Objekt grösser und dann wieder kleiner werden kann. Es kann also notwendig sein, das Gameboard zu erweitern, wie oben im Abschnitt (Randzellen)[#randzellen] beschrieben. Um jedoch zwei Generationen in einem Spiel vergleichen zu können, musste ich beim Zusammenziehen eines Objektes das Gameboard wieder auf die Grundform reduzieren.
 
@@ -110,21 +110,21 @@ Durch die Reduktion auf die Grundform, die für oszillierende Objekte notwendig 
 
 ![Abb. 11: Grundkonfiguration des Gleiters](relative_gb.png)  
 
-Diese relativen Gameboards werden nun nach dem Schema der Oszillatoren abgeglichen und falls eine Affinität besteht, gilt diese Konfiguration als gleitendes Objekt.
+Diese relativen Gameboards werden nun nach dem Schema der Oszillatoren abgeglichen. Falls eine Affinität besteht, gilt diese Konfiguration als gleitendes Objekt.
 
 #### Überlebende Objekte (Survival)
 
 Falls der Objekttyp bis jetzt nicht identifiziert wurde, klassifizieren wir ein Spiel als überlebend. Damit diese Spiele nun nicht endlos weiterlaufen, baue ich eine maximale Zahl von erlaubten Spielzügen ein. Dieser Maximalwert impliziert eine Fehlerquote für Anfangskonfigurationen, die ein Objekt erst nach dem vorgegebenen Grenzwert erreichen. Würde dieser Grenzwert aber weggelassen werden, würde die Simulation endlos lange dauern. Den Grenzwert setzte ich bei meinen Simulationen auf 100.
 
-### Speicherform des Spielbrettes 
+### Speicherform des Spielbretts 
 
-Um die Spiele später analysieren zu können, wollte ich nicht alle Generationen, sondern nur die Anfangskonfiguration und den Endzustände abspeichern. Um eine Konfiguration in ein Excel schreiben zu können, muss die Konfiguration in ein Format gebracht werden, das sich dafür eignet. Eine Möglichkeit wäre, jede Konfiguration durch eine Reihe von Nullen und Einsen darzustellen. Dadurch würde viel zu viel Speicherplatz benötigt werden. Ausserdem wäre noch nicht klar, wie wir z.B. ein 4x5 Gameboard von einem 5x4 Gameboard unterscheiden. Also formatiere ich die Konfiguration nach folgendem Schema: 
+Um die Spiele später analysieren zu können, wollte ich jeweils nicht alle Generationen, sondern nur die Anfangskonfiguration und den Endzustand abspeichern. Um eine Konfiguration in ein Excel schreiben zu können, muss die Konfiguration in ein Format gebracht werden, das sich dafür eignet. Eine Möglichkeit wäre, jede Konfiguration durch eine Reihe von Nullen und Einsen darzustellen. Dadurch würde viel zu viel Speicherplatz benötigt werden. Ausserdem wäre noch nicht klar, wie wir beispielsweise ein 4x5 Gameboard von einem 5x4 Gameboard unterscheiden. Also formatiere ich die Konfiguration nach folgendem Schema: 
 
 1. Zuerst kommt die Grösse des Gameboards.
 2. Dann kommt die relative Position des Objekts auf dem Gameboard. 
 3. Darauf folgt die Grösse der Grundkonfiguration.
 4. Jetzt kommt die Anzahl an toten Zellen bis zur ersten lebendigen Zelle
-5. Schlussendlich kommt noch die "Zahl" des Spielbrettes. Die Zahl des Spielbrettes ergibt sich aus dem Gameboard als binäre Zahl, die Nullen stellen die toten Zellen und die Einsen die lebendigen dar. Diese Zahl wird in eine hexadezimale Zahl umgewandelt, um weiteren Speicherplatz zu sparen. Somit erhält jedes Objekt eine individuelle Objektzahl. 
+5. Schlussendlich kommt noch die "Zahl" des Spielbretts. Die Zahl des Spielbretts ergibt sich aus dem Gameboard als binäre Zahl, die Nullen stellen die toten Zellen und die Einsen die lebendigen dar. Diese Zahl wird in eine hexadezimale Zahl umgewandelt, um weiteren Speicherplatz zu sparen. Somit erhält jedes Objekt eine individuelle Objektzahl. 
    
 Das folgende Spielbrett sieht dann also wie folgt aus:
 
@@ -176,14 +176,14 @@ Jede Konfiguration wird trotzdem noch siebenmal zu oft abgespielt, da sie entwed
 
 Diese will ich ebenfalls nicht mehrfach spielen, da ich an *unterschiedlichen* Konfigurationen interessiert bin. Ich nenne diese Konfigurationen *affine Konfigurationen*. Siehe (Glossar)[#glossar].
 
-Um zu vermeiden, dass all diese affinen Konfigurationen abgespielt und gespeichert werden, muss also jeweils die Grundkonfiguration der Anfangskonfiguration und derer gespiegelten und gedrehten Variationen mit den bereits in einem Set gespeicherten, nicht-affinen Anfangskonfigurationen abgeglichen werden. Falls keine Affinität gefunden wird, wird diese Anfangskonfiguration auch abgespeichert, ansonsten wird das Spiel nicht durchgeführt.  
+Um zu vermeiden, dass all diese affinen Konfigurationen abgespielt und gespeichert werden, muss also jeweils die Grundkonfiguration der Anfangskonfiguration und ihre gespiegelten und gedrehten Variationen mit den bereits in einem Set gespeicherten, nicht-affinen Anfangskonfigurationen abgeglichen werden. Falls keine Affinität gefunden wird, wird diese Anfangskonfiguration auch abgespeichert, ansonsten wird das Spiel nicht durchgeführt.  
 
 
 ### Abspeichern
 
 Ich speichere alle Spiele in ein CSV-File. <!-- TODO: ag Referenz einfügen --> Dieses Text-Format eignet sich besonders gut, da es einfach in eine Exceltabelle transformiert werden kann. 
 
-Für das erste Problem, das Vorhersagen des Endzustandes, würde das Abspeichern jeder einzelnen Generation einer Konfiguration zu viel Speicherplatz brauchen. Deshalb werden diese hier auf die Anzahl an Generationen beschränkt. Die Anfangs- und Endlänge beziehungsweise -breite, die Anfangs- und Endkonfiguration und die Definition des Objektes werden auch abgespeichert. Zudem noch die Periodizität, falls es sich um ein oszillierendes oder gleitendes Objekt handelt. 
+Für das erste Problem, das Vorhersagen des Endzustandes, würde das Abspeichern aller Generationen einer Konfiguration zu viel Speicherplatz brauchen. Deshalb werden diese hier auf die Anzahl an Generationen beschränkt. Die Anfangs- und Endlänge beziehungsweise -breite, die Anfangs- und Endkonfiguration und die Definition des Objektes werden auch abgespeichert. Zudem noch die Periodizität, falls es sich um ein oszillierendes oder gleitendes Objekt handelt. 
 
 {width: "80%"}
 ![Abb. 15: Ausschnitt aus CSV-File](CSV-File.png)   

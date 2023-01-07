@@ -11,7 +11,7 @@ Von 33'554'432 theoretisch möglichen Konfigurationen bei einem 5x5 Gameboard wu
 
 Am häufigsten kommen statische und selbst auslöschende Spiele vor. Überlebende Spiele kommen am zweithäufigsten vor. Gleitende Spiele sind mit Abstand am seltensten. 
 
-Auch stellte sich heraus, dass die meisten oszillierenden Objekte eine Periodizität von 2 haben. Mit einer Periodizität von drei existieren 5474 oszillierende Objekte, mit 15 wurden nur noch 14 entdeckt. Diese 14 Anfangskonfiguration sind alle unterschiedlich, entwickeln sich jedoch alle zu dem genau gleichen Objekt. All diese Anfangskonfigurationen haben zwischen 12 und 16 lebenden Zellen. 
+Auch stellte sich heraus, dass die meisten oszillierenden Objekte eine Periodizität von 2 haben. Mit einer Periodizität von drei existieren 5474 oszillierende Objekte, mit 15 wurden nur noch 14 entdeckt. Diese 14 Anfangskonfiguration sind alle unterschiedlich, entwickeln sich jedoch alle zu dem genau gleichen Objekt. All diese Anfangskonfigurationen haben zwischen 12 und 16 lebende Zellen. 
 Gleitende Objekte haben alle eine Periodizität von 4. Dies deckt sich mit dem gegenwärtigen wissenschaftlichen Stand, wonach es keine bekannte gleitende Objekte mit Periodizität ungleich 4 gibt.
 
 {width: "60%"}
@@ -25,12 +25,12 @@ Das erste Problem, das meine Arbeit untersucht, lautete:
 
 > Es existiert kein Algorithmus, der bestimmen kann, zu welchem Objekt die Anfangskonfiguration mutieren wird.
 
-Dieses Problem kann nun eine Funktion umgehen, indem sie die gegebene Konfiguration mit den getesteten Anfangskonfigurationen abgleicht. Sobald eine Übereinstimmung gefunden wird, ist bekannt, welcher Spielklasse die Konfiguration angehört.
+Dieses Problem kann nun eine Funktion umgehen, indem diese die gegebene Konfiguration mit den getesteten Anfangskonfigurationen abgleicht. Sobald eine Übereinstimmung gefunden wird, ist bekannt, welcher Spielklasse die Konfiguration angehört.
 
 Das zweite Problem lautete:
 
 > Es existiert kein Algorithmus, der für alle Konfigurationen bestimmen kann, ob die eine aus der anderen entstehen wird.
 
-Dieses Problem kann ebenfalls eine Funktion umgehen, indem sie die zu vergleichende Konfiguration mit den getesteten Anfangskonfigurationen abgleicht. Sobald eine Affinität gefunden wird, gleicht sie die zu vergleichende Konfiguration mit den Generationen der übereinstimmenden Anfangskonfiguration ab. Falls hierbei eine Affinität gefunden wird, kann die zu testende Konfiguration aus der zu vergleichenden Konfiguration entstehen, ansonsten nicht.   
+Dieses Problem kann ebenfalls eine Funktion umgehen, indem diese die zu vergleichende Konfiguration mit den getesteten Anfangskonfigurationen abgleicht. Sobald eine Affinität gefunden wird, gleicht sie die zu vergleichende Konfiguration mit den Generationen der übereinstimmenden Anfangskonfiguration ab. Falls hierbei eine Affinität gefunden wird, kann die zu testende Konfiguration aus der zu vergleichenden Konfiguration entstehen, ansonsten nicht.   
 
 

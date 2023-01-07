@@ -28,10 +28,10 @@ Die n. Generation
 : Die Konfiguration, die nach dem n. nacheinander folgenden Spielzug aus der Anfangskonfiguration entsteht. 
 
 Endzustand
-: Entsteht nach einer gewissen Anzahl von Spielzügen eine Grundkonfiguration, die im Spielverlauf bereits einmal entstanden ist, so hat das Spiel den Endzustand erreicht. Ist der Endzustand erreicht, ist das Spiel zu Ende.
+: Entsteht nach einer gewissen Anzahl von Spielzügen eine Grundkonfiguration, die im Spielverlauf bereits einmal entstanden ist, hat das Spiel den Endzustand erreicht. Ist der Endzustand erreicht, ist das Spiel zu Ende.
 
 Spiel
-: Werden auf eine Anfangskonfiguration wiederholt Spielzüge ausgeführt bis der Endzustand erreicht ist, so sprechen wir von einem Spiel.
+: Werden auf eine Anfangskonfiguration wiederholt Spielzüge ausgeführt, bis der Endzustand erreicht ist, so sprechen wir von einem Spiel.
 : `run_simulation.run_simulation(gameboard, max_runs)`
 
 Simulation
@@ -42,13 +42,13 @@ Maximale Zahl
 : Die zuvor festgelegte Anzahl an Spielzügen, nach deren Erreichen die Simulation abbricht.
 
 Spielklassen
-: Spiele können in verschiedene Klassen eingeteilt werden, je nachdem wie sich die Konfigurationen über den Spielverlauf entwickeln. Unterschieden werden folgende Spielklassen: statisch, oszillierend, gleitend, selbst auslöschend, überlebend.
+: Spiele können in verschiedene Klassen eingeteilt werden, je nachdem, wie sich die Konfigurationen über den Spielverlauf entwickeln. Unterschieden werden folgende Spielklassen: statisch, oszillierend, gleitend, selbst auslöschend, überlebend.
 
 Objekt
 : Konfigurationen, die in Simulationen immer wieder auftauchen, werden als Objekte bezeichnet und benannt, z.B.: Gleiter, Tümmler, Blinker, Uhr, Fresser, Segler, etc. Objekte verhalten sich nach Spielklassen, d.h. statisch, oszillierend, gleitend, selbst auslöschend, überlebend. In einer Konfiguration können grundsätzlich auch mehrere Objekte vorkommen. Zum Beispiel eine Kanone, die immer wieder Gleiter schiesst. In meiner Arbeit habe ich nicht zwischen Objekt und Grundkonfiguration unterschieden.
 
 Periodizität
-: Die Anzahl an Generationen bis wieder dieselbe Grundkonfiguration entsteht. Dies ist nur bei gleitenden und oszillierenden Spielen relevant. 
+: Die Anzahl an Generationen, bis wieder dieselbe Grundkonfiguration entsteht. Dies ist nur bei gleitenden und oszillierenden Spielen relevant. 
 
 Doppelgänger
 : Zwei identische Grundkonfigurationen mit unterschiedlichen Positionen auf dem Gameboard.

@@ -5,7 +5,7 @@
 06_Material_und_Methode.md
 07_Resultate.md
 08_Diskussion.md 
-09_Was_habe_ich_persönlich_gelernt
+09_Was_habe_ich_persönlich_gelernt.md
 10_Glossar.md
 11_Quellenverzeichnis.md
 12_Anhang.md
