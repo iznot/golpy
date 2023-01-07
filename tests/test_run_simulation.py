@@ -10,69 +10,69 @@ class TestSimulation(unittest.TestCase):
 
     def test_check_exit_criteria_stable(self):
         gleiter = samp.get_gleiter()
-        gameboards = [gleiter, gleiter]
-        res, p = sim.check_exit_criteria(gameboards)
+        configurations = [gleiter, gleiter]
+        res, p = sim.check_exit_criteria(configurations)
         assert res == 'stable'
 
     
 
     def test_check_exists(self):
-        gameboards = [samp.get_Eater(), samp.get_erased(), samp.get_gleiter()]
-        gameboard_to_check = samp.get_Tuemmler()
-        res1, i = sim.check_exists(gameboard_to_check, gameboards, True)
+        configurations = [samp.get_Eater(), samp.get_erased(), samp.get_gleiter()]
+        configuration_to_check = samp.get_Tuemmler()
+        res1, i = sim.check_exists(configuration_to_check, configurations, True)
         assert res1 == False
         assert i == -1
 
 
     def test_check_not_exists(self):
-        gameboards = [samp.get_Eater(), samp.get_Tuemmler(), samp.get_erased(), samp.get_gleiter()]
-        gameboard_to_check = samp.get_Tuemmler()
-        res1, periodicity = sim.check_exists(gameboard_to_check, gameboards, True)
+        configurations = [samp.get_Eater(), samp.get_Tuemmler(), samp.get_erased(), samp.get_gleiter()]
+        configuration_to_check = samp.get_Tuemmler()
+        res1, periodicity = sim.check_exists(configuration_to_check, configurations, True)
         assert res1 == True
         assert periodicity == 3
 
 
     def test_pulsator_oscilator(self):
-        gameboard = samp.get_pulsator()
-        gameboards = [gameboard]
+        configuration = samp.get_pulsator()
+        configurations = [configuration]
         for i in range(20):
-            gameboard_new = gm.play(gameboard)
-            list.append(gameboards, gameboard_new)
-            gameboard = gameboard_new
+            configuration_new = gm.play(configuration)
+            list.append(configurations, configuration_new)
+            configuration = configuration_new
         
-        exit_criteria, periodicity = sim.check_exit_criteria(gameboards)
+        exit_criteria, periodicity = sim.check_exit_criteria(configurations)
 
         assert exit_criteria == 'oscillator'
         assert periodicity == 15
 
     def test_gleiter_spaceship(self):
-        gameboard = samp.get_gleiter()
-        gameboards = [gameboard]
+        configuration = samp.get_gleiter()
+        configurations = [configuration]
         for i in range (7):
-            gameboard_new = gam.expand_gameboard_if_necessary(gameboard)
-            gameboard_new = gm.play(gameboard_new)
-            gameboard_new = gam.get_base_configuration( gameboard_new )
-            list.append(gameboards, gameboard_new)
-            gameboard = gameboard_new
+            configuration_new = gam.expand_gameboard_if_necessary(configuration)
+            configuration_new = gm.play(configuration_new)
+            configuration_new = gam.get_base_configuration( configuration_new )
+            list.append(configurations, configuration_new)
+            configuration = configuration_new
         
-        exit_criteria, periodicity = sim.check_exit_criteria(gameboards)
+        exit_criteria, periodicity = sim.check_exit_criteria(configurations)
 
         assert exit_criteria == 'spaceship'
         assert periodicity == 4
 
 
     def test_oscillator(self):
-        gameboard = gam.create_configuration_from_string('(20, 20):(9, 8)|(2, 4):0:0x8f')
-        gameboards, exit_criteria, periodicity, i = sim.run_simulation(gameboard,100)
+        configuration = gam.create_configuration_from_string('(20, 20):(9, 8)|(2, 4):0:0x8f')
+        configurations, exit_criteria, periodicity, i = sim.run_simulation(configuration,100)
         assert exit_criteria == 'oscillator'
         assert periodicity == 2
-        assert i == len(gameboards)-1
+        assert i == len(configurations)-1
 
 
     def test_run_simulation(self):
-        gameboard = samp.get_gleiter()
-        gameboards, exit_criteria, periodicity, i = sim.run_simulation(gameboard, 30)
-        assert len(gameboards) >= periodicity
+        configuration = samp.get_gleiter()
+        configurations, exit_criteria, periodicity, i = sim.run_simulation(configuration, 30)
+        assert len(configurations) >= periodicity
         assert exit_criteria == 'spaceship'
         assert periodicity == 4
     
@@ -97,7 +97,7 @@ class TestSimulation(unittest.TestCase):
         res = gam.convert_to_string_representation(g0)
         assert res == '(12, 12):(1, 1)|(3, 3):0:0x141'
     
-    def test_convert_to_gameboard(self):
+    def test_convert_to_configuration(self):
         gb_str = '(12, 12):(2, 3)|(7, 8):4:0x8a8002810a825'
         gb = gam.create_configuration_from_string(gb_str)
         columns = gb[0].shape[1]
@@ -105,7 +105,7 @@ class TestSimulation(unittest.TestCase):
         gb_str_2 = gam.convert_to_string_representation(gb)
         assert gb_str_2 == gb_str
         
-    def test_convert_huge_gameboard(self):
+    def test_convert_huge_configuration(self):
         g0 = gm.create_configuration(rows = 1000, cols = 900)
         g0[0][1,1] = True
         g0[0][1,3] = True

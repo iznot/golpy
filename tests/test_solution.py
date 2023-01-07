@@ -11,23 +11,23 @@ class TestSolution(unittest.TestCase):
 
 
 
-#print_gameboard
+#print_configuration
 
-    def test_create_gameboard(self):
+    def test_create_configuration(self):
         
-        gameboard = gm.create_configuration(rows = 9, cols = 10)
+        configuration = gm.create_configuration(rows = 9, cols = 10)
         
-        assert gameboard[0].size == 90
-        assert gameboard[0].shape == (9, 10)
+        assert configuration[0].size == 90
+        assert configuration[0].shape == (9, 10)
 
 
-    def test_demo_print_gameboard(self):
-        gameboard = gm.create_configuration(rows = 9, cols = 10)
-        gameboard[0][3,4] = True
-        gameboard[0][5,4] = True
-        gameboard[0][4,4] = True
+    def test_demo_print_configuration(self):
+        configuration = gm.create_configuration(rows = 9, cols = 10)
+        configuration[0][3,4] = True
+        configuration[0][5,4] = True
+        configuration[0][4,4] = True
         
-        print(gameboard)
+        print(configuration)
 
     
     def test_demo_gameplay(self):
