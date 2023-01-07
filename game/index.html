@@ -458,29 +458,29 @@
 <span class="sd">        str: Die Spielklasse, falls identifiziert, oder &#39;survival&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>    
     <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">game</span><span class="p">)</span>
-    <span class="n">last_gameboard</span> <span class="o">=</span> <span class="n">game</span><span class="p">[</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">previous_gameboard</span> <span class="o">=</span> <span class="n">game</span><span class="p">[</span><span class="n">length</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
-    <span class="n">previous_gameboards</span> <span class="o">=</span> <span class="n">game</span><span class="p">[</span><span class="mi">0</span><span class="p">:(</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+    <span class="n">last_generation</span> <span class="o">=</span> <span class="n">game</span><span class="p">[</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">previous_generation</span> <span class="o">=</span> <span class="n">game</span><span class="p">[</span><span class="n">length</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">previous_game</span> <span class="o">=</span> <span class="n">game</span><span class="p">[</span><span class="mi">0</span><span class="p">:(</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
 
 
     <span class="c1"># check if extinct (all empty)</span>
 
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">last_gameboard</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">last_generation</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">&quot;extinct&quot;</span><span class="p">,</span> <span class="mi">0</span>
 
 
     <span class="c1"># check if equals</span>
 
-    <span class="k">if</span> <span class="n">gam</span><span class="o">.</span><span class="n">configuration_equal</span><span class="p">(</span><span class="n">last_gameboard</span><span class="p">,</span> <span class="n">previous_gameboard</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">gam</span><span class="o">.</span><span class="n">configuration_equal</span><span class="p">(</span><span class="n">last_generation</span><span class="p">,</span> <span class="n">previous_generation</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;stable&quot;</span><span class="p">,</span> <span class="mi">0</span>
 
     <span class="c1"># check if oscillator</span>
-    <span class="n">osc_check</span><span class="p">,</span> <span class="n">periodicity</span> <span class="o">=</span> <span class="n">_check_exists</span><span class="p">(</span><span class="n">last_gameboard</span><span class="p">,</span> <span class="n">previous_gameboards</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">osc_check</span><span class="p">,</span> <span class="n">periodicity</span> <span class="o">=</span> <span class="n">_check_exists</span><span class="p">(</span><span class="n">last_generation</span><span class="p">,</span> <span class="n">previous_game</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">osc_check</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">&quot;oscillator&quot;</span><span class="p">,</span> <span class="n">periodicity</span>
 
     <span class="c1"># check if spaceship</span>
-    <span class="n">spaceship_check</span><span class="p">,</span> <span class="n">periodicity</span> <span class="o">=</span> <span class="n">_check_exists</span><span class="p">(</span><span class="n">last_gameboard</span><span class="p">,</span> <span class="n">previous_gameboards</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">spaceship_check</span><span class="p">,</span> <span class="n">periodicity</span> <span class="o">=</span> <span class="n">_check_exists</span><span class="p">(</span><span class="n">last_generation</span><span class="p">,</span> <span class="n">previous_game</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">spaceship_check</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">&quot;spaceship&quot;</span><span class="p">,</span> <span class="n">periodicity</span>
 
