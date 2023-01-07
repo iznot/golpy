@@ -1,6 +1,6 @@
 # Diskussion
 
-Meine beiden Algorithmen sind funktionsfähig und können das gewünschte Resultat aufzeigen. Allerdings sind die beiden Probleme damit nicht wirklich gelöst. Keine beliebige Funktion kann abgefragt werden, sondern nur eine, die zuvor schon einmal abgespielt wurde. Zudem beschränkt sich das Verzeichnis der nachschlagbaren Konfiguration auf die tatsächlich gespielten Konfigurationen. In meinem Fall also Gameboards mit maximaler Grösse von 5x5. 
+Meine beiden Funktionen sind funktionsfähig und können das gewünschte Resultat aufzeigen. Allerdings sind die beiden Probleme damit nicht wirklich gelöst. Keine beliebige Konfiguration kann abgefragt werden, sondern nur eine, die zuvor schon einmal abgespielt wurde. Das Verzeichnis der nachschlagbaren Konfiguration beschränkt sich zudem auf die tatsächlich gespielten Konfigurationen. In meinem Fall Startkonfigurationen auf einem Gameboard mit einer maximalen Grösse von 5x5. 
 
 Um die Voraussagekraft meiner Resultate zu erhöhen, müsste ich grössere Gameboards durchspielen. Dazu müsste die simulierende Funktion effizienter gemacht werden, und ich müsste Zugang zu stärkeren Servern haben. Ersteres wäre unter anderem dadurch möglich, dass ich die maximale Zahl je nach Anzahl lebender Zellen mathematisch berechnen würde. Der jeweilige Prozess könnte dann bereits nach dem Erreichen dieser Zahl abbrechen. Zudem könnte die Simulation in noch mehr Parallelprozesse aufgeteilt werden, zum Beispiel nach Anzahl lebender Zellen im äussersten Ring, dann im zweit-äussersten Ring, und so weiter. Um von dieser massiven Parallelisierung Gebrauch machen zu können, würde dann ein leistungsstärkerer Computer mit genügenden Kernen benötigt, der so viele Parallelprozesse abspielen kann.
 
@@ -15,4 +15,4 @@ Systematischer könnte diese Analyse dadurch erreicht werden, dass eine Funktion
 
 Ob diese Ansätze überhaupt zu etwas führen, ist aufgrund der Erkenntnisse, die ich in dieser Arbeit gewonnen habe, nicht bestimmbar. Vielleicht ist die Vorhersage der Lebensentwicklung in "Conway's Game of Life" wirklich nicht oder nur beschränkt möglich. 
 Fest steht aber, das Game of Life ist weitaus komplexer, als auf den ersten Blick gedacht.
- 
+
