@@ -1,8 +1,14 @@
+# gui.py
+
+"""
+Das GUI (graphical user interface) von Golpy.mkdocsmk
+"""
+
 from time import sleep
 
 import play as play
 import gameboard_manipulation as gam
-import run_simulation as sim
+import simulation as sim
 import samples
 import numpy as np
 import tkinter as tk 
