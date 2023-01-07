@@ -1,4 +1,4 @@
-import run_simulation as sim
+import simulation as sim
 import gameboard_manipulation as gam
 import numpy as np
 import csv

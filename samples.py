@@ -1,4 +1,4 @@
-import play as play
+import play
 
 #Spaceship
 def get_gleiter(size = 30):

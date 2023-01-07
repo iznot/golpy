@@ -6,97 +6,31 @@ import os
 import numpy as np
 from joblib import Parallel, delayed
 
-import play as play
+import game
 import gameboard_manipulation as gam
-
-
-def play_full_game(start_configuration, max_runs):
-    """Spielt ein Spiel.
-
-    Args:
-        start_configuration: Die Anfangskonfiguration
-        max_runs (int): Die maximale Anzahl Spielzüge.
-
-    Returns:
-        generations: Eine Liste aller Generationen.
-        exit_criteria (str): Die Spielklasse dieses Spiels, also 'survival', 'extinct', 'stable', 'oscillator', 'spaceship'
-        periodicity (int): Die Periodizität des Objekts falls exit_criteria = 'oscillator' | 'spaceship'. Sonst 0.
-        i (int): Die Anzahl Spielzüge bis zum Erkennen des exit_criteria (oder max_runs).
-    """    
-    generations = [start_configuration]
-    for i in range(1, max_runs):
-        start_configuration = gam.expand_gameboard_if_necessary(start_configuration)
-        start_configuration = play.play(start_configuration)
-        start_configuration = gam.get_base_configuration(start_configuration)
-        generations.append(start_configuration)
-        exit_criteria, periodicity = check_exit_criteria(generations)
-        if exit_criteria != 'survival':
-            return generations, exit_criteria, periodicity, i
-    return generations, 'survival', 0, i
-
-def check_exit_criteria(gameboards):
-    length = len(gameboards)
-    last_gameboard = gameboards[length-1]
-    previous_gameboard = gameboards[length-2]
-    previous_gameboards = gameboards[0:(length-1)]
-    
-
-    # check if extinct (all empty)
-
-    if np.sum(last_gameboard[0]) == 0:
-        return "extinct", 0
-
-
-    # check if equals
-
-    if gam.configuration_equal(last_gameboard, previous_gameboard, True):
-        return "stable", 0
-    
-    # check if oscillator
-    osc_check, periodicity = check_exists(last_gameboard, previous_gameboards, True)
-    if osc_check:
-        return "oscillator", periodicity
-
-    # check if spaceship
-    spaceship_check, periodicity = check_exists(last_gameboard, previous_gameboards, False)
-    if spaceship_check:
-        return "spaceship", periodicity
-
-    # else
-    return 'survival', 0
-
-def check_exists(gameboard_to_check, gameboards, check_origin):
-    length = len(gameboards)
-    
-    for i in range(length-1, 0, -1):
-        gameboard_to_compare = gameboards[i]
-        res = gam.configuration_equal(gameboard_to_check, gameboard_to_compare, check_origin)
-        if res: return True, length - i
-    return False, -1
-
-
-
-
-
-    #counter = sum(1 if x==y else -1 for x, y in product (last_gameboard, i))
-
-
-
-
-
+import play
 
 #generate csv file
 
-def generate_simulation(shape, alive_count, max_runs, folder = "sim", debug = False):
-    if alive_count == 1 and not (shape[0] == shape[1] == 1):
+def generate_simulation(gameboard_shape, alive_count, max_runs, folder = "sim", debug = False):
+    """Läuft eine Simulation durch
+
+    Args:
+        gameboard_shape (tuple): Die Dimensionen des Gameboards
+        alive_count (int): Die Anzahl lebender Zellen
+        max_runs (int): Die maximale Anzahl Spielzüge, bis ein Spiel abbricht
+        folder (str, optional): Der Folder, in welchen die Resultate geschrieben werden. 
+        debug (bool, optional): Falls True, werden maximal 1000 Konfigurationen simuliert.
+    """    
+    if alive_count == 1 and not (gameboard_shape[0] == gameboard_shape[1] == 1):
         return
-    cells = shape[0] * shape[1]
+    cells = gameboard_shape[0] * gameboard_shape[1]
     max_value = (2**cells)
 
     results_header = ['start_gameboard', 'alive_count', 'end_gameboard', 'exit_criteria', 'periodicity', 'rows', 'cols', 'max_height', 'max_width', 'runs']
 
 
-    file_name = f'{folder}/simulation_results_{shape[0]}_{shape[1]}_{alive_count}.csv'
+    file_name = f'{folder}/simulation_results_{gameboard_shape[0]}_{gameboard_shape[1]}_{alive_count}.csv'
 
     folder_exists = os.path.exists(folder)
 
@@ -124,7 +58,7 @@ def generate_simulation(shape, alive_count, max_runs, folder = "sim", debug = Fa
                 dt_diff = dt.datetime.now() - start
                 prog = gameboard_int/max_value
                 expected_end = dt.datetime.now() + dt_diff * (1.0 - prog) / prog
-                print(f'Shape {shape[0]}x{shape[1]} alive: {alive_count} {simulation_count} simulations for {gameboard_int}/{max_value} gameboards. Max p/h/w/r: {max_p}/{max_max_width}/{max_max_height}/{max_max_runs} Progress: {int(100*prog)}%. Expected end: {expected_end}')
+                print(f'Shape {gameboard_shape[0]}x{gameboard_shape[1]} alive: {alive_count} {simulation_count} simulations for {gameboard_int}/{max_value} gameboards. Max p/h/w/r: {max_p}/{max_max_width}/{max_max_height}/{max_max_runs} Progress: {int(100*prog)}%. Expected end: {expected_end}')
 
             
             if gameboard_int in gb_already_checked_set:
@@ -138,21 +72,21 @@ def generate_simulation(shape, alive_count, max_runs, folder = "sim", debug = Fa
                 continue
 
             
-            gb_array_2D = np.reshape(gb_array_1D, (shape[0], shape[1]))
+            gb_array_2D = np.reshape(gb_array_1D, (gameboard_shape[0], gameboard_shape[1]))
             gameboard = play.create_configuration(gb_array_2D.astype(bool))
 
             gameboard = gam.get_base_configuration(gameboard)
             
-            if not (gameboard[0].shape[0] == shape[0] and gameboard[0].shape[1] == shape[1]):
+            if not (gameboard[0].shape[0] == gameboard_shape[0] and gameboard[0].shape[1] == gameboard_shape[1]):
                 #skipping non-full
                 continue
             
             
             # check if current gb is in history
-            add_gb_variations(gameboard, gb_already_checked_set)
+            _add_config_variations(gameboard, gb_already_checked_set)
 
             
-            gameboards, exit_criteria, periodicity, runs = play_full_game(gameboard, max_runs)
+            gameboards, exit_criteria, periodicity, runs = game.play_full_game(gameboard, max_runs)
            
 
             start_gameboard = gam.convert_to_string_representation(gameboard)
@@ -167,17 +101,17 @@ def generate_simulation(shape, alive_count, max_runs, folder = "sim", debug = Fa
             max_max_height = max(max_max_height, max_height)
             max_max_width = max(max_max_width, max_width)
 
-            new_row = [start_gameboard, alive_count, end_gameboard, exit_criteria, periodicity, shape[0], shape[1], max_max_height, max_max_width, runs]
+            new_row = [start_gameboard, alive_count, end_gameboard, exit_criteria, periodicity, gameboard_shape[0], gameboard_shape[1], max_max_height, max_max_width, runs]
 
             writer.writerow(new_row)
 
             simulation_count += 1
 
-def add_gb_variations(gb, gb_already_checked_set):
+def _add_config_variations(configuration, configuration_already_checked_set):
 
-    gb_variation_set = gam.get_configuration_variations(gb)
+    gb_variation_set = gam.get_configuration_variations(configuration)
 
-    gb_already_checked_set.update(gb_variation_set)
+    configuration_already_checked_set.update(gb_variation_set)
     
 
     
@@ -206,7 +140,7 @@ def simulation_for_generations(rows, cols, max_runs):
         gameboard = play.create_configuration(gb_array_2D.astype(bool))
         gameboard = gam.get_base_configuration(gameboard)
 
-        gameboards, exit_criteria, periodicity, runs = play_full_game(gameboard, 2)
+        gameboards, exit_criteria, periodicity, runs = game.play_full_game(gameboard, 2)
 
         for gb in gameboards:
             gameboard = gam.get_base_configuration(gb)
@@ -216,7 +150,7 @@ def simulation_for_generations(rows, cols, max_runs):
         writer.writerow(new_row)
 
         
-def get_dimensions(i, j):
+def _get_dimensions(i, j):
     list1 = list(range(1, i + 1))
     list2 = list(range(1, j + 1))
     
@@ -232,6 +166,8 @@ def get_dimensions(i, j):
 
 
 def main():
+    """Startet eine Simulation.
+    """    
     
     #dims = get_dimensions(5, 5)
     

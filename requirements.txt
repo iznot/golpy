@@ -2,3 +2,6 @@ numpy
 ipywidgets
 joblib
 scipy
+mkdocs
+mkdocstrings[python]
+mkdocs-material

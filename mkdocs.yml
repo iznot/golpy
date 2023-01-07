@@ -1,0 +1,14 @@
+site_name: Golpy Docs
+
+theme:
+  name: "material"
+
+plugins:
+ - mkdocstrings
+
+nav:
+ - index.md
+ - play.md
+ - game.md
+ - simulation.md
+ - gameboard_manipulation.md

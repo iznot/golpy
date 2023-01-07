@@ -2,10 +2,11 @@
 
 import unittest
 
+import game
 import gameboard_manipulation as gam
 import play
-import run_simulation as sim
 import samples as samp
+import simulation as sim
 
 
 class TestSimulation(unittest.TestCase):
@@ -13,7 +14,7 @@ class TestSimulation(unittest.TestCase):
     def test_check_exit_criteria_stable(self):
         gleiter = samp.get_gleiter()
         configurations = [gleiter, gleiter]
-        res, p = sim.check_exit_criteria(configurations)
+        res, p = game.check_exit_criteria(configurations)
         assert res == 'stable'
 
     
@@ -21,7 +22,7 @@ class TestSimulation(unittest.TestCase):
     def test_check_exists(self):
         configurations = [samp.get_Eater(), samp.get_erased(), samp.get_gleiter()]
         configuration_to_check = samp.get_Tuemmler()
-        res1, i = sim.check_exists(configuration_to_check, configurations, True)
+        res1, i = game._check_exists(configuration_to_check, configurations, True)
         assert res1 == False
         assert i == -1
 
@@ -29,7 +30,7 @@ class TestSimulation(unittest.TestCase):
     def test_check_not_exists(self):
         configurations = [samp.get_Eater(), samp.get_Tuemmler(), samp.get_erased(), samp.get_gleiter()]
         configuration_to_check = samp.get_Tuemmler()
-        res1, periodicity = sim.check_exists(configuration_to_check, configurations, True)
+        res1, periodicity = game._check_exists(configuration_to_check, configurations, True)
         assert res1 == True
         assert periodicity == 3
 
@@ -42,7 +43,7 @@ class TestSimulation(unittest.TestCase):
             list.append(configurations, configuration_new)
             configuration = configuration_new
         
-        exit_criteria, periodicity = sim.check_exit_criteria(configurations)
+        exit_criteria, periodicity = game.check_exit_criteria(configurations)
 
         assert exit_criteria == 'oscillator'
         assert periodicity == 15
@@ -57,7 +58,7 @@ class TestSimulation(unittest.TestCase):
             list.append(configurations, configuration_new)
             configuration = configuration_new
         
-        exit_criteria, periodicity = sim.check_exit_criteria(configurations)
+        exit_criteria, periodicity = game.check_exit_criteria(configurations)
 
         assert exit_criteria == 'spaceship'
         assert periodicity == 4
@@ -65,7 +66,7 @@ class TestSimulation(unittest.TestCase):
 
     def test_oscillator(self):
         configuration = gam.create_configuration_from_string('(20, 20):(9, 8)|(2, 4):0:0x8f')
-        configurations, exit_criteria, periodicity, i = sim.play_full_game(configuration,100)
+        configurations, exit_criteria, periodicity, i = game.play_full_game(configuration,100)
         assert exit_criteria == 'oscillator'
         assert periodicity == 2
         assert i == len(configurations)-1
@@ -73,7 +74,7 @@ class TestSimulation(unittest.TestCase):
 
     def test_run_simulation(self):
         configuration = samp.get_gleiter()
-        configurations, exit_criteria, periodicity, i = sim.play_full_game(configuration, 30)
+        configurations, exit_criteria, periodicity, i = game.play_full_game(configuration, 30)
         assert len(configurations) >= periodicity
         assert exit_criteria == 'spaceship'
         assert periodicity == 4
@@ -124,5 +125,5 @@ class TestSimulation(unittest.TestCase):
         assert gb_str == "(10, 8):(0, 0)|(10, 8):4:0x8a8002810a825202020"
 
     def test_get_dimensions(self):
-        res = sim.get_dimensions(5,5)
+        res = sim._get_dimensions(5,5)
 
