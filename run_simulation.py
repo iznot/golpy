@@ -1,13 +1,14 @@
-import numpy as np
-import gameboard_manipulation as gam
-import basic_game_functions as gm
-import itertools as ito
 import csv
 import datetime as dt
-import operator
-from ast import literal_eval
-from joblib import Parallel, delayed
+import itertools as ito
 import os
+
+import numpy as np
+from joblib import Parallel, delayed
+
+import basic_game_functions as gm
+import gameboard_manipulation as gam
+
 
 def run_simulation(gameboard, max_runs):
     
@@ -70,70 +71,8 @@ def check_exists(gameboard_to_check, gameboards, check_origin):
     #counter = sum(1 if x==y else -1 for x, y in product (last_gameboard, i))
 
 
-def convert_to_string(gameboard):
-    
-    gameboard_cut = gam.get_base_configuration(gameboard)
-
-    gb_array = gameboard_cut[0].ravel()
-
-    gb_bits = gb_array.astype(int)
-
-    # gb_int = bits_to_int(gb_bits)
-
-    gb_str = ''.join(map(str, gb_bits))
-    gb_int = int(gb_str, 2)
-    gb_hex = hex(gb_int)
-    # IDEA: base64 would be even more efficient than hex.
-    # gb_64 = base64.b64encode(gb_bits)
-
-    shape = gameboard[0].shape
-    shape_cut = gameboard_cut[0].shape
-    leading_zeroes= get_leading_zeroes(gb_bits)
-    origin = tuple(map(lambda x, y: -(x - y), gameboard_cut[1], gameboard[1]))
-    res = f'{shape}:{origin}|{shape_cut}:{leading_zeroes}:{gb_hex}'
-    return res
 
 
-def get_leading_zeroes(bits):
-    i = np.argmax(bits!=0)
-    if i==0 and np.all(bits==0): i=len(bits)
-    return i
-
-def convert_to_gameboard(gameboard_str):
-    res_list = gameboard_str.split('|')
-    gb_specs = res_list[0].split(':')
-    set_specs = res_list[1].split(':')
-
-    
-    
-    shape = literal_eval(set_specs[0])
-    leading_zeroes = int(set_specs[1])
-    gb_hex_str = set_specs[2]
-
-    gb_int = int(gb_hex_str, 16)
-    gb_bin = bin(gb_int)[2:]
-    gb_bin = gb_bin.zfill(len(gb_bin) + leading_zeroes)
-    gb_array_1D = np.fromstring(gb_bin,'u1') - ord('0')
-    gb_array_2D = np.reshape(gb_array_1D, shape)
-    input_array = gb_array_2D.astype(bool)
-
-    gameboard = gm.create_configuration(input_array)
-
-
-    # fit into large
-    full_shape = literal_eval(gb_specs[0])
-    origin = literal_eval(gb_specs[1])
-
-    #NOTE: wir erstellen ein Gameboard mit der gewünschten Form (aber alles leer)
-    full_gameboard_a = np.full(full_shape, False)
-
-    #NOTE: jetzt platzieren wir die Figur an die richtige Stelle, relativ zum Ursprung
-    full_gameboard_a[ origin[0]:(origin[0]+shape[0])  , origin[1]:(origin[1]+shape[1])   ] = gameboard[0]
-
-    gameboard = gm.create_configuration(full_gameboard_a)
-
-
-    return gameboard
 
 
 #generate csv file
@@ -206,8 +145,8 @@ def generate_simulation(shape, alive_count, max_runs, folder = "sim", debug = Fa
             gameboards, exit_criteria, periodicity, runs = run_simulation(gameboard, max_runs)
            
 
-            start_gameboard = convert_to_string(gameboard)
-            end_gameboard = convert_to_string(gameboards[len(gameboards)-1])
+            start_gameboard = gam.convert_to_string_representation(gameboard)
+            end_gameboard = gam.convert_to_string_representation(gameboards[len(gameboards)-1])
 
             # TODO: überprüfen, sieht komisch aus
             max_height= np.shape(gameboards[len(gameboards)-1][0])[0]
@@ -226,7 +165,7 @@ def generate_simulation(shape, alive_count, max_runs, folder = "sim", debug = Fa
 
 def add_gb_variations(gb, gb_already_checked_set):
 
-    gb_variation_set = gam.get_gameboard_variations(gb)
+    gb_variation_set = gam.get_configuration_variations(gb)
 
     gb_already_checked_set.update(gb_variation_set)
     
