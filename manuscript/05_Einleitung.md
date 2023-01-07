@@ -95,7 +95,7 @@ Diese Objekte enden nach `n`$ Generationen in einem leeren Spielfeld
 {width: "50%"}
 ![Abb. 6: Selbst auslöschendes Objekt](erased_gb.png)    
 
-[(*Johnston 2023*)](#Johnston)
+[(*Wikipedia 2 2023*)](#Wikipedia 2)
 
 ## Probleme
 

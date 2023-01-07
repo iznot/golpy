@@ -12,3 +12,6 @@ Im Verlauf der Arbeit habe ich einiges an neuem Wissen erlangt. Anfangs konnte i
 8. Verschiedene Datentypen in Python, insbesondere: Tupel, Liste, Dictionary, Set
 9. Datenanalyse und Arbeiten mit grossen Datensätzen in Power BI
 10. Wissenschaftliche Texte mit Markdown, Latex und Jupyter schreiben 
+    
+
+    ![](title_page.jng)  

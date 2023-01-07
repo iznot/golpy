@@ -1,18 +1,25 @@
-
 import numpy as np
-import basic_game_functions as gm
 
+"""Stellt Funktionen zur Verfügung, die benötigt werden um die Simulationen durchzuführen.
+"""
 
+def get_base_configuration(configuration):
+    """Konvertiert eine Konfiguration zu ihrer Grundkonfiguration.
 
-def cut_both_axis(gb):
-    gb1 = cut(gb, 0)
-    gb2 = cut(gb1, 1)
-    return gb2
+    Args:
+        configuration: Die Konfiguration
 
-def cut(gb, axis = 0):
+    Returns:
+        configuration: Die Grundkonfiguration
+    """    
+    config1 = _cut(configuration, 0)
+    base_config = _cut(config1, 1)
+    return base_config
+
+def _cut(configuration, axis = 0):
     
     #überflüssige cols herausfinden
-    sums = np.sum(gb[0], axis = axis)
+    sums = np.sum(configuration[0], axis = axis)
 
     idx = np.where(sums != 0)[0]
 
@@ -24,84 +31,97 @@ def cut(gb, axis = 0):
     sums[min:max+1] = 1
     
     if axis == 0:
-        gb = (gb[0][:,sums == 1], (gb[1][0], gb[1][1] - min))
+        configuration = (configuration[0][:,sums == 1], (configuration[1][0], configuration[1][1] - min))
     else:
-        gb = (gb[0][sums == 1,], (gb[1][0] - min, gb[1][1]))
+        configuration = (configuration[0][sums == 1,], (configuration[1][0] - min, configuration[1][1]))
 
-    return gb
+    return configuration
 
 
 
-def expand_gameboard_if_necessary(gb):
-    if sum(gb[0][0, :]) > 0:
+def expand_gameboard_if_necessary(configuration):
+    """Erweitert ein Gameboard auf denjenigen Seiten, auf denen eine lebende Zelle am Rand ist.
+
+    Args:
+        configuration: Die allenfalls zu erweiterne Konfiguration
+
+    Returns:
+        configuration: die Konfiguration, die allenfalls erweitert wurde
+    """    
+    if sum(configuration[0][0, :]) > 0:
         #add first row
-        gb = (np.insert(gb[0], 0, 0, axis = 0), (gb[1][0]+1, gb[1][1]))
+        configuration = (np.insert(configuration[0], 0, 0, axis = 0), (configuration[1][0]+1, configuration[1][1]))
 
 
-    if sum(gb[0][:, 0]) > 0:
+    if sum(configuration[0][:, 0]) > 0:
         #add first column
-        gb = (np.insert(gb[0], 0, 0, axis = 1), (gb[1][0], gb[1][1]+1))
+        configuration = (np.insert(configuration[0], 0, 0, axis = 1), (configuration[1][0], configuration[1][1]+1))
     
-    if sum(gb[0][:, gb[0].shape[1]-1]) > 0 :
-        gb = (np.insert(gb[0], gb[0].shape[1], 0, axis = 1), gb[1])
+    if sum(configuration[0][:, configuration[0].shape[1]-1]) > 0 :
+        configuration = (np.insert(configuration[0], configuration[0].shape[1], 0, axis = 1), configuration[1])
     
-    if sum(gb[0][gb[0].shape[0]-1, :]) > 0 :
-        gb = (np.insert(gb[0], gb[0].shape[0], 0, axis = 0), gb[1])
-    return gb
+    if sum(configuration[0][configuration[0].shape[0]-1, :]) > 0 :
+        configuration = (np.insert(configuration[0], configuration[0].shape[0], 0, axis = 0), configuration[1])
+    return configuration
 
 
-def get_gameboard_variations(gb):
-    """Gibt eine Liste von allen unterschiedlichen "ähnlichen" Gameboards.
+def get_configuration_variations(configuration):
+    """Gibt ein Set von allen affinen Grundkonfigurationen.
     D.h. gespiegelt und gedreht.
 
     Args:
-        gb (_type_): Das Gameboard, für welches wir die Variationen suchen.
+        configuration: Die Konfiguration
 
     Returns:
-        _type_: _description_
+        Set: Ein Set, das die Konfigurations-Zahlen der affinen Konfiguration enthält.
     """    
-    quadratic = gb[0].shape[0] == gb[0].shape[1]
+    quadratic = configuration[0].shape[0] == configuration[0].shape[1]
 
     
-    gb_rota_1 = np.rot90(gb[0])
-    gb_rota_2 = np.rot90(gb_rota_1)
+    config_rota_1 = np.rot90(configuration[0])
+    config_rota_2 = np.rot90(config_rota_1)
     
     
-    gb_reflected = np.flip(gb[0], axis = 0)
-    gb_reflected_rota_1 = np.rot90(gb_reflected)
-    gb_reflected_rota_2 = np.rot90(gb_reflected_rota_1)
+    config_reflected = np.flip(configuration[0], axis = 0)
+    config_reflected_rota_1 = np.rot90(config_reflected)
+    config_reflected_rota_2 = np.rot90(config_reflected_rota_1)
     
 
     if quadratic:
         
-        gb_rota_3 = np.rot90(gb_rota_2)
-        gb_reflected_rota_3 = np.rot90(gb_reflected_rota_2)
+        config_rota_3 = np.rot90(config_rota_2)
+        config_reflected_rota_3 = np.rot90(config_reflected_rota_2)
 
-        gb_variations_number_set = {get_gb_nbr(gb[0]),
-                        get_gb_nbr(gb_rota_1), 
-                        get_gb_nbr(gb_rota_2), 
-                        get_gb_nbr(gb_rota_3), 
-                        get_gb_nbr(gb_reflected),
-                        get_gb_nbr(gb_reflected_rota_1), 
-                        get_gb_nbr(gb_reflected_rota_2), 
-                        get_gb_nbr(gb_reflected_rota_3)}
+        config_variations_number_set = {get_config_nbr(configuration[0]),
+                        get_config_nbr(config_rota_1), 
+                        get_config_nbr(config_rota_2), 
+                        get_config_nbr(config_rota_3), 
+                        get_config_nbr(config_reflected),
+                        get_config_nbr(config_reflected_rota_1), 
+                        get_config_nbr(config_reflected_rota_2), 
+                        get_config_nbr(config_reflected_rota_3)}
 
     else:
-        gb_variations_number_set = {get_gb_nbr(gb[0]), 
-                        get_gb_nbr(gb_rota_2),
-                        get_gb_nbr(gb_reflected),
-                        get_gb_nbr(gb_reflected_rota_2)}
+        config_variations_number_set = {get_config_nbr(configuration[0]), 
+                        get_config_nbr(config_rota_2),
+                        get_config_nbr(config_reflected),
+                        get_config_nbr(config_reflected_rota_2)}
 
-    return gb_variations_number_set
+    return config_variations_number_set
     
-def get_gb_nbr(gb):
+def get_config_nbr(configuration):
+    """Transformiert eine Konfiguration in ihre dezimal-Räpresentation.
+
+    Args:
+        configuration: Die Konfiguration
+
+    Returns:
+        int: Eine Dezimalzahl, die der Konfiguration entspricht.
+    """    
     
-    gb_array = gb.ravel()
-    gb_bits = gb_array.astype(int)
+    config_array = configuration.ravel()
+    config_bits = config_array.astype(int)
+    config_str = ''.join(map(str, config_bits))
+    config_int = int(config_str, 2)
 
-    # gb_int = bits_to_int(gb_bits)
-
-    gb_str = ''.join(map(str, gb_bits))
-    gb_int = int(gb_str, 2)
-
-    return gb_int
+    return config_int

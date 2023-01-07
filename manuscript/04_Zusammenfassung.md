@@ -5,7 +5,7 @@ In dieser Arbeit befasse ich mich mit Conway's "Game of Life". Dieses "No player
 1. Es existiert kein bekannter Algorithmus, der als Input eine Konfiguration nimmt und als Output deren Spielklasse wiedergibt.
 1. Es existiert kein bekannter Algorithmus, der als Input zwei Konfigurationen nimmt und als Output sagt, ob die eine aus der anderen entstehen wird oder nicht.
 
-<!-- QUESTION: Was ist genau ein Algorithmus? Ist das Durchspielen kein Algo? Falls ja würde ich sagen: "... ausser das Spiel zu spielen.-->
+
 
 Im Verlauf dieser Arbeit versuchte ich diese Probleme zu umgehen, indem ich eine Simulation programmierte, die alle möglichen Konfigurationen auf einem begrenzten Gameboard durchspielt. Diese werden, je nach dem daraus entstehenden Objekt, nach Spielklasse gefiltert und abgespeichert.
 

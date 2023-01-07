@@ -8,7 +8,7 @@ class TestGUI(unittest.TestCase):
 #get_neighbour_indices
 
     def test_gameboard(self):
-        g0 = gm.create_gameboard(rows = 6, cols = 6)
+        g0 = gm.create_configuration(rows = 6, cols = 6)
         g0[0][3,4] = True
         g0[0][4,4] = True
         g0[0][5,4] = True

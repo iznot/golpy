@@ -16,7 +16,7 @@ def run_simulation(gameboard, max_runs):
         #NOTE: notwendig vorher, falls Anfangsposition am Rand
         gameboard = gam.expand_gameboard_if_necessary(gameboard)
         gameboard = gm.play(gameboard)
-        gameboard = gam.cut_both_axis(gameboard)
+        gameboard = gam.get_base_configuration(gameboard)
         gameboards.append(gameboard)
         exit_criteria, periodicity = check_exit_criteria(gameboards)
         if exit_criteria != 'survival':
@@ -38,7 +38,7 @@ def check_exit_criteria(gameboards):
 
     # check if equals
 
-    if gm.gameboard_equal(last_gameboard, previous_gameboard, True):
+    if gm.configuration_equal(last_gameboard, previous_gameboard, True):
         return "stable", 0
     
     # check if oscillator
@@ -59,7 +59,7 @@ def check_exists(gameboard_to_check, gameboards, check_origin):
     
     for i in range(length-1, 0, -1):
         gameboard_to_compare = gameboards[i]
-        res = gm.gameboard_equal(gameboard_to_check, gameboard_to_compare, check_origin)
+        res = gm.configuration_equal(gameboard_to_check, gameboard_to_compare, check_origin)
         if res: return True, length - i
     return False, -1
 
@@ -72,7 +72,7 @@ def check_exists(gameboard_to_check, gameboards, check_origin):
 
 def convert_to_string(gameboard):
     
-    gameboard_cut = gam.cut_both_axis(gameboard)
+    gameboard_cut = gam.get_base_configuration(gameboard)
 
     gb_array = gameboard_cut[0].ravel()
 
@@ -117,7 +117,7 @@ def convert_to_gameboard(gameboard_str):
     gb_array_2D = np.reshape(gb_array_1D, shape)
     input_array = gb_array_2D.astype(bool)
 
-    gameboard = gm.create_gameboard(input_array)
+    gameboard = gm.create_configuration(input_array)
 
 
     # fit into large
@@ -130,7 +130,7 @@ def convert_to_gameboard(gameboard_str):
     #NOTE: jetzt platzieren wir die Figur an die richtige Stelle, relativ zum Ursprung
     full_gameboard_a[ origin[0]:(origin[0]+shape[0])  , origin[1]:(origin[1]+shape[1])   ] = gameboard[0]
 
-    gameboard = gm.create_gameboard(full_gameboard_a)
+    gameboard = gm.create_configuration(full_gameboard_a)
 
 
     return gameboard
@@ -190,9 +190,9 @@ def generate_simulation(shape, alive_count, max_runs, folder = "sim", debug = Fa
 
             
             gb_array_2D = np.reshape(gb_array_1D, (shape[0], shape[1]))
-            gameboard = gm.create_gameboard(gb_array_2D.astype(bool))
+            gameboard = gm.create_configuration(gb_array_2D.astype(bool))
 
-            gameboard = gam.cut_both_axis(gameboard)
+            gameboard = gam.get_base_configuration(gameboard)
             
             if not (gameboard[0].shape[0] == shape[0] and gameboard[0].shape[1] == shape[1]):
                 #skipping non-full
@@ -254,13 +254,13 @@ def simulation_for_generations(rows, cols, max_runs):
         gb_bin = gb_bin.zfill(cells)
         gb_array_1D = np.fromstring(gb_bin,'u1') - ord('0')
         gb_array_2D = np.reshape(gb_array_1D, (rows, cols))
-        gameboard = gm.create_gameboard(gb_array_2D.astype(bool))
-        gameboard = gam.cut_both_axis(gameboard)
+        gameboard = gm.create_configuration(gb_array_2D.astype(bool))
+        gameboard = gam.get_base_configuration(gameboard)
 
         gameboards, exit_criteria, periodicity, runs = run_simulation(gameboard, 2)
 
         for gb in gameboards:
-            gameboard = gam.cut_both_axis(gb)
+            gameboard = gam.get_base_configuration(gb)
             cut_gameboards.append(gameboard)
 
         new_row = cut_gameboards

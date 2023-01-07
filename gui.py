@@ -104,7 +104,7 @@ class DrawableGrid(tk.Frame):
                 color = self.canvas.itemcget(self._tag(row, column), "fill")
                 if color == "black":
                     gb_a[row, column] = True
-        gameboard = gm.create_gameboard(gb_a)
+        gameboard = gm.create_configuration(gb_a)
         return gameboard
         
 
@@ -257,7 +257,7 @@ class GolpyGui():
         self.button_frame.pack()
      
 
-        self.gameboard = gm.create_gameboard(rows= 20, cols = 20)
+        self.gameboard = gm.create_configuration(rows= 20, cols = 20)
         self.canvas = DrawableGrid(self.window, self, self.gameboard, size = self.size.get())
         self.canvas.pack(fill="both", expand=True)
 
@@ -327,7 +327,7 @@ class GolpyGui():
         gb = gm.play(self.gameboard)
         self.increase_counter()
 
-        if gm.gameboard_equal(gb, self.gameboard):
+        if gm.configuration_equal(gb, self.gameboard):
             self.running = False
             self.run_button["text"] = "run"
         

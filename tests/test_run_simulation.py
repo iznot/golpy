@@ -51,7 +51,7 @@ class TestSimulation(unittest.TestCase):
         for i in range (7):
             gameboard_new = gam.expand_gameboard_if_necessary(gameboard)
             gameboard_new = gm.play(gameboard_new)
-            gameboard_new = gam.cut_both_axis( gameboard_new )
+            gameboard_new = gam.get_base_configuration( gameboard_new )
             list.append(gameboards, gameboard_new)
             gameboard = gameboard_new
         
@@ -77,20 +77,20 @@ class TestSimulation(unittest.TestCase):
         assert periodicity == 4
     
     def test_convert_to_string(self):
-        g0 = gm.create_gameboard(rows = 5, cols = 4, origin=(-12, -15))
+        g0 = gm.create_configuration(rows = 5, cols = 4, origin=(-12, -15))
         g0[0][1,0] = True
         g0[0][1,2] = True
         g0[0][2,1] = True
         res = sim.convert_to_string(g0)
         assert res == '(5, 4):(1, 0)|(2, 3):0:0x2a'
         g1 = sim.convert_to_gameboard(res)
-        assert gm.gameboard_equal(g0, g1, check_origin=False)
+        assert gm.configuration_equal(g0, g1, check_origin=False)
 
     
 
 
     def test_convert_to_string_2(self):
-        g0 = gm.create_gameboard(rows = 12, cols = 12)
+        g0 = gm.create_configuration(rows = 12, cols = 12)
         g0[0][1,1] = True
         g0[0][1,3] = True
         g0[0][3,3] = True
@@ -106,17 +106,17 @@ class TestSimulation(unittest.TestCase):
         assert gb_str_2 == gb_str
         
     def test_convert_huge_gameboard(self):
-        g0 = gm.create_gameboard(rows = 1000, cols = 900)
+        g0 = gm.create_configuration(rows = 1000, cols = 900)
         g0[0][1,1] = True
         g0[0][1,3] = True
         g0[0][3,3] = True
         res = sim.convert_to_string(g0)
         gb = sim.convert_to_gameboard(res)
-        assert gm.gameboard_equal(gb, g0)
+        assert gm.configuration_equal(gb, g0)
     
     def test_new_cut(self):
         gb = sim.convert_to_gameboard('(12, 12):(2, 3)|(10, 8):4:0x8a8002810a825202020')
-        gb = gam.cut_both_axis(gb)
+        gb = gam.get_base_configuration(gb)
         gb_str = sim.convert_to_string(gb)
         print(gb_str)
         assert gb_str == "(10, 8):(0, 0)|(10, 8):4:0x8a8002810a825202020"

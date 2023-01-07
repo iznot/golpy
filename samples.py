@@ -2,7 +2,7 @@ import basic_game_functions as gm
 
 #Spaceship
 def get_gleiter(size = 30):
-    gameboard = gm.create_gameboard(rows = size, cols = size)
+    gameboard = gm.create_configuration(rows = size, cols = size)
     gameboard[0][2,0] = True
     gameboard[0][2,1] = True
     gameboard[0][2,2] = True
@@ -11,7 +11,7 @@ def get_gleiter(size = 30):
     return gameboard
 
 def get_segler(size = 30):
-    gameboard = gm.create_gameboard(rows = size, cols = size)
+    gameboard = gm.create_configuration(rows = size, cols = size)
     x = int(size/2)
     y = int(size/2) 
     gameboard[0][x, y] = True
@@ -28,7 +28,7 @@ def get_segler(size = 30):
 
 #random
 def get_random(size = 30):
-    gameboard = gm.create_gameboard(rows = size, cols = size)
+    gameboard = gm.create_configuration(rows = size, cols = size)
     x = int(size/2)
     y = int(size/2) 
     gameboard[0][x, y] = True
@@ -44,7 +44,7 @@ def get_random(size = 30):
 
 #destinct:
 def get_erased(size = 40):
-    gameboard = gm.create_gameboard(rows = size, cols = size)
+    gameboard = gm.create_configuration(rows = size, cols = size)
     start_x = int(size / 2)
     start_y = int(size / 2)
     gameboard[0][start_x - 2,start_y-1] = True
@@ -65,7 +65,7 @@ def get_erased(size = 40):
 
 #Oszilatoren:
 def get_pulsator(size = 40):
-    gameboard = gm.create_gameboard(rows = size, cols = size)
+    gameboard = gm.create_configuration(rows = size, cols = size)
     x = int(size/2)
     y = int(size/2)
     gameboard[0][x - 1, y - 1] = True
@@ -93,7 +93,7 @@ def get_pulsator(size = 40):
     return gameboard
 
 def get_Tuemmler(size = 40):
-    gameboard = gm.create_gameboard(rows = size, cols = size)
+    gameboard = gm.create_configuration(rows = size, cols = size)
     x = int(size / 2)
     y = int(size / 2)
     gameboard[0][x, y - 1] = True
@@ -118,7 +118,7 @@ def get_Tuemmler(size = 40):
 
 #Stable:
 def get_Loaf(size = 10):
-    gameboard = gm.create_gameboard(rows = size, cols = size)
+    gameboard = gm.create_configuration(rows = size, cols = size)
     x = int(size/2)
     y = int(size/2)
     gameboard[0][x, y] = True
@@ -132,7 +132,7 @@ def get_Loaf(size = 10):
 
 
 def get_Eater(size = 10):
-    gameboard = gm.create_gameboard(rows = size, cols = size)
+    gameboard = gm.create_configuration(rows = size, cols = size)
     x = int(size/2)
     y = int(size/2)  
     gameboard[0][x, y] = True
@@ -147,7 +147,7 @@ def get_Eater(size = 10):
 
 #explodierend
 def get_f_Pentomino(size = 50):
-    gameboard = gm.create_gameboard(rows = size, cols = size)
+    gameboard = gm.create_configuration(rows = size, cols = size)
     x = int(size/2)
     y = int(size/2) 
     gameboard[0][x, y + 1] = True

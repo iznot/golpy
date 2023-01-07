@@ -8,8 +8,9 @@ Gameboard
 : `basic_game_functions.create_gameboard(input_array = None, rows = None, cols = None, origin=(0,0))`
 
 Konfiguration
-: Ein bestimmtes Gameboard mit festgelegten lebenden und toten Zellen.
+: Ein bestimmtes Gameboard mit festgelegten lebenden und toten Zellen, sowie der relativen Position (siehe unten)
 : `gameboard`
+TODO: code anpassen
 
 Grundkonfiguration
 : Die Konfiguration, die übrig bleibt, wenn vom Rand des Gameboards alle nicht lebenden Zeilen und Spalten abgeschnitten werden.
