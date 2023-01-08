@@ -59,5 +59,5 @@ golpy ist lokal installiert und lauffähig (siehe Voraussetzungen oben).
 „Ich erkläre hiermit, dass ich die vorliegende Maturaarbeit selbständig und ohne unerlaubte fremde Hilfe erstellt habe und dass alle 
 Quellen, Hilfsmittel und Internetseiten wahrheitsgetreu verwendet wurden und belegt sind.“
 
-{width: "20%"}
+{width: "20%", float: left}
 ![Unterschrift, Anaïs Glur](Unterschirft.png)   
