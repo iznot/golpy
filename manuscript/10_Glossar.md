@@ -13,11 +13,11 @@ Konfiguration
 
 Grundkonfiguration
 : Die Konfiguration, die übrig bleibt, wenn vom Rand des Gameboards alle nicht lebenden Zeilen und Spalten abgeschnitten werden.
-: `gameboard_manipulation.get_base_configuration(configuration)?`
+: `manipulation.get_base_configuration(configuration)?`
 
 
 Relative Position
-: Die Position der Grundkonfiguration auf dem begrenzten Gameboard.
+: Die Position der Grundkonfiguration auf dem begrenzten Gameboard. Diese wird zum Beispiel bei der Reduktion auf die Grundkonfiguration gesetzt.
 
 Anfangskonfiguration
 : Eine Konfiguration bevor sie je abgespielt wurde. Die Anfangskonfiguration wird dann simuliert.
@@ -37,18 +37,18 @@ Spiel
 : `game.play_full_game(start_configuration, max_runs)`
 
 Simulation
-: Die Spiele aller möglichen Konfigurationen auf einem Gameboard einer bestimmten Grösse (hier 5x5).
+: Die Spiele aller möglichen Anfangskonfigurationen auf einem Gameboard einer bestimmten Grösse (hier 5x5).
 : `simulation.generate_simulation(gameboard_shape, alive_count, max_runs, folder = "sim", debug = False)`
 
 Maximale Zahl
-: Die zuvor festgelegte Anzahl an Spielzügen, nach deren Erreichen die Simulation abbricht.
+: Die zuvor festgelegte Anzahl an Spielzügen, nach deren Erreichen die Simulation abbricht, falls der Endzustand noch nicht erreicht worden ist.
 
 Spielklassen
 : Spiele können in verschiedene Klassen eingeteilt werden, je nachdem, wie sich die Konfigurationen über den Spielverlauf entwickeln. Unterschieden werden folgende Spielklassen: statisch, oszillierend, gleitend, selbst auslöschend, überlebend.
 : `game.check_exit_criteria(game)`
 
 Objekt
-: Konfigurationen, die in Simulationen immer wieder auftauchen, werden als Objekte bezeichnet und benannt, z.B.: Gleiter, Tümmler, Blinker, Uhr, Fresser, Segler, etc. Objekte verhalten sich nach Spielklassen, d.h. statisch, oszillierend, gleitend, selbst auslöschend, überlebend. In einer Konfiguration können grundsätzlich auch mehrere Objekte vorkommen. Zum Beispiel eine Kanone, die immer wieder Gleiter schiesst. In meiner Arbeit habe ich nicht zwischen Objekt und Grundkonfiguration unterschieden.
+: Stereotype Konfigurationen, die in Simulationen immer wieder auftauchen, werden als Objekte bezeichnet. Die Literatur hat für einige Objekte gängige Namen festgelegt: Gleiter, Tümmler, Blinker, Uhr, Fresser, Segler, etc. Objekte verhalten sich nach Spielklassen, d.h. statisch, oszillierend, gleitend, selbst auslöschend, überlebend. In einer Konfiguration können grundsätzlich auch mehrere Objekte vorkommen. Zum Beispiel eine Kanone, die immer wieder Gleiter schiesst. In meiner Arbeit habe ich nicht zwischen Objekt und Grundkonfiguration unterschieden.
 
 Periodizität
 : Die Anzahl an Generationen, bis wieder dieselbe Grundkonfiguration entsteht. Dies ist nur bei gleitenden und oszillierenden Spielen relevant. 

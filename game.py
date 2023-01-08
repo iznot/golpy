@@ -1,7 +1,7 @@
 import numpy as np
 
 import play
-import gameboard_manipulation as gam
+import manipulation as gam
 
 
 def play_full_game(start_configuration, max_runs):

@@ -8,7 +8,7 @@ import tkinter as tk
 
 import numpy as np
 
-import gameboard_manipulation as gam
+import manipulation as gam
 import play as play
 import samples
 import simulation as sim

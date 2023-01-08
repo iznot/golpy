@@ -3,7 +3,7 @@
 import unittest
 
 import game
-import gameboard_manipulation as gam
+import manipulation as gam
 import play
 import samples as samp
 import simulation as sim

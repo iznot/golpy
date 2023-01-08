@@ -186,8 +186,8 @@ Um zu vermeiden, dass all diese affinen Konfigurationen abgespielt und gespeiche
 
 
 ### Abspeichern
-QUESTION CG Was für Referenz?
-Ich speichere alle Spiele in ein CSV-File. <!-- TODO: ag Referenz einfügen --> Dieses Text-Format eignet sich besonders gut, da es sich einfach in eine Tabelle transformieren lässt. Weiter analysiert habe ich die Resultate auf Power BI. 
+
+Ich speichere alle Spiele in ein CSV-File. <https://de.wikipedia.org/wiki/CSV_(Dateiformat)>. Dieses Text-Format eignet sich besonders gut, da es sich einfach in eine Tabelle transformieren lässt. Weiter analysiert habe ich die Resultate auf Power BI. 
 
 Das Abspeichern aller Generationen einer Konfiguration würde zu viel Speicherplatz brauchen. Deshalb werden diese hier auf die Anzahl an Generationen beschränkt. Die Anfangs- und Endlänge beziehungsweise -breite, die Anfangs- und Endkonfiguration und die Definition des Objektes werden auch abgespeichert. Zudem noch die Periodizität, falls es sich um ein oszillierendes oder gleitendes Objekt handelt. 
 

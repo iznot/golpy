@@ -9,7 +9,7 @@ plugins:
 nav:
  - index.md
  - play.md
- - gameboard_manipulation.md
+ - manipulation.md
  - game.md
  - simulation.md
  - big_questions.md

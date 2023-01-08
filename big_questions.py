@@ -3,7 +3,7 @@
 
 
 import game
-import gameboard_manipulation as gam
+import manipulation as gam
 
 def get_exit_criteria(configuration, max_runs):
     """Prüft die Spielklasse für eine Anfangskonfiguration.

@@ -7,7 +7,7 @@ import numpy as np
 from joblib import Parallel, delayed
 
 import game
-import gameboard_manipulation as gam
+import manipulation as gam
 import play
 
 #generate csv file

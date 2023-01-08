@@ -1,6 +1,6 @@
 import unittest
 
-import gameboard_manipulation as gam
+import manipulation as gam
 import play
 
 
