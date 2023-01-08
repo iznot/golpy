@@ -183,8 +183,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../gameboard_manipulation/" class="md-nav__link">
-        Gameboard manipulation
+      <a href="../manipulation/" class="md-nav__link">
+        Manipulation
       </a>
     </li>
   
@@ -512,8 +512,7 @@
 <span class="normal">124</span>
 <span class="normal">125</span>
 <span class="normal">126</span>
-<span class="normal">127</span>
-<span class="normal">128</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">DrawableGrid</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">):</span>
+<span class="normal">127</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">DrawableGrid</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">golpy</span><span class="p">,</span> <span class="n">gameboard</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">bd</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;sunken&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">golpy</span> <span class="o">=</span> <span class="n">golpy</span>
@@ -566,7 +565,6 @@
                 <span class="c1">#x1, y1 = (x0 + self.size), (y0 + self.size)</span>
                 <span class="n">cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">find_closest</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">)</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">cell</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span>
-                    <span class="c1">#TODO: remove</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">cell</span><span class="p">)</span>
 
 
@@ -666,14 +664,14 @@ Dieses kann verwendet werden, um Spielverläufe zu visualisieren. Oder um Konfig
 
       <details class="quote">
         <summary>Source code in <code>golpy\gui.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">378</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">377</span>
+<span class="normal">378</span>
 <span class="normal">379</span>
 <span class="normal">380</span>
 <span class="normal">381</span>
 <span class="normal">382</span>
 <span class="normal">383</span>
-<span class="normal">384</span>
-<span class="normal">385</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="normal">384</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Started das GUI (Graphical User Interface) von golpy.</span>
 <span class="sd">    Dieses kann verwendet werden, um Spielverläufe zu visualisieren. Oder um Konfigurationen durch Klicken zu definieren.</span>
 <span class="sd">    &quot;&quot;&quot;</span>    
