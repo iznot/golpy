@@ -4,14 +4,14 @@
 Das GUI (graphical user interface) von Golpy.mkdocsmk
 """
 
-from time import sleep
+import tkinter as tk
 
-import play as play
-import gameboard_manipulation as gam
-import simulation as sim
-import samples
 import numpy as np
-import tkinter as tk 
+
+import gameboard_manipulation as gam
+import play as play
+import samples
+import simulation as sim
 
 
 class DrawableGrid(tk.Frame):
@@ -302,7 +302,7 @@ class GolpyGui():
     def paint_gameboard(self):
         gb_txt = self.text_field.get(1.0, tk.END)
         
-        self.gameboard = sim.convert_to_gameboard(gb_txt)
+        self.gameboard = gam.create_configuration_from_string(gb_txt)
         
         self.canvas.pack_forget()
         self.canvas = DrawableGrid(self.window, self, self.gameboard, size = self.size.get())
@@ -316,7 +316,7 @@ class GolpyGui():
 
     def set_text(self):
         self.gameboard = self.canvas.get_gameboard()
-        gb_str = sim.convert_to_string(self.gameboard)
+        gb_str = gam.convert_to_string_representation(self.gameboard)
         self.set_text_to_value(gb_str)
    
     def set_print(self):
@@ -333,7 +333,7 @@ class GolpyGui():
         gb = play.play(self.gameboard)
         self.increase_counter()
 
-        if play.configuration_equal(gb, self.gameboard):
+        if gam.configuration_equal(gb, self.gameboard):
             self.running = False
             self.run_button["text"] = "run"
         
@@ -372,10 +372,13 @@ class GolpyGui():
         #hide
         #self.set_gameboard(val)
         gb = samples.sample_dict[val]
-        gb_str = sim.convert_to_string(gb)        
+        gb_str = gam.convert_to_string_representation(gb)        
         self.set_text_to_value(gb_str)
 
 def main():
+    """Started das GUI (Graphical User Interface) von golpy.
+    Dieses kann verwendet werden, um Spielverläufe zu visualisieren. Oder um Konfigurationen durch Klicken zu definieren.
+    """    
     #gleiter = samples.get_gleiter(16)
     #GolpyGui(gleiter)
     #erase = samples.get_erased()

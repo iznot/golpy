@@ -52,56 +52,56 @@ def generate_simulation(gameboard_shape, alive_count, max_runs, folder = "sim", 
         start = dt.datetime.now()
 
         modu = int(max_value / min(100, max_value))
-        for gameboard_int in range(max_value if not debug else 1000):
+        for config_int in range(max_value if not debug else 1000):
 
-            if gameboard_int > 0 and  gameboard_int % modu == 0:
+            if config_int > 0 and  config_int % modu == 0:
                 dt_diff = dt.datetime.now() - start
-                prog = gameboard_int/max_value
+                prog = config_int/max_value
                 expected_end = dt.datetime.now() + dt_diff * (1.0 - prog) / prog
-                print(f'Shape {gameboard_shape[0]}x{gameboard_shape[1]} alive: {alive_count} {simulation_count} simulations for {gameboard_int}/{max_value} gameboards. Max p/h/w/r: {max_p}/{max_max_width}/{max_max_height}/{max_max_runs} Progress: {int(100*prog)}%. Expected end: {expected_end}')
+                print(f'Shape {gameboard_shape[0]}x{gameboard_shape[1]} alive: {alive_count} {simulation_count} simulations for {config_int}/{max_value} gameboards. Max p/h/w/r: {max_p}/{max_max_width}/{max_max_height}/{max_max_runs} Progress: {int(100*prog)}%. Expected end: {expected_end}')
 
             
-            if gameboard_int in gb_already_checked_set:
+            if config_int in gb_already_checked_set:
                 continue
 
-            gb_bin = bin(gameboard_int)[2:]
-            gb_bin = gb_bin.zfill(cells)
-            gb_array_1D = np.fromstring(gb_bin,'u1') - ord('0')
+            config_bin = bin(config_int)[2:]
+            config_bin = config_bin.zfill(cells)
+            config_array_1D = np.fromstring(config_bin,'u1') - ord('0')
 
-            if not np.sum(gb_array_1D) == alive_count:
+            if not np.sum(config_array_1D) == alive_count:
                 continue
 
             
-            gb_array_2D = np.reshape(gb_array_1D, (gameboard_shape[0], gameboard_shape[1]))
-            gameboard = play.create_configuration(gb_array_2D.astype(bool))
+            config_array_2D = np.reshape(config_array_1D, (gameboard_shape[0], gameboard_shape[1]))
+            configuration = play.create_configuration(config_array_2D.astype(bool))
 
-            gameboard = gam.get_base_configuration(gameboard)
+            configuration = gam.get_base_configuration(configuration)
             
-            if not (gameboard[0].shape[0] == gameboard_shape[0] and gameboard[0].shape[1] == gameboard_shape[1]):
+            if not (configuration[0].shape[0] == gameboard_shape[0] and configuration[0].shape[1] == gameboard_shape[1]):
                 #skipping non-full
                 continue
             
             
             # check if current gb is in history
-            _add_config_variations(gameboard, gb_already_checked_set)
+            _add_config_variations(configuration, gb_already_checked_set)
 
             
-            gameboards, exit_criteria, periodicity, runs = game.play_full_game(gameboard, max_runs)
+            generations, exit_criteria, periodicity, runs = game.play_full_game(configuration, max_runs)
            
 
-            start_gameboard = gam.convert_to_string_representation(gameboard)
-            end_gameboard = gam.convert_to_string_representation(gameboards[len(gameboards)-1])
+            start_configuration = gam.convert_to_string_representation(configuration)
+            end_configuration = gam.convert_to_string_representation(generations[len(generations)-1])
 
             # TODO: überprüfen, sieht komisch aus
-            max_height= np.shape(gameboards[len(gameboards)-1][0])[0]
-            max_width = np.shape(gameboards[len(gameboards)-1][0])[1]
+            max_height= np.shape(generations[len(generations)-1][0])[0]
+            max_width = np.shape(generations[len(generations)-1][0])[1]
 
             max_max_runs = max(max_max_runs, runs)
             max_p = max(max_p, periodicity)
             max_max_height = max(max_max_height, max_height)
             max_max_width = max(max_max_width, max_width)
 
-            new_row = [start_gameboard, alive_count, end_gameboard, exit_criteria, periodicity, gameboard_shape[0], gameboard_shape[1], max_max_height, max_max_width, runs]
+            new_row = [start_configuration, alive_count, end_configuration, exit_criteria, periodicity, gameboard_shape[0], gameboard_shape[1], max_max_height, max_max_width, runs]
 
             writer.writerow(new_row)
 
@@ -113,56 +113,6 @@ def _add_config_variations(configuration, configuration_already_checked_set):
 
     configuration_already_checked_set.update(gb_variation_set)
     
-
-    
-    
-def simulation_for_generations(rows, cols, max_runs):
-    cells = rows*cols
-    max_value = 2^(cells)
-    cut_gameboards = []
-    generations_header = ['Startkonfiguration']
-
-    for i in max_runs[2:]:
-        i = 'Generation' + i
-        generations_header.append(i)
-        
-
-    with open(f'generations_of_gameboards', 'w',  newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(generations_header)
-
-
-    for gameboard_int in range(max_value):
-        gb_bin = bin(gameboard_int)[2:]
-        gb_bin = gb_bin.zfill(cells)
-        gb_array_1D = np.fromstring(gb_bin,'u1') - ord('0')
-        gb_array_2D = np.reshape(gb_array_1D, (rows, cols))
-        gameboard = play.create_configuration(gb_array_2D.astype(bool))
-        gameboard = gam.get_base_configuration(gameboard)
-
-        gameboards, exit_criteria, periodicity, runs = game.play_full_game(gameboard, 2)
-
-        for gb in gameboards:
-            gameboard = gam.get_base_configuration(gb)
-            cut_gameboards.append(gameboard)
-
-        new_row = cut_gameboards
-        writer.writerow(new_row)
-
-        
-def _get_dimensions(i, j):
-    list1 = list(range(1, i + 1))
-    list2 = list(range(1, j + 1))
-    
-    lp = ito.product(list1, list2)
-    lpl = list(lp)
-    for n in range(len(lpl)-1, 0, -1):
-        if lpl[n][0] > lpl[n][1]:
-            del lpl[n]
-
-
-    lpl.reverse()
-    return lpl
 
 
 def main():

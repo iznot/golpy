@@ -9,6 +9,8 @@ plugins:
 nav:
  - index.md
  - play.md
+ - gameboard_manipulation.md
  - game.md
  - simulation.md
- - gameboard_manipulation.md
+ - big_questions.md
+ - gui.md

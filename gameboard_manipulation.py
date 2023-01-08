@@ -140,14 +140,7 @@ def convert_to_string_representation(configuration):
     Returns:
         str: Die Konfiguration in ihrer String-Representation
     """    
-    base_configuration = get_base_configuration(configuration)
-
-    config_array = base_configuration[0].ravel()
-
-    config_bits = config_array.astype(int)
-
-    config_str = ''.join(map(str, config_bits))
-    config_int = int(config_str, 2)
+    base_configuration, config_bits, config_int = convert_to_int(configuration)
     config_hex = hex(config_int)
     # IDEA: base64 would be even more efficient than hex.
     # gb_64 = base64.b64encode(gb_bits)
@@ -159,6 +152,17 @@ def convert_to_string_representation(configuration):
     res = f'{shape}:{origin}|{shape_cut}:{leading_zeroes}:{config_hex}'
     return res
 
+def convert_to_int(configuration):
+    base_configuration = get_base_configuration(configuration)
+
+    config_array = base_configuration[0].ravel()
+
+    config_bits = config_array.astype(int)
+
+    config_str = ''.join(map(str, config_bits))
+    config_int = int(config_str, 2)
+    return base_configuration,config_bits,config_int
+
 
 def _get_leading_zeroes(bits):
     i = np.argmax(bits!=0)
@@ -166,6 +170,14 @@ def _get_leading_zeroes(bits):
     return i
 
 def create_configuration_from_string(configuration_str):
+    """Konvertiert eine Text-Repräsentation in die dazugehörige Konfiguration.
+
+    Args:
+        str: Die Konfiguration in ihrer String-Representation
+        
+    Returns:
+        configuration: Die Konfiguration
+    """    
     res_list = configuration_str.split('|')
     config_specs = res_list[0].split(':')
     set_specs = res_list[1].split(':')

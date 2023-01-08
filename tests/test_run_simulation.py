@@ -124,6 +124,5 @@ class TestSimulation(unittest.TestCase):
         print(gb_str)
         assert gb_str == "(10, 8):(0, 0)|(10, 8):4:0x8a8002810a825202020"
 
-    def test_get_dimensions(self):
-        res = sim._get_dimensions(5,5)
+
 
