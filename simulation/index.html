@@ -366,6 +366,9 @@
 
   <h1>Simulation</h1>
 
+<p>Dieses File enthält die Funktion, die notwendig sind, um die Simulation durchzuspielen.</p>
+
+
 <div class="doc doc-object doc-module">
 
 
@@ -464,7 +467,8 @@
 
       <details class="quote">
         <summary>Source code in <code>golpy\simulation.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 15</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 14</span>
+<span class="normal"> 15</span>
 <span class="normal"> 16</span>
 <span class="normal"> 17</span>
 <span class="normal"> 18</span>
@@ -556,8 +560,7 @@
 <span class="normal">104</span>
 <span class="normal">105</span>
 <span class="normal">106</span>
-<span class="normal">107</span>
-<span class="normal">108</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">generate_simulation</span><span class="p">(</span><span class="n">gameboard_shape</span><span class="p">,</span> <span class="n">alive_count</span><span class="p">,</span> <span class="n">max_runs</span><span class="p">,</span> <span class="n">folder</span> <span class="o">=</span> <span class="s2">&quot;sim&quot;</span><span class="p">,</span> <span class="n">debug</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="normal">107</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">generate_simulation</span><span class="p">(</span><span class="n">gameboard_shape</span><span class="p">,</span> <span class="n">alive_count</span><span class="p">,</span> <span class="n">max_runs</span><span class="p">,</span> <span class="n">folder</span> <span class="o">=</span> <span class="s2">&quot;sim&quot;</span><span class="p">,</span> <span class="n">debug</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Läuft eine Simulation durch</span>
 
 <span class="sd">    Args:</span>
@@ -627,7 +630,7 @@
                 <span class="k">continue</span>
 
 
-            <span class="c1"># check if current gb is in history</span>
+            <span class="c1"># check if current config is in history</span>
             <span class="n">_add_config_variations</span><span class="p">(</span><span class="n">configuration</span><span class="p">,</span> <span class="n">gb_already_checked_set</span><span class="p">)</span>
 
 
@@ -673,7 +676,8 @@
 
       <details class="quote">
         <summary>Source code in <code>golpy\simulation.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">118</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">117</span>
+<span class="normal">118</span>
 <span class="normal">119</span>
 <span class="normal">120</span>
 <span class="normal">121</span>
@@ -683,8 +687,7 @@
 <span class="normal">125</span>
 <span class="normal">126</span>
 <span class="normal">127</span>
-<span class="normal">128</span>
-<span class="normal">129</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="normal">128</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Startet eine Simulation.</span>
 <span class="sd">    &quot;&quot;&quot;</span>    
 
