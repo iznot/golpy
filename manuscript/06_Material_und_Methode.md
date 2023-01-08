@@ -20,6 +20,7 @@ Die Konfiguration setzt sozusagen die lebenden Zellen auf das Gameboard. Dies wi
 {width: "16.666666667%"}
 ![Abb. 7: Beispielsgameboard](example_gb.png)  
 
+{pagebreak}
 
 ### Spielzug (Play)
 
