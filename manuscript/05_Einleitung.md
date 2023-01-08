@@ -41,7 +41,7 @@ Das "Game of Life" ist ein faszinierendes Spiel, welches auf vier einfachen Rege
 
 Die Zahlen auf der Abbildung zeigen an, wie viele lebende Nachbarn die betroffene Zelle hat. Wenn die Zahl grün geschrieben ist, fängt die Zelle in der nächsten Generation an zu leben oder bleibt am Leben.
 
-{Pagebreak}
+{pagebreak}
 
 ## Objekte   
 
