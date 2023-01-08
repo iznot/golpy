@@ -64,6 +64,8 @@ Periodizität
 Doppelgänger
 : Zwei identische Grundkonfigurationen mit unterschiedlichen Positionen auf dem Gameboard.
 
++++
+
 Affine Konfigurationen
 : Zwei Konfigurationen sind affin, wenn die relative Konfiguration der einen durch mindestens eine der folgenden Operationen in die relative Konfiguration der anderen transformiert werden kann:
 - horizontale Spiegelung

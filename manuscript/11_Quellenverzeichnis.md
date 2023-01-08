@@ -10,7 +10,8 @@ Alle restlichen Abbildungen sind eigene Darstellungen.
 ## Textquellen
 
 - *Golombek{#Golombek}, Jens* (2005). **Life ist unentscheidbar**. Universität Paderborn. S.2, S.13 https://www.i1.cs.uni-bonn.de/lib/exe/fetch.php?media=lehre:ss16:vl-algo-ii:gol_unentscheidbar.pdf
-- *Verschiedene{#Wikipedia}* (2023). **Conway's Spiel des Lebens.** Wikipedia. https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens
+- *Verschiedene{#Wikipedia}* (2023). **Conway's Spiel des Lebens.** Wikipedia. 
+  https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens
 - *Roberts{#Roberts}, Siobhan* (2020). **The Lasting Lessons of John Conway’s Game of Life**. The New York Times. https://www.nytimes.com/2020/12/28/science/math-conway-game-of-life.html
 - *Sedlacek{#Sedlacek}, Klaus-Dieter*. 2021. **Emergenz - Strukturen der Selbstorganisation in Natur und Technik**. Books on Demand. *Nur elektronisch verfügbar*. S. 92. 
 - *Strick{#Strick}, Heinz* (2022). **John Horton Conway, das rastlose Genie.**. Spektrum. https://www.spektrum.de/wissen/mathematik-john-horton-conway-das-rastlose-genie/1996372
