@@ -27,20 +27,21 @@ Die Faszination des Spieles liegt darin, dass ein einfaches Konzept mit vier sim
 
 ## Regeln
 
-Das "Game of Life" ist ein faszinierendes Spiel, welches auf vier einfachen Regeln basiert. Man stelle sich ein Schachbrett mit nur weissen Feldern vor, welches über eine beliebig grosse Anzahl an Feldern verfügt. Jedes Feld, oder besser, jede Zelle kann entweder lebendig oder tot sein. Durch die Abhängigkeit von ihren Nachbarn kann sich der Status der Zelle von Generation zu Generation verändern. Jede Zelle hat acht Nachbarn, drei oben, drei unten und noch je einen auf jeder Seite. Zu Beginn kann der Zustand jeder Zelle festgelegt werden. Nun gelten folgende Regeln:
+Das "Game of Life" ist ein faszinierendes Spiel, welches auf vier einfachen Regeln basiert. Man stelle sich ein Schachbrett mit nur weissen Feldern vor, welches über eine beliebig grosse Anzahl an Feldern verfügt. Jedes Feld, oder besser, jede Zelle kann entweder lebendig oder tot sein. Durch die Abhängigkeit von ihren Nachbarn kann sich der Status der Zelle von Generation zu Generation verändern. Jede Zelle hat acht Nachbarn, drei oben, drei unten und noch je einen auf jeder Seite. Zu Beginn kann der Zustand jeder Zelle festgelegt werden. Nun gelten nach [*Golombek (2005)*](#Golombek) folgende Regeln:
 
 1.	Der Status einer Zelle bleibt unverändert, wenn diese zwei Nachbarn hat.
 2.	Hat die Zelle drei Nachbarn, ist diese zwingend am Leben.
 3.	Wenn weniger als zwei Nachbarn leben, stirbt eine lebendige Zelle an Einsamkeit.
 4.	Hat sie mehr als drei Nachbarn, stirbt sie an Überbevölkerung.
 
-[(*Golombek 2005*)](#Golombek)
+
 
 {width: "50%"}
 ![Abb. 2: Lebensentwicklung](Lebensentwicklung.png)  
 
 Die Zahlen auf der Abbildung zeigen an, wie viele lebende Nachbarn die betroffene Zelle hat. Wenn die Zahl grün geschrieben ist, fängt die Zelle in der nächsten Generation an zu leben oder bleibt am Leben.
 
++++
 ## Objekte   
 
 Über die Jahre wurden viele unterschiedliche archetypische Objekte entdeckt. Diese können in verschiedene Kategorien eingeteilt werden:
@@ -95,7 +96,7 @@ Diese Objekte enden nach `n`$ Generationen in einem leeren Spielfeld
 {width: "50%"}
 ![Abb. 6: Selbst auslöschendes Objekt](erased_gb.png)      
 
-Weitere Informationen zu Objekten: [(*Wikipedia 2023*)](#Wikipedia)
+Weitere Informationen zu Objekten: [*Wikipedia (2023)*](#Wikipedia)
 
 ## Probleme
 
@@ -103,7 +104,7 @@ Die Anwendung des "Game of Life" ist für viele Themenbereiche interessant. So i
 
 Durch diesen vielfältigen Anwendungsbereich interessieren sich Wissenschaftler aus verschiedenen Fachbereichen für Conway's "Game of Life" und beschäftigen sich mit den ungelösten Problemen, die das Spiel mit sich bringt. Einige der Probleme sind mit der Zeit bereits gelöst worden, andere noch nicht. 
 
-Aus dem Problem der theoretischen Informatik, also Conway's "Game of Life" als Entscheidungsproblem, folgen nach [*Golombek 2005*](#Golombek) zwei weitere Probleme:
+Aus dem Problem der theoretischen Informatik, also Conway's "Game of Life" als Entscheidungsproblem, folgen nach [*Golombek (2005)*](#Golombek) zwei weitere Probleme:
 
 1. Es existiert kein bekannter Algorithmus, der bestimmen kann, zu welcher Spielklasse eine Anfangskonfiguration gehört. 
 2. Es existiert kein Algorithmus, der für alle Konfigurationen bestimmen kann, ob die eine aus der anderen entstehen wird.
