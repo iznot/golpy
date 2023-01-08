@@ -1,9 +1,9 @@
 # Einleitung
 
 ## John Conway
-John Horton Conway ist ein bedeutender Mathematiker aus dem 20. Jahrhundert. Er wurde 1937 in Liverpool geboren und verstarb vor zwei Jahren im Alter von 82 Jahren an Covid-19. Er studierte Mathematik an der Universität Cambridge, wo er später mathematische Logik unterrichtete. Während dieser Zeit machte er sich einen Namen in dem Gebiet der Gruppentheorie. Er entdeckte eine endliche Gruppe mit über 8 Trillionen Elementen in einem 24-dimensionalen Raum, die nach ihm benannt wurde. [(*Strick 2022*)](#Strick)
+John Horton Conway war ein bedeutender Mathematiker aus dem 20. Jahrhundert. Er wurde 1937 in Liverpool geboren und verstarb im Alter von 82 Jahren an Covid-19. Er studierte Mathematik an der Universität Cambridge, wo er später mathematische Logik unterrichtete. Während dieser Zeit machte er sich einen Namen in dem Gebiet der Gruppentheorie. Er entdeckte eine endliche Gruppe mit über 8 Trillionen Elementen in einem 24-dimensionalen Raum, die nach ihm benannt wurde. [(*Strick 2022*)](#Strick)
 
-Ihm war es wichtig, die Mathematik den Leuten näherzubringen. Dadurch unterrichtete er nicht nur Hochbegabte an Universitäten, sondern auch jüngere und durchschnittlich talentierte Kinder. Er hielt viele Vorträge, bei denen er entweder gänzlich vom Thema abkam oder gar nicht erst erschien. Er bezeichnete sich selbst als faul und ging stets barfuss oder in Sandalen. Er entsprach also genau dem Bild, das die Allgemeinheit von einem zerstreuten Professor hat. [(*Szpiro 2020*)](#Szpiro)
+Ihm war es wichtig, den Menschen die Mathematik näherzubringen. Dadurch unterrichtete er nicht nur Hochbegabte an Universitäten, sondern auch jüngere und durchschnittlich talentierte Kinder. Er hielt viele Vorträge, bei denen er entweder gänzlich vom Thema abkam oder gar nicht erst erschien. Er bezeichnete sich selbst als faul und ging stets barfuss oder in Sandalen. Er entsprach also genau dem Bild, das die Allgemeinheit von einem zerstreuten Professor hat. [(*Szpiro 2020*)](#Szpiro)
 
 {width: "30%"}
 ![Abb. 1: John Horton Conway](conway.png) 
@@ -18,16 +18,14 @@ Der Öffentlichkeit wurde er durch die Entwicklung des "Game of Life" bekannt. D
 
 Die Faszination des Spieles liegt darin, dass ein einfaches Konzept mit vier simplen Regeln hochkomplexe Themen behandelt. Wie der Musiker Brian Eno sagte:
 
-> "Wir sind an die Idee gewöhnt, dass alles Komplexe aus etwas noch Komplexerem hervorgehen muss. […] Life zeigt uns komplexe, virtuelle Organismen, erschaffen durch die Interaktion mit ein paar einfachen Regeln." [^footnote-1]
-> - *Brian Eno* 
-
-[(*Roberts 2020*)](#Roberts)
+> "Wir sind an die Idee gewöhnt, dass alles Komplexe aus etwas noch Komplexerem hervorgehen muss. […] Life zeigt uns komplexe, virtuelle Organismen, erschaffen durch die Interaktion mit ein paar einfachen Regeln."
+> - *Brian Eno* [(*Roberts 2020*)](#Roberts)
 
 [^footnote-1]: Zitate wurden von mir aus dem Englischen übersetzt.
 
 ## Regeln
 
-Das "Game of Life" ist ein faszinierendes Spiel, welches auf vier einfachen Regeln basiert. Man stelle sich ein Schachbrett vor, welches über eine beliebig grosse Anzahl an Feldern verfügt. Jedes Feld, oder besser, jede Zelle kann entweder lebendig oder tot sein. Durch die Abhängigkeit von ihren Nachbarn kann sich der Status der Zelle von Generation zu Generation verändern. Jede Zelle hat acht Nachbarn, drei oben, drei unten und noch je einen auf jeder Seite. Zu Beginn kann der Zustand jeder Zelle festgelegt werden. Nun gelten folgende Regeln:
+Das "Game of Life" ist ein faszinierendes Spiel, welches auf vier einfachen Regeln basiert. Man stelle sich ein Schachbrett mit nur weissen Feldern vor, welches über eine beliebig grosse Anzahl an Feldern verfügt. Jedes Feld, oder besser, jede Zelle kann entweder lebendig oder tot sein. Durch die Abhängigkeit von ihren Nachbarn kann sich der Status der Zelle von Generation zu Generation verändern. Jede Zelle hat acht Nachbarn, drei oben, drei unten und noch je einen auf jeder Seite. Zu Beginn kann der Zustand jeder Zelle festgelegt werden. Nun gelten folgende Regeln:
 
 1.	Der Status einer Zelle bleibt unverändert, wenn diese zwei Nachbarn hat.
 2.	Hat die Zelle drei Nachbarn, ist diese zwingend am Leben.
@@ -39,11 +37,11 @@ Das "Game of Life" ist ein faszinierendes Spiel, welches auf vier einfachen Rege
 {width: "50%"}
 ![Abb. 2: Lebensentwicklung](Lebensentwicklung.png)  
 
-Die Zahlen auf der Abbildung zeigen an, wie viele Nachbarn die betroffene Zelle hat. Wenn die Zahl grün geschrieben ist, fängt die Zelle in der nächsten Generation an zu leben oder bleibt am Leben.
+Die Zahlen auf der Abbildung zeigen an, wie viele lebende Nachbarn die betroffene Zelle hat. Wenn die Zahl grün geschrieben ist, fängt die Zelle in der nächsten Generation an zu leben oder bleibt am Leben.
 
 ## Objekte   
 
-Über die Jahre wurden viele unterschiedliche Objekte entdeckt. Diese können in verschiedene Kategorien eingeteilt werden:
+Über die Jahre wurden viele unterschiedliche archetypische Objekte entdeckt. Diese können in verschiedene Kategorien eingeteilt werden:
 
 - statische Objekte
 - oszillierende Objekte
@@ -75,7 +73,7 @@ Oszillatoren ändern sich, einem bestimmten Schema folgend, in periodischen Zeit
 
 
 {width: "50%"}
-![Abb. 4: Oszillierendes Objekt](oscillator_gb.png)  
+![Abb. 4: Oszillierendes Objekt mit einer Periodizität von 2](oscillator_gb.png)  
 
 ### Gleitende Objekte
 
@@ -84,7 +82,7 @@ Wie auch die Oszillatoren verändern sich diese Objekte periodisch nach einem be
 
 
 {width: "85%"}
-![Abb. 5: Gleitendes Objekt](Gleiter_gb.png)  
+![Abb. 5: Gleitendes Objekt mit einer Periodizität von 4](Gleiter_gb.png)  
 
 
 ### Selbst auslöschende Objekte
@@ -93,17 +91,17 @@ Diese Objekte enden nach `n`$ Generationen in einem leeren Spielfeld
 
 
 {width: "50%"}
-![Abb. 6: Selbst auslöschendes Objekt](erased_gb.png)    
+![Abb. 6: Selbst auslöschendes Objekt](erased_gb.png)      
 
-[(*Wikipedia 2 2023*)](#Wikipedia 2)
+Weitere Informationen zu Objekten: [(*Wikipedia 2023*)](#Wikipedia)
 
 ## Probleme
 
-Die Anwendung des "Game of Life" ist für viele Themenbereiche interessant. So in der Biologie, wo das Spiel als ein Blick ins Mikroskop interpretiert werden kann. Das Interesse liegt also auf den verschiedenen Lebensformen und der Entwicklung von Zellen. Auch vertritt das Konzept einen ökonomischen Aspekt, wobei das Sterben und Gebären der Zellen das Angebot und die Nachfrage auf einem Finanzmarkt darstellen. Weiter ist das Spiel für die Physik interessant. Hierbei liegt das Augenmerk darauf, dass auf beliebig kleine Abweichungen der Anfangskonfiguration andere Resultate folgen, analog zu physikalischen Gleichungen. In der theoretischen Informatik ist das Spiel besonders als Entscheidungsproblem interessant. (*Sedlacek* 2021)[#Sedlacek]
+Die Anwendung des "Game of Life" ist für viele Themenbereiche interessant. So in der Biologie, wo das Spiel als ein Blick ins Mikroskop interpretiert werden kann. Auch vertritt das Konzept einen ökonomischen Aspekt, wobei das Sterben und Gebären der Zellen das Angebot und die Nachfrage auf einem Finanzmarkt darstellen. Weiter ist das Spiel für die Physik interessant. Hierbei liegt das Augenmerk darauf, dass auf beliebig kleine Abweichungen der Anfangskonfiguration komplett andere Resultate folgen, analog zur Chaostheorie. In der theoretischen Informatik ist das Spiel besonders als Entscheidungsproblem interessant. [(*Sedlacek* 2021)](#Sedlacek)
 
 Durch diesen vielfältigen Anwendungsbereich interessieren sich Wissenschaftler aus verschiedenen Fachbereichen für "Conway's Game of Life" und beschäftigen sich mit den ungelösten Problemen, die das Spiel mit sich bringt. Einige der Probleme sind mit der Zeit bereits gelöst worden, andere noch nicht. 
 
-Aus dem Problem der theoretischen Informatik, also Conway's Game of Life als Entscheidungsproblem, folgen zwei weitere Probleme:
+Aus dem Problem der theoretischen Informatik, also "Conway's Game of Life" als Entscheidungsproblem, folgen zwei weitere Probleme:
 
 1. Es existiert kein bekannter Algorithmus, der bestimmen kann, zu welcher Spielklasse eine Anfangskonfiguration gehört. 
 2. Es existiert kein Algorithmus, der für alle Konfigurationen bestimmen kann, ob die eine aus der anderen entstehen wird.

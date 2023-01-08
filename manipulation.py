@@ -131,7 +131,7 @@ def get_config_nbr(configuration):
 
 
 def convert_to_string_representation(configuration):
-    """Konvertiert eine Konfiguration in ihre Text-Repräsentation.
+    """Konvertiert eine Konfiguration in ihre Text-Repräsentation im Golpy-Format.
 
     Args:
         configuration: Die Konfiguration
@@ -139,7 +139,7 @@ def convert_to_string_representation(configuration):
     Returns:
         str: Die Konfiguration in ihrer String-Representation
     """    
-    base_configuration, config_bits, config_int = convert_to_int(configuration)
+    base_configuration, config_bits, config_int = _convert_to_int(configuration)
     config_hex = hex(config_int)
     # IDEA: base64 would be even more efficient than hex.
     # gb_64 = base64.b64encode(gb_bits)
@@ -151,7 +151,7 @@ def convert_to_string_representation(configuration):
     res = f'{shape}:{origin}|{shape_cut}:{leading_zeroes}:{config_hex}'
     return res
 
-def convert_to_int(configuration):
+def _convert_to_int(configuration):
     base_configuration = get_base_configuration(configuration)
 
     config_array = base_configuration[0].ravel()
@@ -169,7 +169,7 @@ def _get_leading_zeroes(bits):
     return i
 
 def create_configuration_from_string(configuration_str):
-    """Konvertiert eine Text-Repräsentation in die dazugehörige Konfiguration.
+    """Konvertiert ein Konfiguration im Golpy-Format in die dazugehörige Konfiguration auf einem python-gameboard.
 
     Args:
         str: Die Konfiguration in ihrer String-Representation

@@ -40,6 +40,14 @@ Simulation
 : Die Spiele aller möglichen Anfangskonfigurationen auf einem Gameboard einer bestimmten Grösse (hier 5x5).
 : `simulation.generate_simulation(gameboard_shape, alive_count, max_runs, folder = "sim", debug = False)`
 
+Zähler
+: Um für die Simulation alle Anfangskonfigurationen identifizieren zu können, wird eine Methode entwickelt, welche bei festgelegten Dimensionen des Gameboards eine Dezimalzahl in eine Konfiguration umwandelt.
+: `simulation.py:54`
+
+Golpy-Format
+: Ein von mir entwickeltes, kompaktes Format, welches es erlaubt, eine Konfiguration z.B. in einem CSV-File abzuspeichern.
+: `convert_to_string_representation(configuration)`
+
 Maximale Zahl
 : Die zuvor festgelegte Anzahl an Spielzügen, nach deren Erreichen die Simulation abbricht, falls der Endzustand noch nicht erreicht worden ist.
 
@@ -48,7 +56,7 @@ Spielklassen
 : `game.check_exit_criteria(game)`
 
 Objekt
-: Stereotype Konfigurationen, die in Simulationen immer wieder auftauchen, werden als Objekte bezeichnet. Die Literatur hat für einige Objekte gängige Namen festgelegt: Gleiter, Tümmler, Blinker, Uhr, Fresser, Segler, etc. Objekte verhalten sich nach Spielklassen, d.h. statisch, oszillierend, gleitend, selbst auslöschend, überlebend. In einer Konfiguration können grundsätzlich auch mehrere Objekte vorkommen. Zum Beispiel eine Kanone, die immer wieder Gleiter schiesst. In meiner Arbeit habe ich nicht zwischen Objekt und Grundkonfiguration unterschieden.
+: Archetypische Konfigurationen, die in Simulationen immer wieder auftauchen, werden als Objekte bezeichnet. Die Literatur hat für einige Objekte gängige Namen festgelegt: Gleiter, Tümmler, Blinker, Uhr, Fresser, Segler, etc. Objekte verhalten sich nach Spielklassen, d.h. statisch, oszillierend, gleitend, selbst auslöschend, überlebend. In einer Konfiguration können grundsätzlich auch mehrere Objekte vorkommen. Zum Beispiel eine Kanone, die immer wieder Gleiter schiesst. In meiner Arbeit habe ich nicht zwischen Objekt und Grundkonfiguration unterschieden.
 
 Periodizität
 : Die Anzahl an Generationen, bis wieder dieselbe Grundkonfiguration entsteht. Dies ist nur bei gleitenden und oszillierenden Spielen relevant. 

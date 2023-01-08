@@ -32,7 +32,7 @@ def is_contained(start_configuration, configuration_to_compare, max_runs = 100):
     """    
     generations, exit_criteria, periodicity, runs = game.play_full_game(start_configuration, max_runs)
 
-    generation_ints = set(map(lambda config: gam.convert_to_int(config)[2], generations))
+    generation_ints = set(map(lambda config: gam._convert_to_int(config)[2], generations))
 
     affine_configuration_int_set = gam.get_configuration_variations(configuration_to_compare)
     
