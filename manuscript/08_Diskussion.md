@@ -17,7 +17,7 @@ Dies ist durch meine Ergebnisse in limitiertem Umfang bereits möglich. So weiss
 
 Systematischer könnte diese Analyse dadurch erreicht werden, dass eine Funktion alle Anfangskonfigurationen mit allen Generationen der jeweils anderen Anfangskonfigurationen abgleicht. Wenn eine Übereinstimmung gefunden wird, kann der Spielverlauf der Anfangskonfiguration besser nachempfunden werden. Folgende Fragen könnten dann beantwortet werden: Welche Konfiguration entsteht aus welcher anderen? Wie viele verschiedene Endkonfigurationen gibt es wirklich? Vielleicht sind es gar nicht so viele wie vermutet, und der Spielverlauf ist besser vorhersehbar als gemeinhin befürchtet? Falls dieser Ansatz zu einem brauchbaren Ergebnis führt, könnte damit auch das zweite Problem angegangen werden. 
 
-Ob diese Ansätze überhaupt zu etwas führen, ist aufgrund der Erkenntnisse, die ich in dieser Arbeit gewonnen habe, nicht bestimmbar. Vielleicht ist die Vorhersage der Lebensentwicklung in "Conway's Game of Life" wirklich nicht oder nur beschränkt möglich. 
-Fest steht aber: Das Game of Life ist weitaus komplexer, als auf den ersten Blick gedacht.
+Ob diese Ansätze überhaupt zu etwas führen, ist aufgrund der Erkenntnisse, die ich in dieser Arbeit gewonnen habe, nicht bestimmbar. Vielleicht ist die Vorhersage der Lebensentwicklung in Conway's "Game of Life" wirklich nicht oder nur beschränkt möglich. 
+Fest steht aber: Das "Game of Life" ist weitaus komplexer, als auf den ersten Blick gedacht.
 
 
