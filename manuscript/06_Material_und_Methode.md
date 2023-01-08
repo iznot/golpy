@@ -71,8 +71,6 @@ Die Zellen sterben durch diese Funktion also bereits nach einer Generation aus. 
 
 ## Spiel und Simulation
 
-TODO: Simulation vs Spiel
-
 Ich versuchte mich den Problemen auf zwei verschiedene Arten zu nähern. 
 Zum einen tat ich dies durch zwei Funktionen. Die erste spielt die gegebene Konfiguration durch und ordnet diesem Spiel eine Spielklasse zu, nähert sich also dem ersten Problem. Die zweite Funktion hat als Input eine zu testende und eine zu vergleichende Konfiguration. Sie spielt die zu vergleichende Konfiguration durch und gleicht deren Generationen auf Affinität mit der zu testenden Konfiguration ab. Diese nähert sich also dem zweiten Problem.
 
@@ -188,8 +186,8 @@ Um zu vermeiden, dass all diese affinen Konfigurationen abgespielt und gespeiche
 
 
 ### Abspeichern
-
-Ich speichere alle Spiele in ein CSV-File. <!-- TODO: ag Referenz einfügen --> Dieses Text-Format eignet sich besonders gut, da es einfach in eine Exceltabelle transformiert werden kann. 
+QUESTION CG Was für Referenz?
+Ich speichere alle Spiele in ein CSV-File. <!-- TODO: ag Referenz einfügen --> Dieses Text-Format eignet sich besonders gut, da es sich einfach in eine Tabelle transformieren lässt. Weiter analysiert habe ich die Resultate auf Power BI. 
 
 Das Abspeichern aller Generationen einer Konfiguration würde zu viel Speicherplatz brauchen. Deshalb werden diese hier auf die Anzahl an Generationen beschränkt. Die Anfangs- und Endlänge beziehungsweise -breite, die Anfangs- und Endkonfiguration und die Definition des Objektes werden auch abgespeichert. Zudem noch die Periodizität, falls es sich um ein oszillierendes oder gleitendes Objekt handelt. 
 

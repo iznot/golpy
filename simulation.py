@@ -92,7 +92,7 @@ def generate_simulation(gameboard_shape, alive_count, max_runs, folder = "sim", 
             start_configuration = gam.convert_to_string_representation(configuration)
             end_configuration = gam.convert_to_string_representation(generations[len(generations)-1])
 
-            # TODO: überprüfen, sieht komisch aus
+
             max_height= np.shape(generations[len(generations)-1][0])[0]
             max_width = np.shape(generations[len(generations)-1][0])[1]
 

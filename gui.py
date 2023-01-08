@@ -67,7 +67,6 @@ class DrawableGrid(tk.Frame):
                 #x1, y1 = (x0 + self.size), (y0 + self.size)
                 cell = self.canvas.find_closest(x0, y0)
                 if self.canvas.type(cell) == 'text':
-                    #TODO: remove
                     self.canvas.delete(cell)
                 
 
