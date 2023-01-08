@@ -19,7 +19,7 @@ Dieses Problem kann ebenfalls eine Funktion umgehen, indem diese die zu vergleic
 Die Simulation speicherte nur die nicht-affinen Konfigurationen ab. Ich konnte die Simulation bis zu einem 5x5 grossen Gameboard abspielen lassen. Die 6x6 Simulation würde bis zu 68,7 Milliarden Konfigurationen führen, was mit meinen technischen Mitteln und der mir zur Verfügung stehenden Zeit nicht simulierbar gewesen wäre. Auch die 5x5 Simulation konnte überhaupt nur durch parallele Prozesse, unterteilt nach genauer Grösse des Gameboards und Anzahl aller lebenden Zelle in der Anfangskonfiguration, abgespielt werden. 
 
 {width: "100"}
-![Abb. 16: 6x6 Simulation](6x6_simulation.png)  
+![Abb. 16: 6x6 Simulation: Diese würde auf einem leistungsfähigen Server über einen Monat dauern.](6x6_simulation.png)  
 
 {width: "60%"}
 ![Abb. 17: Parallelisierung, die CPU-Leistung wird zu 100% ausgenützt](Parallelisierung.png)  
@@ -27,7 +27,7 @@ Die Simulation speicherte nur die nicht-affinen Konfigurationen ab. Ich konnte d
 Von 33'554'432 theoretisch möglichen Konfigurationen bei einem 5x5 Gameboard wurden durch Ausschluss von Doppelgängern und affinen Konfigurationen 3'956'995 unterschiedliche Anfangskonfigurationen identifiziert und abgespeichert. Das sind also knapp 12 % der theoretisch möglichen Konfigurationen. Der am längsten dauernde Prozess mit den meisten unterschiedlichen Konfigurationen war die 5x5 Simulation mit 13 lebenden Zellen in der Anfangskonfiguration. Diese Simulation generierte 29'586'437 nicht-affine Anfangskonfigurationen und dauerte auf einem handelsüblichen Notebook etwa sechs Stunden. 
 
 {width: "60%"}
-![Abb. 16: Säulendiagramm zu Objekten](occurence_of_objects.png)   
+![Abb. 18: Säulendiagramm zu Objekten](occurence_of_objects.png)   
 
 Überlebende Spiele kommen am zweithäufigsten vor. Abgesehen von diesen, kommen statische und selbst auslöschende Spiele am häufigsten vor. Gleitende Spiele sind mit Abstand am seltensten. 
 
@@ -35,7 +35,7 @@ Auch stellte sich heraus, dass die meisten oszillierenden Objekte eine Periodizi
 Gleitende Objekte haben alle eine Periodizität von 4. Dies deckt sich mit dem gegenwärtigen Stand der Wissenschaft, wonach zwei gleitende Objekte bekannt sind, beide mit einer Periodizität von 4.
 
 {width: "60%"}
-![Abb. 17: Säulendiagramm zu Objekten nach Lebenden](objects_compared_alive.png)  
+![Abb. 19: Säulendiagramm zu Objekten nach Lebenden](objects_compared_alive.png)  
 
 Des Weiteren fand ich heraus, dass auf keinem Gameboard ein gleitendes Objekt entstehen kann, wenn die Startkonfiguration weniger als fünf lebende Zellen hat. Mit mehr als 22 lebenden Zellen kann auf einem 5x5 Gameboard ebenfalls kein gleitendes Objekt entstehen. Ein oszillierendes oder statisches Objekt kann bereits bei drei lebenden Zellen entstehen, letzteres sogar, wenn das gesamte 5x5 Gameboard nur aus lebenden Zellen besteht.     
 

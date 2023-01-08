@@ -14,12 +14,14 @@ Schon als Kind hatte er eine Faszination für Spiele, welche ihn später in die 
 Der Öffentlichkeit wurde er durch die Entwicklung des "Game of Life" bekannt. Dieses "no-player, never ending game", wie er es auch nannte, entwickelte er in den 70er Jahren. Das Spiel war der Startschuss für Simulationen auf dem Gebiet der Komplexitätswissenschaft. Ganze Generationen von Mathematikern, Informatikern und Tüftlern liessen sich dafür begeistern. Die ansteigende Popularität seiner Entwicklung gefiel Conway gar nicht, weshalb er Fragen über seine Kreation mit dem Satz "I hate life" auswich. Gegen das Ende seines eigenen Lebens konnte er sich jedoch wieder mit seiner Rolle als Schöpfer des "Game of Life" anfreunden: 
 
 > "Ich gab irgendwo einen Vortrag und wurde als 'John Conway, Schöpfer des Lebens.' vorgestellt. Und ich dachte 'Oh das ist eine nette Art, bekannt zu sein'." [^footnote-1]
-> - *John Conway*
+> 
+> *--John Conway*
 
 Die Faszination des Spieles liegt darin, dass ein einfaches Konzept mit vier simplen Regeln hochkomplexe Themen behandelt. Wie der Musiker Brian Eno sagte:
 
 > "Wir sind an die Idee gewöhnt, dass alles Komplexe aus etwas noch Komplexerem hervorgehen muss. […] Life zeigt uns komplexe, virtuelle Organismen, erschaffen durch die Interaktion mit ein paar einfachen Regeln."
-> - *Brian Eno* [(*Roberts 2020*)](#Roberts)
+>
+> *--Brian Eno* [(*Roberts 2020*)](#Roberts)
 
 [^footnote-1]: Zitate wurden von mir aus dem Englischen übersetzt.
 
@@ -99,16 +101,16 @@ Weitere Informationen zu Objekten: [(*Wikipedia 2023*)](#Wikipedia)
 
 Die Anwendung des "Game of Life" ist für viele Themenbereiche interessant. So in der Biologie, wo das Spiel als ein Blick ins Mikroskop interpretiert werden kann. Auch vertritt das Konzept einen ökonomischen Aspekt, wobei das Sterben und Gebären der Zellen das Angebot und die Nachfrage auf einem Finanzmarkt darstellen. Weiter ist das Spiel für die Physik interessant. Hierbei liegt das Augenmerk darauf, dass auf beliebig kleine Abweichungen der Anfangskonfiguration komplett andere Resultate folgen, analog zur Chaostheorie. In der theoretischen Informatik ist das Spiel besonders als Entscheidungsproblem interessant. [(*Sedlacek* 2021)](#Sedlacek)
 
-Durch diesen vielfältigen Anwendungsbereich interessieren sich Wissenschaftler aus verschiedenen Fachbereichen für "Conway's Game of Life" und beschäftigen sich mit den ungelösten Problemen, die das Spiel mit sich bringt. Einige der Probleme sind mit der Zeit bereits gelöst worden, andere noch nicht. 
+Durch diesen vielfältigen Anwendungsbereich interessieren sich Wissenschaftler aus verschiedenen Fachbereichen für Conway's "Game of Life" und beschäftigen sich mit den ungelösten Problemen, die das Spiel mit sich bringt. Einige der Probleme sind mit der Zeit bereits gelöst worden, andere noch nicht. 
 
-Aus dem Problem der theoretischen Informatik, also "Conway's Game of Life" als Entscheidungsproblem, folgen zwei weitere Probleme:
+Aus dem Problem der theoretischen Informatik, also Conway's "Game of Life" als Entscheidungsproblem, folgen nach [*Golombek 2005*](#Golombek) zwei weitere Probleme:
 
 1. Es existiert kein bekannter Algorithmus, der bestimmen kann, zu welcher Spielklasse eine Anfangskonfiguration gehört. 
 2. Es existiert kein Algorithmus, der für alle Konfigurationen bestimmen kann, ob die eine aus der anderen entstehen wird.
 
 In dieser Arbeit widme ich mich diesen beiden Problemen.
 
-[(*Golombek 2005*)](#Golombek)
+
 
 
 

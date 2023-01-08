@@ -1,4 +1,4 @@
-# Was habe ich persönlich gelernt?
+# Was habe ich gelernt?
 
 Im Verlauf der Arbeit habe ich einiges an neuem Wissen erlangt. Dazu gehört:
 

@@ -116,9 +116,9 @@ Diese Grundkonfigurationen werden nun nach dem Schema der Oszillatoren abgeglich
 
 #### Überlebende Objekte (Survival)
 
-Falls der Objekttyp bis jetzt nicht identifiziert wurde, klassifiziere ich ein Spiel als überlebend. Damit diese Spiele nun nicht endlos weiterlaufen, baute ich eine maximale Zahl von erlaubten Spielzügen ein. Dieser Maximalwert impliziert eine Fehlerquote für Anfangskonfigurationen, die ein Objekt erst nach dem vorgegebenen Grenzwert erreichen. Würde dieser Grenzwert aber weggelassen werden, würde die das Spiel endlos lange dauern. Den Grenzwert setzte ich auf 100.
+Falls der Objekttyp bis jetzt nicht identifiziert wurde, klassifiziere ich ein Spiel als überlebend. Damit diese Spiele nun nicht endlos weiterlaufen, baute ich eine maximale Zahl von erlaubten Spielzügen ein. Dieser Maximalwert impliziert eine Fehlerquote für Anfangskonfigurationen, die ein Objekt erst nach dem vorgegebenen Grenzwert erreichen. Würde dieser Grenzwert aber weggelassen werden, so wäre das Spiel endlos lang. Den Grenzwert setzte ich auf 100.
 
-### Speicherform des Spielbretts: Das Golpy-Format 
+### Speicherform der Konfiguration: Das Golpy-Format 
 
 Um die durch meine Simulation gespielten Spiele später analysieren zu können, musste ich sie in einem File abspeichern. Damit dieses nicht zu gross wird, speicherte ich jeweils nicht alle Generationen, sondern nur die Anfangskonfiguration und den Endzustand ab. Um eine Konfiguration in ein Excel schreiben zu können, muss die Konfiguration in ein Format gebracht werden, das sich dafür eignet. Eine Möglichkeit wäre, jede Konfiguration durch eine Zeile von Nullen und Einsen darzustellen. Dadurch würde jedoch viel zu viel Speicherplatz benötigt werden. Ausserdem wäre noch nicht klar, wie wir beispielsweise ein 4x5 Gameboard von einem 5x4 Gameboard unterscheiden. Also formatierte ich die Konfiguration nach folgendem Format: 
 
@@ -126,7 +126,7 @@ Um die durch meine Simulation gespielten Spiele später analysieren zu können, 
 2. Dann kommt die relative Position des Objekts auf dem Gameboard. 
 3. Darauf folgt die Grösse der Grundkonfiguration.
 4. Jetzt kommt die Anzahl an toten Zellen bis zur ersten lebendigen Zelle
-5. Schlussendlich kommt noch die "Zahl" des Spielbretts. Die Zahl des Spielbretts ergibt sich aus dem Gameboard als binäre Zahl, die Nullen stellen die toten Zellen und die Einsen die lebendigen dar. Diese Zahl wird in eine hexadezimale Zahl umgewandelt, um weiteren Speicherplatz zu sparen. Somit erhält jedes Objekt eine individuelle Objektzahl. 
+5. Schlussendlich kommt noch die "Zahl" des Spielbretts. Die Zahl des Spielbretts ergibt sich aus dem Gameboard als binäre Zahl, die Nullen stellen die toten Zellen und die Einsen die lebendigen dar. Diese Zahl wird in eine hexadezimale Zahl umgewandelt, um weiteren Speicherplatz zu sparen. Somit erhält jedes Objekt eine individuelle Objektzahl im Golpy-Format. 
    
 Folgendes Beispiel erläutert dieses Format:
 
@@ -137,7 +137,7 @@ Folgendes Beispiel erläutert dieses Format:
 
 ### Zähler
 
-Die soeben erklärte Methode der Objektzahl verwende ich auch, um die einzelnen zu simulierenden Anfangskonfigurationen zu generieren. Ein (dezimaler) Zähler zählt in einer `for` Schleife von 0 aufwärts. Einzig die höchste Zahl muss bekannt sein, also wie viele verschiedene Konfigurationen auf diesem Spielfeld maximal generiert werden können. Da es zwei mögliche Ausgänge gibt (lebendig oder tot), liegt die Anzahl von unterschiedlichen Konfigurationen bei `2^{Anzahl Zellen}`$. Bei einem 5x5 Spielfeld gibt es also `2^{5\cdot5} = 33'554'432`$ mögliche Anfangskonfigurationen.
+Eine Variation der soeben erklärten Methode der Objektzahl im Golpy-Format verwende ich auch, um die einzelnen zu simulierenden Anfangskonfigurationen zu generieren. Ein (dezimaler) Zähler zählt in einer `for` Schleife von 0 aufwärts. Einzig die höchste Zahl muss bekannt sein, also wie viele verschiedene Konfigurationen auf diesem Spielfeld maximal generiert werden können. Da es zwei mögliche Ausgänge gibt (lebendig oder tot), liegt die Anzahl von unterschiedlichen Konfigurationen bei `2^{Anzahl Zellen}`$. Bei einem 5x5 Spielfeld gibt es also `2^{5\cdot5} = 33'554'432`$ mögliche Anfangskonfigurationen.
 
 Nun zählt der Zähler hoch, bis diese maximale Zahl erreicht wird. Jede Zahl wird zuerst in eine binäre Zahl umgewandelt. Diese wird nun mit dem leeren Spielfeld als binäre Zahl verglichen und von vorne (von links) mit Nullen aufgefüllt, bis sie auf die gleiche Länge kommen. Da die Länge und Breite des Spielbrettes bekannt sind, kann nun aus dieser binären Zahl einfach ein Spielbrett mit der gewünschten Konfiguration erstellt werden. Folgendes Beispiel veranschaulicht das:
 
@@ -184,16 +184,16 @@ Um zu vermeiden, dass all diese affinen Konfigurationen abgespielt und gespeiche
 
 ### Abspeichern
 
-Ich speichere alle Spiele in ein CSV-File[^footnote-2]. Dieses Text-Format eignet sich besonders gut, da es sich einfach in eine Tabelle transformieren und in Excel importieren lässt. Weiter analysiert habe ich die Resultate auf Power BI, da die Datenmenge für Excel zu gross war. 
+Ich speichere alle Spiele in ein CSV-File. [^footnote-2] Dieses Text-Format eignet sich besonders gut, da es sich einfach in eine Tabelle transformieren und in Excel importieren lässt. Weiter analysiert habe ich die Resultate auf Power BI, da die Datenmenge für Excel zu gross war. 
 
 Das Abspeichern aller Generationen einer Konfiguration würde zu viel Speicherplatz brauchen. Deshalb werden diese hier auf die Anzahl an Generationen beschränkt. Die Anfangs- und Endlänge beziehungsweise -breite, die Anfangs- und Endkonfiguration und die Definition des Objektes werden auch abgespeichert. Zudem noch die Periodizität, falls es sich um ein oszillierendes oder gleitendes Objekt handelt. 
 
-{width: "80%"}
+{width: "100%"}
 ![Abb. 15: Ausschnitt aus CSV-File in Power BI](CSV-File.png)  
 
 
 
-[^footnote-2] : Weitere Informationen zu CSV-Files unter: <https://de.wikipedia.org/wiki/CSV_(Dateiformat)>
+[^footnote-2]: Weitere Informationen zu CSV-Files unter: <https://de.wikipedia.org/wiki/CSV_(Dateiformat)>
 
 
 

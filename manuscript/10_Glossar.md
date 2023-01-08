@@ -4,7 +4,7 @@
 Angegeben wird für jeden Begriff zuerst eine Erklärung, sowie zusätzlich ein Bezug auf den Python-Code falls sinnvoll.
 
 Gameboard
-: Das Spielbrett des Conway's Game of Life. In meiner Arbeit habe ich mit 5x5 Gameboards gearbeitet.
+: Das Spielbrett des Conway's "Game of Life". In meiner Arbeit habe ich mit 5x5 Gameboards gearbeitet.
 : `play.print_gameboard(configuration)`
 
 Konfiguration
