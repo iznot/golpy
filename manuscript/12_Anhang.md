@@ -4,7 +4,7 @@
 
 - **Golpy{#golpy}: Die gesamte Arbeit, inklusive Sourcecode, ist verfügbar unter <https://github.com/iznot/golpy>.
 - Die Sourcecode Dokumentation zu dieser Arbeit ist online verfügbar unter <https://iznot.github.io/golpy/>.
-- Ein Dashboard mit den Resultaten der Simulation ist verfügbar unter <https://app.powerbi.com/viewr=eyJrIjoiNzFiNGFlYjgtZTk0Yi00NTgwLThiZDUtZDQ4MWI1ZGU1MjUzIiwidCI6ImJlZTU0ZGU1LTQ3NDQtNGU0Ny04YTIwLWVhOGI4NDJiOTE5ZCJ9&pageName=ReportSection>.
+- Ein Dashboard mit den Resultaten der Simulation ist verfügbar unter <https://tinyurl.com/golpy-dashboard>.
 - Das CSV-Files mit den simulierten Spielen sind verfügbar unter <https://github.com/iznot/golpy/tree/master/sim>
   
 ## Verwendete Tools
@@ -59,5 +59,5 @@ golpy ist lokal installiert und lauffähig (siehe Voraussetzungen oben).
 „Ich erkläre hiermit, dass ich die vorliegende Maturaarbeit selbständig und ohne unerlaubte fremde Hilfe erstellt habe und dass alle 
 Quellen, Hilfsmittel und Internetseiten wahrheitsgetreu verwendet wurden und belegt sind.“
 
-{width: "10%"}
-![Unterschrift, Anaïs Glur](Unterschrift.png)  
+{width: "20%"}
+![Unterschrift, Anaïs Glur](Unterschirft.png)   
