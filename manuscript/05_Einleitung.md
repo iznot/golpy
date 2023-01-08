@@ -1,7 +1,7 @@
 # Einleitung
 
 ## John Conway
-John Horton Conway ist ein bedeutender Mathematiker aus dem 20. Jahrhundert. Er wurde 1937 in Liverpool geboren und verstarb vor zwei Jahren im Alter von 82 Jahren an Covid-19. Er studierte Mathematik an der Universität Cambridge, wo er später mathematische Logik unterrichtete. Während dieser Zeit machte er sich einen Namen in dem Gebiet der Gruppentheorie. Er entdeckte eine endliche Gruppe mit über 8 Trillionen Elementen in einem 24-dimensionalem Raum, die nach ihm benannt wurde. [(*Strick 2022*)](#Strick)
+John Horton Conway ist ein bedeutender Mathematiker aus dem 20. Jahrhundert. Er wurde 1937 in Liverpool geboren und verstarb vor zwei Jahren im Alter von 82 Jahren an Covid-19. Er studierte Mathematik an der Universität Cambridge, wo er später mathematische Logik unterrichtete. Während dieser Zeit machte er sich einen Namen in dem Gebiet der Gruppentheorie. Er entdeckte eine endliche Gruppe mit über 8 Trillionen Elementen in einem 24-dimensionalen Raum, die nach ihm benannt wurde. [(*Strick 2022*)](#Strick)
 
 Ihm war es wichtig, die Mathematik den Leuten näherzubringen. Dadurch unterrichtete er nicht nur Hochbegabte an Universitäten, sondern auch jüngere und durchschnittlich talentierte Kinder. Er hielt viele Vorträge, bei denen er entweder gänzlich vom Thema abkam oder gar nicht erst erschien. Er bezeichnete sich selbst als faul und ging stets barfuss oder in Sandalen. Er entsprach also genau dem Bild, das die Allgemeinheit von einem zerstreuten Professor hat. [(*Szpiro 2020*)](#Szpiro)
 
@@ -103,7 +103,7 @@ Die Anwendung des "Game of Life" ist für viele Themenbereiche interessant. So i
 
 Durch diesen vielfältigen Anwendungsbereich interessieren sich Wissenschaftler aus verschiedenen Fachbereichen für "Conway's Game of Life" und beschäftigen sich mit den ungelösten Problemen, die das Spiel mit sich bringt. Einige der Probleme sind mit der Zeit bereits gelöst worden, andere noch nicht. 
 
-Zwei der nach wie vor ungelösten Probleme, die die Wissenschaften weiterhin beschäftigen, sind:
+Aus dem Problem der theoretischen Informatik, also Conway's Game of Life als Entscheidungsproblem, folgen zwei weitere Probleme:
 
 1. Es existiert kein bekannter Algorithmus, der bestimmen kann, zu welcher Spielklasse eine Anfangskonfiguration gehört. 
 2. Es existiert kein Algorithmus, der für alle Konfigurationen bestimmen kann, ob die eine aus der anderen entstehen wird.

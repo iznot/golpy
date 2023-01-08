@@ -1,7 +1,7 @@
 # Material und Methode
 
 Um mich diesen grossen Fragen des "Game of Life" widmen zu können, programmierte ich als Erstes das einfache Grundkonzept des Spieles. Danach konzentrierte ich mich auf die Programmierung einer Simulation, die auf einem beliebig grossen Spielfeld alle möglichen und unterschiedlichen Konfiguration durchspielen sollte. Da ich mich lediglich in Python, (wenn auch nur dürftig), auskannte, wählte ich diese Programmiersprache für meine Arbeit. 
-Mein Vater spielte eine grosse Rolle bei anfälligen Fragen oder als Anlaufstelle bei Unsicherheiten und Problemen. 
+Mein Vater spielte eine grosse Rolle bei allfälligen Fragen oder als Anlaufstelle bei Unsicherheiten und Problemen. 
 
 ## Das Grundkonzept
 
@@ -43,7 +43,7 @@ Um eine Konfiguration nun durchspielen zu können, muss der Status der Nachbarze
 [1, 0, 1]
 [1, 1, 1]
 ```
-Für jede Zelle wird dieser Kernel darüber gelegt, sodass das Null auf der besagten Zelle liegt. Nun werden alle Zellen, auf denen im Kernel eine Eins liegt, überprüft und zusammengezählt. Eine tote Zelle hat den Wert Null und eine lebende den Wert Eins. Sobald die Summe der Nachbarzellen nun bekannt ist, muss nur noch den Regeln gefolgt werden, um den Status besagter Zelle für die nächste Generation herauszufinden.   
+Für jede Zelle wird dieser Kernel darüber gelegt, sodass die Null auf der besagten Zelle liegt. Nun werden alle Zellen, auf denen im Kernel eine Eins liegt, überprüft und zusammengezählt. Eine tote Zelle hat den Wert Null und eine lebende den Wert Eins. Sobald die Summe der Nachbarzellen nun bekannt ist, muss nur noch den Regeln gefolgt werden, um den Status besagter Zelle für die nächste Generation herauszufinden.   
  
 Diese Funktion wird in Python in der Bibliothek `scipy` durch die Funktion `convolve` zur Verfügung gestellt.
 
@@ -69,26 +69,29 @@ Bevor der nächste Spielzug errechnet wird, kommt auf jeder der vier Hauptseiten
 
 Die Zellen sterben durch diese Funktion also bereits nach einer Generation aus. Für sie gelten nun dieselben Bedingungen wie für Zellen eines endlos grossen Spielfelds. 
 
-## Simulation
+## Spiel und Simulation
 
-Die Simulation ist der Schlüssel zur Beantwortung der Fragestellungen. 
-Wenn alle möglichen Konfigurationen eines Spielfelds einmal durchgespielt werden, sind auch all deren Endzustände bekannt. Wenn nun also eine beliebige Konfiguration auf diesem begrenzten Spielfeld abgefragt wird, kann ich den Endzustand sozusagen "vorhersagen", ohne diese erneut durchzuspielen. Dabei handelt es sich nicht um einen echten Algorithmus, sondern eher um einen Katalog aller möglichen Konfigurationen.
+TODO: Simulation vs Spiel
 
-Zudem sind mir die einzelnen Generationen jeder Konfiguration dieses Spielfeldes bekannt. Um herauszufinden, ob eine Konfiguration X aus einer Konfiguration Y entstehen kann, muss man Konfiguration X also nur mit den abgespeicherten Generationen des Spiels vergleichen, die aus Konfiguration Y entstanden. 
+Ich versuchte mich den Problemen auf zwei verschiedene Arten zu nähern. 
+Zum einen tat ich dies durch zwei Funktionen. Die erste spielt die gegebene Konfiguration durch und ordnet diesem Spiel eine Spielklasse zu, nähert sich also dem ersten Problem. Die zweite Funktion hat als Input eine zu testende und eine zu vergleichende Konfiguration. Sie spielt die zu vergleichende Konfiguration durch und gleicht deren Generationen auf Affinität mit der zu testenden Konfiguration ab. Diese nähert sich also dem zweiten Problem.
+
+Der zweite Ansatzpunkt war eine Simulation. Ich programmierte eine Simulation, die alle möglichen Konfigurationen auf einem begrenzten Spielfeld durchspielte, deren Spielklasse zuordnete und abspeicherte. Dadurch war es mir möglich, die einzelnen Spiele zu analysieren und nach Auffälligkeiten zu suchen.   
+
 
 ### Spielklassen
 
-Als Erstes legte ich fest, nach welchen möglichen Spielklassen ich unterscheiden will. Ich entschied mich für die vier bekanntesten und nicht allzu seltenen Spielklassen, plus eine fünfte, die alle restlichen Fälle enthält:
+Als Erstes legte ich fest, nach welchen möglichen Spielklassen ich unterscheiden will. Dies war für die Funktion des ersten Problems und die Simulation notwendig. Ich entschied mich für die vier bekanntesten und nicht allzu seltenen Spielklassen, plus eine fünfte, die alle restlichen Fälle enthält:
 
 1. Selbst auslöschende Objekte
-1. Statische Objekte
-1. Oszillierende Objekte
-1. Gleitende Objekte
-1. Überlebende Objekte
+2. Statische Objekte
+3. Oszillierende Objekte
+4. Gleitende Objekte
+5. Überlebende Objekte
 
 Die letzte Spielklasse, "Überlebende Objekte", schliesst interessante Objekte wie beispielsweise eine Gleiterkanone mit ein. 
 
-Für jede Generation des Spiels auf eine bestimmte Anfangskonfiguration muss überprüft werden, ob das Spiel einer dieser Spielklassen angehört. Sobald Spielklassen 1 - 4 identifiziert wurden, bricht das Spiel ab, und die Endkonfiguration wird festgehalten.
+Für jede Generation des Spiels auf eine bestimmte Anfangskonfiguration muss überprüft werden, ob das Spiel einer dieser Spielklassen angehört. Sobald Spielklassen 1 - 4 identifiziert wurden, bricht das Spiel ab, und die Endkonfiguration wird festgehalten. 
 
 #### Selbst auslöschende Objekte (Erased)
 
@@ -114,11 +117,11 @@ Diese relativen Gameboards werden nun nach dem Schema der Oszillatoren abgeglich
 
 #### Überlebende Objekte (Survival)
 
-Falls der Objekttyp bis jetzt nicht identifiziert wurde, klassifizieren wir ein Spiel als überlebend. Damit diese Spiele nun nicht endlos weiterlaufen, baue ich eine maximale Zahl von erlaubten Spielzügen ein. Dieser Maximalwert impliziert eine Fehlerquote für Anfangskonfigurationen, die ein Objekt erst nach dem vorgegebenen Grenzwert erreichen. Würde dieser Grenzwert aber weggelassen werden, würde die Simulation endlos lange dauern. Den Grenzwert setzte ich bei meinen Simulationen auf 100.
+Falls der Objekttyp bis jetzt nicht identifiziert wurde, klassifiziere ich ein Spiel als überlebend. Damit diese Spiele nun nicht endlos weiterlaufen, baue ich eine maximale Zahl von erlaubten Spielzügen ein. Dieser Maximalwert impliziert eine Fehlerquote für Anfangskonfigurationen, die ein Objekt erst nach dem vorgegebenen Grenzwert erreichen. Würde dieser Grenzwert aber weggelassen werden, würde die das Spiel endlos lange dauern. Den Grenzwert setzte ich auf 100.
 
 ### Speicherform des Spielbretts 
 
-Um die Spiele später analysieren zu können, wollte ich jeweils nicht alle Generationen, sondern nur die Anfangskonfiguration und den Endzustand abspeichern. Um eine Konfiguration in ein Excel schreiben zu können, muss die Konfiguration in ein Format gebracht werden, das sich dafür eignet. Eine Möglichkeit wäre, jede Konfiguration durch eine Reihe von Nullen und Einsen darzustellen. Dadurch würde viel zu viel Speicherplatz benötigt werden. Ausserdem wäre noch nicht klar, wie wir beispielsweise ein 4x5 Gameboard von einem 5x4 Gameboard unterscheiden. Also formatiere ich die Konfiguration nach folgendem Schema: 
+Um die durch meine Simulation gespielten Spiele später analysieren zu können, wollte ich jeweils nicht alle Generationen, sondern nur die Anfangskonfiguration und den Endzustand abspeichern. Um eine Konfiguration in ein Excel schreiben zu können, muss die Konfiguration in ein Format gebracht werden, das sich dafür eignet. Eine Möglichkeit wäre, jede Konfiguration durch eine Reihe von Nullen und Einsen darzustellen. Dadurch würde jedoch viel zu viel Speicherplatz benötigt werden. Ausserdem wäre noch nicht klar, wie wir beispielsweise ein 4x5 Gameboard von einem 5x4 Gameboard unterscheiden. Also formatiere ich die Konfiguration nach folgendem Schema: 
 
 1. Zuerst kommt die Grösse des Gameboards.
 2. Dann kommt die relative Position des Objekts auf dem Gameboard. 
@@ -131,6 +134,11 @@ Das folgende Spielbrett sieht dann also wie folgt aus:
 {width: "65%"}
 ![Abb. 12: Gameboard als Zahl](gb_number_explained.png)  
 
+
+Diese Methode hatte keinen Einfluss auf meine Funktionen, obwohl die Funktion für das zweite Problem eine ähnliche Methode verwendet. Sie speichert alle Generationen der zu vergleichenden Konfiguration in Dezimalzahlen ab, um diese Später einfacher mit der Grundkonfiguration der zu testenden Konfiguration vergleichen zu können, wobei diese und all ihre affinen Konfigurationen auch als Dezimalzahlen verwendet werden. 
+
+
+Alle folgenden Methoden wurden nur für die Simulation verwendet.
 
 ### Zähler
 
@@ -183,12 +191,12 @@ Um zu vermeiden, dass all diese affinen Konfigurationen abgespielt und gespeiche
 
 Ich speichere alle Spiele in ein CSV-File. <!-- TODO: ag Referenz einfügen --> Dieses Text-Format eignet sich besonders gut, da es einfach in eine Exceltabelle transformiert werden kann. 
 
-Für das erste Problem, das Vorhersagen des Endzustandes, würde das Abspeichern aller Generationen einer Konfiguration zu viel Speicherplatz brauchen. Deshalb werden diese hier auf die Anzahl an Generationen beschränkt. Die Anfangs- und Endlänge beziehungsweise -breite, die Anfangs- und Endkonfiguration und die Definition des Objektes werden auch abgespeichert. Zudem noch die Periodizität, falls es sich um ein oszillierendes oder gleitendes Objekt handelt. 
+Das Abspeichern aller Generationen einer Konfiguration würde zu viel Speicherplatz brauchen. Deshalb werden diese hier auf die Anzahl an Generationen beschränkt. Die Anfangs- und Endlänge beziehungsweise -breite, die Anfangs- und Endkonfiguration und die Definition des Objektes werden auch abgespeichert. Zudem noch die Periodizität, falls es sich um ein oszillierendes oder gleitendes Objekt handelt. 
 
 {width: "80%"}
 ![Abb. 15: Ausschnitt aus CSV-File](CSV-File.png)   
 
-Für das zweite Problem, den Vergleich zweier Konfigurationen, werden alle Generationen jeder Konfiguration abgespeichert. Ansonsten wird nichts benötigt.
+
 
 
 

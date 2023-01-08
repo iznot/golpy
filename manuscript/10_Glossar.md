@@ -5,15 +5,16 @@ Angegeben wird für jeden Begriff zuerst eine Erklärung, sowie zusätzlich ein 
 
 Gameboard
 : Das Spielbrett des Conway's Game of Life. In meiner Arbeit habe ich mit 5x5 Gameboards gearbeitet.
-: `basic_game_functions.create_gameboard(input_array = None, rows = None, cols = None, origin=(0,0))`
+: `play.print_gameboard(configuration)`
 
 Konfiguration
 : Ein bestimmtes Gameboard mit festgelegten lebenden und toten Zellen, sowie der relativen Position (siehe unten)
-: `gameboard`
-TODO: code anpassen
+: `play.create_configuration(input_array = None, rows = None, cols = None, origin=(0,0))`
 
 Grundkonfiguration
 : Die Konfiguration, die übrig bleibt, wenn vom Rand des Gameboards alle nicht lebenden Zeilen und Spalten abgeschnitten werden.
+: `gameboard_manipulation.get_base_configuration(configuration)?`
+
 
 Relative Position
 : Die Position der Grundkonfiguration auf dem begrenzten Gameboard.
@@ -23,7 +24,7 @@ Anfangskonfiguration
 
 Spielzug (Play)
 : Ein Spielzug bezeichnet die Anwendung der Spielregeln auf eine Konfiguration. Durch einen Spielzug entsteht aus einer Konfiguration eine neue Konfiguration.
-: `basic_game_functions.play(gameboard)`
+: `play.play(configuration)`
 
 Die n. Generation
 : Die Konfiguration, die nach dem n. nacheinander folgenden Spielzug aus der Anfangskonfiguration entsteht. 
@@ -33,17 +34,18 @@ Endzustand
 
 Spiel
 : Werden auf eine Anfangskonfiguration wiederholt Spielzüge ausgeführt, bis der Endzustand erreicht ist, so sprechen wir von einem Spiel.
-: `run_simulation.run_simulation(gameboard, max_runs)`
+: `game.play_full_game(start_configuration, max_runs)`
 
 Simulation
 : Die Spiele aller möglichen Konfigurationen auf einem Gameboard einer bestimmten Grösse (hier 5x5).
-: `run_simulation.generate_simulation(shape, alive_count, max_runs, folder = "sim", debug = False)`
+: `simulation.generate_simulation(gameboard_shape, alive_count, max_runs, folder = "sim", debug = False)`
 
 Maximale Zahl
 : Die zuvor festgelegte Anzahl an Spielzügen, nach deren Erreichen die Simulation abbricht.
 
 Spielklassen
 : Spiele können in verschiedene Klassen eingeteilt werden, je nachdem, wie sich die Konfigurationen über den Spielverlauf entwickeln. Unterschieden werden folgende Spielklassen: statisch, oszillierend, gleitend, selbst auslöschend, überlebend.
+: `game.check_exit_criteria(game)`
 
 Objekt
 : Konfigurationen, die in Simulationen immer wieder auftauchen, werden als Objekte bezeichnet und benannt, z.B.: Gleiter, Tümmler, Blinker, Uhr, Fresser, Segler, etc. Objekte verhalten sich nach Spielklassen, d.h. statisch, oszillierend, gleitend, selbst auslöschend, überlebend. In einer Konfiguration können grundsätzlich auch mehrere Objekte vorkommen. Zum Beispiel eine Kanone, die immer wieder Gleiter schiesst. In meiner Arbeit habe ich nicht zwischen Objekt und Grundkonfiguration unterschieden.
@@ -61,3 +63,4 @@ Affine Konfigurationen
 - Drehung um 90 Grad
 - Drehung um 180 Grad
 - Drehung um 270 Grad
+: `gameboard_manipulation.get_configuration_variations(configuration)`

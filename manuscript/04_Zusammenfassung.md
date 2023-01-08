@@ -18,5 +18,6 @@ Ausserdem sind beide Probleme durch die Methode der Simulation nicht gelöst. Zu
 Der Python Sourcecode zu dieser Arbeit ist verfügbar auf <https://github.com/iznot/golpy>.
 
 Die Datenanalyse ist unter folgendem Link zu finden:
-TODO Link einfügen
+<https://app.powerbi.com/viewr=eyJrIjoiNzFiNGFlYjgtZTk0Yi00NTgwLThiZDUtZDQ4MWI1ZGU1MjUzIiwidCI6ImJlZTU0ZGU1LTQ3NDQtNGU0Ny04YTIwLWVhOGI4NDJiOTE5ZCJ9&pageName=ReportSection>
+
 
