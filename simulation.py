@@ -10,7 +10,6 @@ import game
 import manipulation as gam
 import play
 
-#generate csv file
 
 def generate_simulation(gameboard_shape, alive_count, max_runs, folder = "sim", debug = False):
     """Läuft eine Simulation durch
@@ -82,7 +81,7 @@ def generate_simulation(gameboard_shape, alive_count, max_runs, folder = "sim", 
                 continue
             
             
-            # check if current gb is in history
+            # check if current config is in history
             _add_config_variations(configuration, gb_already_checked_set)
 
             

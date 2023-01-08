@@ -3,8 +3,6 @@ import os
 import numpy as np
 from scipy.ndimage import convolve
 
-"""Dieses File stellt die grundlegenden Funktionen zu Verfügung, mit denen man Conway's Game of Life spielen kann. Es definiert das Grundobjekt (Konfiguration), die Ausgabe, sowie die Spielzüge.
-"""
 
 def create_configuration(input_array = None, rows = None, cols = None, origin=(0,0)):
     """Erstellt eine Konfiguration.

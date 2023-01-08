@@ -1,8 +1,5 @@
 # gui.py
 
-"""
-Das GUI (graphical user interface) von Golpy.mkdocsmk
-"""
 
 import tkinter as tk
 

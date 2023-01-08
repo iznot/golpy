@@ -91,7 +91,7 @@ Die letzte Spielklasse, "Überlebende Objekte", schliesst interessante Objekte w
 
 Für jede Generation des Spiels auf eine bestimmte Anfangskonfiguration muss überprüft werden, ob das Spiel einer dieser Spielklassen angehört. Sobald Spielklassen 1 - 4 identifiziert wurden, bricht das Spiel ab, und die Endkonfiguration wird festgehalten. 
 
-#### Selbst auslöschende Objekte (Erased)
+#### Selbst auslöschende Objekte (Extinct)
 
 Diese Objekte sind sichtlich einfach erkennbar. Eine Funktion prüft, ob im aktuellen Spielbrett lebende Zellen vorhanden sind. Falls nicht, zählt die Startkonfiguration zu den selbst auslöschenden Objekten. Falls lebende Zellen vorhanden sind, muss weiter geprüft werden. 
 

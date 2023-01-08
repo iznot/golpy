@@ -4,8 +4,7 @@ import numpy as np
 
 import play as play
 
-"""Stellt Funktionen zur Verfügung, die benötigt werden um die Simulationen durchzuführen.
-"""
+
 
 def get_base_configuration(configuration):
     """Konvertiert eine Konfiguration zu ihrer Grundkonfiguration.
