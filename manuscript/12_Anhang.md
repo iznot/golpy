@@ -41,7 +41,7 @@ Um die Resultate dieser Arbeit zu reproduzieren müssen folgende Schritte ausgef
 
 ## GUI
 
-Bemerkung: Die GUI-Anwendung von golpy wurde von Christoph Glur mit tkinter entwickelt. 
+<!-- Bemerkung: Die GUI-Anwendung von golpy wurde von Christoph Glur mit tkinter entwickelt. -->
 
 ### Voraussetzungen
 
@@ -59,5 +59,5 @@ golpy ist lokal installiert und lauffähig (siehe Voraussetzungen oben).
 „Ich erkläre hiermit, dass ich die vorliegende Maturaarbeit selbständig und ohne unerlaubte fremde Hilfe erstellt habe und dass alle 
 Quellen, Hilfsmittel und Internetseiten wahrheitsgetreu verwendet wurden und belegt sind.“
 
-{width: "20%", float: left}
-![Unterschrift, Anaïs Glur](Unterschirft.png)   
+<!-- {width: "20%", float: left}
+![Unterschrift, Anaïs Glur](Unterschirft.png) -->  
